@@ -1,0 +1,39 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@600&display=swap");
+
+// Bootstrap stylesheets
+@import "@/node_modules/bootstrap/scss/maps";
+@import "@/node_modules/bootstrap/scss/utilities";
+
+// Optional Bootstrap components
+@import "@/node_modules/bootstrap/scss/root";
+@import "@/node_modules/bootstrap/scss/reboot";
+@import "@/node_modules/bootstrap/scss/images";
+@import "@/node_modules/bootstrap/scss/containers";
+@import "@/node_modules/bootstrap/scss/grid";
+@import "@/node_modules/bootstrap/scss/buttons";
+@import "@/node_modules/bootstrap/scss/close"; // = close button
+@import "@/node_modules/bootstrap/scss/forms";
+@import "@/node_modules/bootstrap/scss/type"; // list
+@import "@/node_modules/bootstrap/scss/tables";
+
+// Helpers
+@import "@/node_modules/bootstrap/scss/helpers/position";
+@import "@/node_modules/bootstrap/scss/helpers/stacks";
+@import "@/node_modules/bootstrap/scss/helpers/ratio";
+
+// Utilities
+@import "@/node_modules/bootstrap/scss/utilities/api";
+
+@import "@/assets/css/_transitions"; // vue page transitions
+
+body {
+  width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &.disable-scroll {
+    overflow-y: hidden;
+    position: fixed;
+  }
+}

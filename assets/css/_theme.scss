@@ -1,0 +1,41 @@
+//  theme settings
+$primary: #8e5077;
+$secondary: #687b77;
+$light: #f5efeb;
+$dark: #1a1715;
+$body-bg: #fdfbf9;
+
+$body-color: #5c5856;
+$border-color: #ccc;
+$headings-color: #1a1715;
+
+$link-hover-color: $primary;
+
+$font-family-base: "Inter", sans-serif;
+$headings-font-family: "Source Serif Pro", serif;
+$display-font-family: "Source Serif Pro", serif;
+
+$border-radius: 1rem;
+
+$btn-border-radius: 25px;
+$btn-padding-y: 0.7rem;
+$btn-padding-x: 1.4rem;
+$btn-font-weight: 500;
+
+$grid-gutter-width: 2rem;
+
+$font-weight-base: 300;
+$line-height-base: 1.8;
+
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.4,
+  2: $spacer * 0.8,
+  3: $spacer * 1.6,
+  4: $spacer * 2.5,
+  5: $spacer * 5,
+) !default;
+
+$link-color: $headings-color;
+$link-decoration: none;
