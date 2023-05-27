@@ -6,7 +6,7 @@ export default {
     base: "/",
   },
   head: {
-    title: "ℏ𝑒𝒶𝓉𝒽𝑒𝓇",
+    title: "ℏ𝑒𝒶𝓉ℏ𝑒𝓇",
     htmlAttrs: {
       lang: "en",
     },
@@ -20,7 +20,7 @@ export default {
       },
       { name: "format-detection", content: "telephone=no" },
     ],
-    // link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
 
   css: ["@/assets/css/main.scss"],
@@ -39,6 +39,8 @@ export default {
   },
 
   components: true,
+
+  plugins: ["~/plugins/typed.js"],
 
   modules: ["@nuxtjs/style-resources"],
   build: {
