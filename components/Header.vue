@@ -67,8 +67,8 @@ export default {
 
   .logo {
     background-image: url("@/assets/images/logo.svg");
-    width: 135px;
-    height: 45px;
+    width: 94px * 1.4;
+    height: 20px * 1.4;
     background-size: cover;
     background-repeat: no-repeat;
     opacity: 1;
