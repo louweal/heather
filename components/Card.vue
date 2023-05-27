@@ -1,0 +1,27 @@
+<template>
+  <div class="card">
+    <visual :data="{ visual: require('~/assets/images/dummy-drill.png'), name: 'Drill' }" />
+    <!-- <img src="..." class="card-img-top" alt="..." /> -->
+    <div class="card-body">
+      <h5 class="card-title">Drill</h5>
+
+      <div class="d-flex gap-2 align-items-center">
+        <div class="bg-light p-1 px-2 rounded-circle">A</div>
+        <div>Anneloes</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    data: {
+      type: Object,
+      default: {},
+    },
+  },
+};
+</script>
+
+<style></style>
