@@ -1,5 +1,7 @@
 <template>
-  <main>landingspage</main>
+  <main>
+    <hero />
+  </main>
 </template>
 
 <script></script>
