@@ -5,10 +5,8 @@
     <div class="hero--inner w-100">
       <div class="container-xl">
         <div class="row">
-          <div class="col-12 col-lg-7">
+          <div class="col-12 col-lg-7" data-aos="fade-up-scale" data-aos-duration="1000">
             <vue-typed-js
-              data-aos="fade-up-scale"
-              data-aos-duration="1000"
               :strings="['tent', 'hammer', 'bicycle', 'suitcase']"
               :loop="true"
               :typeSpeed="90"
@@ -21,7 +19,6 @@
             <h2 class="hero--intro mb-3">
               Minimize your environmental impact and save money by sharing resources within your local community.
             </h2>
-
             <nuxt-link to="/app" class="btn btn-primary mb-4">Launch app <i class="bi bi-arrow-right"></i></nuxt-link>
           </div>
         </div>
@@ -49,7 +46,7 @@ export default {};
 
   &--title {
     color: $primary;
-    // min-height: 245px;
+    min-height: 152px;
     span {
       -webkit-text-stroke-width: 2px;
       -webkit-text-stroke-color: $primary;
