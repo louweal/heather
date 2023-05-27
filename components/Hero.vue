@@ -5,7 +5,7 @@
     <div class="hero--inner w-100">
       <div class="container-xl">
         <div class="row">
-          <div class="col-12 col-lg-8">
+          <div class="col-12 col-lg-7">
             <vue-typed-js
               data-aos="fade-up-scale"
               data-aos-duration="1000"
@@ -16,7 +16,7 @@
               :startDelay="1300"
               :showCursor="false"
             >
-              <h1 class="hero--title display-1 lh-sm pb-2">Dear Heather, can I borrow a <span class="typing">tent</span>?</h1>
+              <h1 class="hero--title display-1 lh-sm pb-2">Hi Heather, can I borrow a <span class="typing">tent</span>?</h1>
             </vue-typed-js>
             <h2 class="hero--intro mb-3">
               Minimize your environmental impact and save money by sharing resources within your local community.
