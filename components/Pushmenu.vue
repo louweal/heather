@@ -1,24 +1,24 @@
 <template>
   <div class="pushmenu p-2 d-lg-none" v-if="$store.state.pushmenu.open">
     <div class="pushmenu--header d-flex w-100 justify-content-between align-items-center">
-      <nuxt-link
-        to="/"
-        event=""
+      <logo
         @click.native="
           $store.commit('pushmenu/toggle');
           $router.push('/');
         "
-        class="header-logo"
-        aria-label="to homepage"
-      >
-        <span>logo</span>
-      </nuxt-link>
+      />
+
       <div @click="$store.commit('pushmenu/toggle')">
         <i class="bi lh-1" style="font-size: 38px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
       </div>
     </div>
 
-    <div class="pushmenu--body">menu here</div>
+    <div class="pushmenu--body">
+      <ul>
+        <li>Sign in</li>
+        <li>Register</li>
+      </ul>
+    </div>
 
     <div class="pushmenu--footer"></div>
   </div>

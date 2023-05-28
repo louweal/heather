@@ -1,14 +1,12 @@
 <template>
   <nav class="header fixed-top p-2" id="header" ref="header">
-    <div class="row">
+    <div class="row g-1">
       <div class="col col-md-4 d-flex align-items-center">
-        <nuxt-link to="/" event="" @click.native="scrollToTop()" class="header-logo" aria-label="to homepage">
-          <div class="logo"></div>
-        </nuxt-link>
+        <logo @click.native="scrollToTop()" />
       </div>
-      <div class="col-6 col-md-4">
+      <div class="col-7 col-sm col-md-4">
         <div class="searchbar" @click="activateSearch()">
-          <input type="text" class="form-control" placeholder="What are you looking for?" />
+          <input type="text" class="form-control" placeholder="Find items" />
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
@@ -90,20 +88,6 @@ export default {
   background-color: #fff;
   box-shadow: 0 0.125rem 0.25rem rgba(#000, 0.075);
   border-bottom: 1px solid rgba(#000, 0.175);
-
-  .logo {
-    background-image: url("@/assets/images/logo.svg");
-    width: 94px * 1.4;
-    height: 20px * 1.4;
-    background-size: cover;
-    background-repeat: no-repeat;
-    opacity: 1;
-    transition: opacity 0.3s cubic-bezier(0.2, 0, 0.1, 1);
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 
 .searchbar {
