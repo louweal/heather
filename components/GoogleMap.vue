@@ -20,7 +20,7 @@ export default {
 
   methods: {
     async initMap() {
-      // The location of Uluru
+      // The location of Leiden
       const position = { lat: 52.16869, lng: 4.47094 };
       // Request needed libraries.
       //@ts-ignore
@@ -32,6 +32,11 @@ export default {
         zoom: 16,
         center: position,
         mapId: "f7886dcdb440711",
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
       });
 
       const iconBase = "https://heather.codesparks.nl/";
@@ -59,7 +64,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  min-height: 40vh;
+  min-height: 100vh;
   width: 100vw;
 
   @include media-breakpoint-up(md) {
@@ -72,10 +77,10 @@ export default {
 }
 
 .map {
-  min-height: 40vh;
+  min-height: 100vh;
 
-  @include media-breakpoint-up(md) {
-    min-height: 100vh;
-  }
+  // @include media-breakpoint-up(md) {
+  //   min-height: 100vh;
+  // }
 }
 </style>
