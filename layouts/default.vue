@@ -5,7 +5,7 @@
         <div>
           <Header />
 
-          <div id="pushdown" class="w-100 mb-2 mb-md-3 mb-lg-4" :class="$route.path === '/' ? 'd-none' : false"></div>
+          <div id="pushdown" class="w-100" :class="$route.path === '/' ? 'd-none' : false"></div>
           <Nuxt />
         </div>
 
