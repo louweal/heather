@@ -11,7 +11,7 @@ $border-color: #ccc;
 $headings-color: #351524;
 $link-hover-color: $primary;
 $link-color: $headings-color;
-
+$text-muted: #c5bcc0;
 // text
 $font-family-base: "Inter", sans-serif;
 $headings-font-family: "Source Serif Pro", serif;
@@ -43,6 +43,11 @@ $btn-border-radius: 25px;
 $btn-padding-y: 0.7rem;
 $btn-padding-x: 1.4rem;
 $btn-font-weight: 500;
+
+// forms
+$input-btn-focus-box-shadow: none;
+$input-btn-padding-y: 0.7rem;
+$input-btn-padding-x: 1.4rem;
 
 $grid-gutter-width: 2rem;
 

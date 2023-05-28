@@ -40,7 +40,7 @@ export default {
 
   components: true,
 
-  plugins: ["~/plugins/typed.js", "~/plugins/aos.js"],
+  plugins: ["~/plugins/typed.js", "~/plugins/aos.js", "~/plugins/maps.js", "~/plugins/translate.js"],
 
   modules: ["@nuxtjs/style-resources"],
   build: {

@@ -7,7 +7,10 @@
 
       <div class="d-flex gap-2 align-items-center">
         <div class="bg-light p-1 px-2 rounded-circle">A</div>
-        <div>Anneloes</div>
+        <div>
+          <div class="lh-1">Anneloes</div>
+          <div class="lh-sm">Leiden <span class="text-muted fw-medium">1.7km</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -17,8 +20,8 @@
 export default {
   props: {
     data: {
-      type: Object,
-      default: {},
+      type: [Object, Array],
+      default: () => {},
     },
   },
 };
