@@ -1,28 +1,31 @@
 <template>
   <main>
-    <google-map />
+    <google-map v-if="$store.state.map.show" />
 
     <section>
-      <div class="container-xl">
+      <div class="container-fluid">
         <p>23 results for 'drill' found in your area</p>
 
         <div class="row">
           <div class="col-12 col-md-6 pe-4">
             <div class="row gy-3">
-              <div class="col-12 col-md-6">
-                <card />
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
               </div>
-              <div class="col-12 col-md-6">
-                <card />
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-call />
               </div>
-              <div class="col-12 col-md-6">
-                <card />
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
               </div>
-              <div class="col-12 col-md-6">
-                <card />
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
               </div>
-              <div class="col-12 col-md-6">
-                <card />
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
               </div>
             </div>
           </div>
@@ -32,6 +35,13 @@
         </div>
       </div>
     </section>
+
+    <div class="position-fixed start-50 translate-middle bottom-0 d-md-none" style="z-index: 4">
+      <div class="btn btn-primary" v-if="!$store.state.map.show" @click="$store.commit('map/toggle')">
+        <i class="bi bi-geo-alt-fill"></i> Map
+      </div>
+      <div class="btn btn-primary" v-if="$store.state.map.show" @click="$store.commit('map/toggle')"><i class="bi bi-grid"></i> List</div>
+    </div>
   </main>
 </template>
 

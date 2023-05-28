@@ -1,11 +1,6 @@
 <template>
   <div class="ratio ratio-4x3">
-    <component
-      :is="data.visual ? 'img' : 'div'"
-      :src="data.visual || false"
-      :alt="data.visual ? data.name : false"
-      class="visual rounded"
-    />
+    <component :is="data.visual ? 'img' : 'div'" :src="data.visual || false" :alt="data.visual ? data.name : false" class="visual" />
   </div>
 </template>
 
