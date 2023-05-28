@@ -1,3 +1,5 @@
+// import ogImage from "@/static/ogImage.png";
+
 export default {
   ssr: false,
   modern: "client",
@@ -6,7 +8,7 @@ export default {
     base: "/",
   },
   head: {
-    title: "ℏ𝑒𝒶𝓉ℏ𝑒𝓇",
+    title: "Heather",
     htmlAttrs: {
       lang: "en",
     },
@@ -18,6 +20,7 @@ export default {
         name: "description",
         content: "Minimize environmental impact by sharing resources",
       },
+      { hid: "og:image", property: "og:image", content: "https://heather.codesparks.nl/ogImage.png" },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
