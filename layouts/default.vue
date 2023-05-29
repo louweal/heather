@@ -26,22 +26,11 @@ export default {
     name: "page",
     mode: "out-in",
   },
-  async created() {},
 
   async mounted() {
     let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     let pushdown = document.querySelector("#pushdown"); // refs?
     pushdown.style.height = headerHeight + "px";
-  },
-
-  watch: {
-    "$store.state.modals.disableScroll": function (val) {
-      if (val) {
-        // this.posY = window.scrollY;
-        document.body.style.top = `-${window.scrollY}px`;
-      }
-      document.body.classList.toggle("disable-scroll");
-    },
   },
 };
 </script>
