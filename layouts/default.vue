@@ -9,7 +9,7 @@
           <Nuxt />
         </div>
 
-        <Footer v-if="$route.path !== '/app'" />
+        <Footer v-if="$route.path == '/'" />
       </div>
     </div>
     <modal name="connect" title="Connect">
@@ -21,12 +21,22 @@
 </template>
 
 <script>
+import owners from "@/data/owners";
+import ads from "@/data/ads";
+
 export default {
+  owners,
+  ads,
+
   transition: {
     name: "page",
     mode: "out-in",
   },
 
+  async fetch() {
+    this.$store.commit("data/SET_ADS", this.$options.ads);
+    this.$store.commit("data/SET_OWNERS", this.$options.owners);
+  },
   async mounted() {
     let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     let pushdown = document.querySelector("#pushdown"); // refs?
