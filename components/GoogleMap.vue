@@ -18,12 +18,21 @@
           </button>
         </div>
 
-        <p v-if="marker.available">To {{ marker.type }}</p>
+        <p v-if="marker.available">
+          To {{ marker.type }}
+
+          <span v-if="marker.type === 'rent' && marker.rent" class="opacity-50">€{{ marker.rent.start }}</span>
+        </p>
         <p v-else>Not available</p>
       </div>
       <div class="card-footer">
         <div class="d-flex gap-2 align-items-center">
-          <button class="bg-light p-2 rounded-circle lh-1"><i class="bi bi-chat-text-fill"></i></button>
+          <button
+            class="bg-light p-2 rounded-circle lh-1 text-white"
+            @click="$store.commit('modals/show', { name: 'request', data: marker })"
+          >
+            <i class="bi bi-chat-text-fill"></i>
+          </button>
           <div>{{ marker.name }}</div>
         </div>
       </div>
@@ -51,6 +60,8 @@ export default {
     this.markers.forEach((a) => (a["position"] = this.$store.state.data.owners.find((o) => o.id === a.owner).position));
     this.markers.forEach((a) => (a["name"] = this.$store.state.data.owners.find((o) => o.id === a.owner).name));
 
+    this.markers.sort((a, b) => (a.available > b.available ? 1 : -1));
+
     console.log(this.markers);
     console.log(this.markers.length);
   },
@@ -59,15 +70,11 @@ export default {
 
   methods: {
     hideInfo() {
-      let info = this.$refs["info"];
-      info.style.display = "none";
+      this.marker.show = false;
     },
     async initMap() {
-      // The location of Leiden
-      const position = { lat: 52.16869, lng: 4.47094 };
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
-      // const infowindow = new google.maps.InfoWindow();
 
       this.map = new Map(this.$refs["map"], {
         zoom: 16,
@@ -78,10 +85,15 @@ export default {
 
       const iconBase = "https://heather.codesparks.nl/";
       const pins = {
-        primary: iconBase + "pin-primary.png",
-        secondary: iconBase + "pin-secondary.png",
-        grey: iconBase + "pin-grey.png",
+        primary: iconBase + "pin-primary.svg",
+        secondary: iconBase + "pin-secondary.svg",
+        grey: iconBase + "pin-grey.svg",
       };
+      // const pins = {
+      //   primary: iconBase + "pin-primary.png",
+      //   secondary: iconBase + "pin-secondary.png",
+      //   grey: iconBase + "pin-grey.png",
+      // };
 
       for (let i = 0; i < this.markers.length; i++) {
         let m = this.markers[i];
@@ -90,7 +102,7 @@ export default {
           map: this.map,
           position: m.position,
           title: m.title,
-          icon: m.available ? pins.primary : m.grey,
+          icon: m.available ? pins.primary : pins.grey,
         });
 
         google.maps.event.addListener(
@@ -104,20 +116,21 @@ export default {
               this.marker["available"] = m.available;
               this.marker["title"] = m.title;
               this.marker["type"] = m.type;
+
+              if (m.type === "rent") {
+                this.marker["rent"] = m.rent;
+              }
               this.marker["name"] = m.name;
               this.marker["id"] = m.id;
               this.marker.show = true;
 
               this.map.panTo(marker.getPosition());
-              // infowindow.setContent(contentString);
-              // infowindow.open(this.map, marker);
             };
           })(marker)
         );
       }
 
       google.maps.event.addListener(this.map, "click", function (event) {
-        // infowindow.close();
         this.marker.show = false;
       });
     },
