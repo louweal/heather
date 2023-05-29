@@ -7,13 +7,25 @@
         <p>23 results for 'drill' found in your area</p>
 
         <div class="row">
-          <div class="col-12 col-md-6 pe-4">
+          <div class="col-12 col-md-6">
             <div class="row gy-3">
               <div class="col-12 col-sm-6 col-xxl-4">
                 <card-ad />
               </div>
               <div class="col-12 col-sm-6 col-xxl-4">
                 <card-call />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-4">
+                <card-ad />
               </div>
               <div class="col-12 col-sm-6 col-xxl-4">
                 <card-ad />
@@ -46,7 +58,17 @@
 </template>
 
 <script>
-export default {};
+import owners from "@/data/owners";
+import ads from "@/data/ads";
+
+export default {
+  owners,
+  ads,
+  async fetch() {
+    this.$store.commit("data/SET_ADS", this.$options.ads);
+    this.$store.commit("data/SET_OWNERS", this.$options.owners);
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
