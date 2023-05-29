@@ -34,8 +34,9 @@ export default {
   },
 
   async fetch() {
-    this.$store.commit("data/SET_ADS", this.$options.ads);
     this.$store.commit("data/SET_OWNERS", this.$options.owners);
+
+    this.$store.commit("data/SET_ADS", this.$options.ads);
   },
   async mounted() {
     let headerHeight = document.querySelector("#header").offsetHeight; //refs ?

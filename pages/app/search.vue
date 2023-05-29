@@ -4,12 +4,18 @@
 
     <section>
       <div class="container-fluid">
-        <p>23 results for 'drill' found in your area</p>
-        todo filter
+        <p v-if="this.$store.state.search.query">
+          {{ results.length }} result<span v-if="results.length > 1">s</span> for '{{ this.$store.state.search.query }}' found in your area
+        </p>
+
+        <p v-if="this.$store.state.search.place">
+          {{ this.$store.state.search.place.geometry.location.lat() }}
+        </p>
+
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="row gy-3">
-              <div class="col-12 col-sm-6 col-xxl-3" v-for="a in $store.state.data.ads" :key="a.id">
+              <div class="col-12 col-sm-6 col-xxl-3" v-for="a in results" :key="a.id">
                 <card-ad :data="a" />
               </div>
             </div>
@@ -34,6 +40,21 @@
   </main>
 </template>
 
-<script></script>
+<script>
+export default {
+  created() {},
 
+  computed: {
+    results() {
+      let query = this.$store.state.search.query;
+
+      if (query) {
+        query = query.toLowerCase();
+        return this.$store.state.data.ads.filter((a) => a.title.toLowerCase().includes(query));
+      }
+      return [];
+    },
+  },
+};
+</script>
 <style lang="scss" scoped></style>

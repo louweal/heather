@@ -59,11 +59,7 @@ export default {
     // add owner data (position and name) to markers
     this.markers.forEach((a) => (a["position"] = this.$store.state.data.owners.find((o) => o.id === a.owner).position));
     this.markers.forEach((a) => (a["name"] = this.$store.state.data.owners.find((o) => o.id === a.owner).name));
-
     this.markers.sort((a, b) => (a.available > b.available ? 1 : -1));
-
-    console.log(this.markers);
-    console.log(this.markers.length);
   },
 
   computed: {},
@@ -89,11 +85,6 @@ export default {
         secondary: iconBase + "pin-secondary.svg",
         grey: iconBase + "pin-grey.svg",
       };
-      // const pins = {
-      //   primary: iconBase + "pin-primary.png",
-      //   secondary: iconBase + "pin-secondary.png",
-      //   grey: iconBase + "pin-grey.png",
-      // };
 
       for (let i = 0; i < this.markers.length; i++) {
         let m = this.markers[i];
@@ -110,12 +101,12 @@ export default {
           "click",
           ((marker) => {
             return () => {
-              console.log("clicked!!!");
               this.marker = { show: false };
 
               this.marker["available"] = m.available;
               this.marker["title"] = m.title;
               this.marker["type"] = m.type;
+              this.marker["visual"] = m.visuals[0];
 
               if (m.type === "rent") {
                 this.marker["rent"] = m.rent;
@@ -166,7 +157,6 @@ export default {
   }
 
   &-info {
-    // display: none;
     opacity: 0;
     transition: opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1);
     min-width: 270px;

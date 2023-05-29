@@ -1,5 +1,5 @@
 <template>
-  <nav class="header fixed-top p-2" id="header" ref="header">
+  <nav class="header fixed-top p-2 shadow-sm" id="header" ref="header">
     <div class="row g-1">
       <div class="col col-md-4 d-flex align-items-center">
         <logo @click.native="scrollToTop()" />
@@ -17,12 +17,33 @@
       </div>
     </div>
 
-    <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
-      <div class="hstack gap-1">
-        <input type="text" class="form-control" @click="activateSearch()" placeholder="Find something..." id="query" />
-        <input type="text" class="form-control" placeholder="Address" />
-        <div class="btn btn-primary rounded" @click="searchActive = false">
-          <i class="bi bi-search"></i>
+    <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2 shadow-sm" :class="searchActive ? 'active' : false">
+      <div class="row g-2">
+        <div class="col-12 col-sm">
+          <input
+            type="text"
+            class="form-control"
+            @click="activateSearch()"
+            placeholder="Find something..."
+            id="query"
+            :value="$store.state.search.query"
+            @input="(e) => (query = e.target.value)"
+          />
+        </div>
+        <div class="col-9 col-sm">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Address"
+            ref="searchLoc"
+            :value="$store.state.search.placeValue"
+            @input="(e) => (placeValue = e.target.value)"
+          />
+        </div>
+        <div class="col-3 col-sm-2">
+          <div class="btn btn-primary rounded w-100" @click="goSearch()">
+            <i class="bi bi-search"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -35,11 +56,23 @@ export default {
     return {
       prevPosY: 0,
       searchActive: false,
+      query: undefined,
+      place: undefined,
+      placeValue: undefined,
     };
   },
 
   mounted() {
     window.addEventListener("scroll", this.aosHeader);
+
+    var input = this.$refs["searchLoc"];
+    const autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.addListener("place_changed", () => {
+      this.place = autocomplete.getPlace();
+    });
+
+    autocomplete.setFields(["address_components", "geometry", "name"]); // to do
   },
 
   beforeDestroy() {
@@ -59,35 +92,69 @@ export default {
     },
     aosHeader() {
       let header = this.$refs["header"];
-      let headerHeight = header.offsetHeight;
 
-      // make header transparent only on top of hero on homepage
-      if (this.$route.path === "/" && window.scrollY <= window.innerHeight - headerHeight) {
-        header.classList.add("header--transparent");
-        header.classList.remove("header--white");
-      } else {
-        header.classList.add("header--white");
-        header.classList.remove("header--transparent");
+      if (header) {
+        let scrollY = window.pageYOffset;
+        let direction = scrollY > this.prevPosY ? "down" : "up";
+
+        if (direction === "down" && scrollY > 0 && !header.classList.contains("move-up")) {
+          header.classList.remove("move-down");
+          header.classList.add("move-up");
+        }
+
+        if (direction === "up" && !header.classList.contains("move-down")) {
+          header.classList.remove("move-up");
+          header.classList.add("move-down");
+        }
+
+        // update previous scroll positon
+        this.prevPosY = window.scrollY;
       }
+    },
+
+    goSearch() {
+      if (this.query) {
+        this.$store.commit("search/setQuery", this.query);
+      }
+      if (this.place) {
+        this.$store.commit("search/setPlace", this.place);
+      }
+      this.placeValue = this.$refs["searchLoc"].value;
+      if (this.placeValue) {
+        this.$store.commit("search/setPlaceValue", this.placeValue);
+      }
+      this.searchActive = false; // hide search form
+      let newPath = "/app/search";
+
+      // the HASH forces page refresh (in most cases)
+      // it does not affect the results!!!!!!!
+      this.$router.push({ path: newPath, hash: "#" + this.query + "-in-" + this.place["name"].toLowerCase() });
     },
 
     activateSearch() {
       this.searchActive = true;
-
-      let field = document.getElementById("query"); //this.$refs["query"]; // document.getElementById("query");
-
+      let field = this.$refs["query"]; // document.getElementById("query");
       window.setTimeout(() => field.focus(), 0);
-
-      console.log("heh!");
     },
   },
 };
 </script>
 <style lang="scss" scoped>
+.move-up {
+  transform: translateY(-100%);
+}
+
+.move-down {
+  transform: translateY(0);
+}
+
 .header {
   background-color: #fff;
-  box-shadow: 0 0.125rem 0.25rem rgba(#000, 0.075);
+  // box-shadow: 0 0.125rem 0.25rem rgba(#000, 0.075);
   border-bottom: 1px solid rgba(#000, 0.175);
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+  z-index: 20 !important;
 }
 
 .searchbar {
@@ -109,15 +176,6 @@ export default {
     font-size: 1.75rem;
     color: $primary;
     transform: scaleX(-1);
-  }
-}
-
-.btn-search {
-  i {
-    &::before {
-      transform: scaleX(-1);
-      font-size: 1.5rem;
-    }
   }
 }
 

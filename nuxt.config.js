@@ -23,6 +23,14 @@ export default {
       { hid: "og:image", property: "og:image", content: "https://heather.codesparks.nl/ogImage.png" },
       { name: "format-detection", content: "telephone=no" },
     ],
+    script: [
+      {
+        hid: "gmap",
+        src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAE_N9EHsQ5QvJ-ZyaBBlaWJW2K5lYNznA&libraries=places",
+        defer: true,
+        async: true,
+      },
+    ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
   },
 

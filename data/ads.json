@@ -2,7 +2,7 @@
   {
     "id": 0,
     "title": "Drill",
-    "visuals": ["dummy-drill.png", "dummy-drill.png"],
+    "visuals": ["drill.avif", "dummy-drill.png"],
     "type": "borrow",
     "available": true,
     "owner": 0,
