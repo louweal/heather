@@ -30,6 +30,7 @@ $aos-distance: 16px; // It has to be above import
 
 @import "@/assets/css/_transitions"; // vue page transitions
 @import "@/assets/css/_animations";
+@import "@/assets/css/_utilities";
 
 body {
   width: 100%;
@@ -40,6 +41,10 @@ body {
     overflow-y: hidden;
     position: fixed;
   }
+}
+
+button {
+  border-width: 0;
 }
 
 section {

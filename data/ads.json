@@ -1,0 +1,18 @@
+[
+  {
+    "id": 0,
+    "title": "Drill",
+    "visuals": ["dummy-drill.png", "dummy-drill.png"],
+    "type": "borrow",
+    "available": true,
+    "owner": 0
+  },
+  {
+    "id": 1,
+    "title": "Suitcase",
+    "visuals": ["dummy-drill.png", "dummy-drill.png"],
+    "type": "rent",
+    "available": true,
+    "owner": 1
+  }
+]
