@@ -9,7 +9,7 @@
       />
 
       <div @click="$store.commit('pushmenu/toggle')">
-        <i class="bi lh-1" style="font-size: 38px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
+        <i class="bi lh-1 text-primary" style="font-size: 44px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
       </div>
     </div>
 
