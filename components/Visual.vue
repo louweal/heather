@@ -1,5 +1,5 @@
 <template>
-  <div class="ratio ratio-4x3">
+  <div class="ratio" :class="`ratio-${ratio}`">
     <component :is="data.visual ? 'img' : 'div'" :src="data.visual || false" :alt="data.visual ? data.name : false" class="visual" />
   </div>
 </template>
@@ -10,6 +10,10 @@ export default {
     data: {
       type: Object,
       default: {},
+    },
+    ratio: {
+      type: String,
+      default: "4x3",
     },
   },
 };

@@ -3,6 +3,13 @@
     <visual :data="{ visual: require(`/assets/images/${data.visuals[0]}`), name: data.title }" />
     <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
+
+      <p v-if="data.available">
+        To {{ data.type }}
+
+        <span v-if="data.type === 'rent' && data.rent" class="opacity-50">€{{ data.rent.start }}</span>
+      </p>
+      <p v-else>Not available</p>
     </nuxt-link>
 
     <div class="card-footer">
