@@ -8,7 +8,7 @@
 
     <div class="card-footer">
       <div class="d-flex gap-2 align-items-center">
-        <div class="bg-light p-1 px-2 rounded-circle">A</div>
+        <div class="bg-light p-2 rounded-circle lh-1"><i class="bi bi-chat-text-fill"></i></div>
         <div>
           <div class="lh-1">Anneloes</div>
           <div class="lh-sm">Leiden <span class="text-muted fw-medium">1.7km</span></div>
