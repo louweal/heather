@@ -45,7 +45,7 @@ $btn-padding-x: 1.4rem;
 $btn-font-weight: 500;
 
 // forms
-$input-btn-focus-box-shadow: none;
+// $input-btn-focus-box-shadow: none;
 $input-btn-padding-y: 0.7rem;
 $input-btn-padding-x: 1.4rem;
 
@@ -64,3 +64,5 @@ $spacers: (
 $link-decoration: none;
 
 $border-radius: 1rem;
+
+$input-btn-focus-width: 0; // no ugly border around inputs

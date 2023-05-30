@@ -1,7 +1,6 @@
 <template>
   <main :key="$store.state.search.placeValue">
-    <google-map :class="$store.state.map.show ? 'd-block' : 'd-none d-md-block'" :zoom="zoom" v-if="zoom" />
-
+    <google-map :class="$store.state.map.show ? 'd-block' : 'd-none d-md-block'" :zoom="zoom" :results="results" />
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -12,9 +11,11 @@
                   <span>Distance:</span>
 
                   <select class="form-select" aria-label="select distance" v-model="maxDistance">
-                    <option value="1" selected>1 km</option>
-                    <option value="2">2 km</option>
-                    <option value="3">3 km</option>
+                    <option :value="1" selected>1 km</option>
+                    <option :value="2">2 km</option>
+                    <option :value="3">3 km</option>
+                    <option :value="6">6 km</option>
+                    <option :value="12">12 km</option>
                   </select>
                 </div>
               </div>
@@ -24,7 +25,7 @@
               <p>
                 {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
                 <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
-                ><span class="text-primary">for {{ this.$store.state.search.query }}</span> in
+                ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
                 <span class="opacity-75">{{ this.$store.state.search.placeValue }}</span> (+{{ maxDistance }} km).
                 <span v-if="results.length === 0"> Try to increase your search area.</span>
               </p>
@@ -51,9 +52,7 @@
       <div class="btn btn-primary" v-if="!$store.state.map.show" @click="$store.commit('map/toggle')">
         <i class="bi bi-geo-alt-fill"></i> Map
       </div>
-      <div class="btn btn-primary" v-if="$store.state.map.show" @click="$store.commit('map/toggle')">
-        <i class="bi bi-grid"></i> List
-      </div>
+      <div class="btn btn-primary" v-if="$store.state.map.show" @click="$store.commit('map/toggle')"><i class="bi bi-grid"></i> List</div>
     </div>
 
     <modal name="request" title="">
@@ -66,37 +65,31 @@
 export default {
   data() {
     return {
-      maxDistance: 5, // 1 km
+      maxDistance: 1, // 1 km
       results: [],
-      zoom: false,
+      zoom: 16,
+      renderMap: true,
     };
   },
 
   created() {
-    this.results = this.filterData();
+    this.results = this.filterData(this.maxDistance);
   },
 
   watch: {
-    maxDistance: {
-      immediate: true, //  ?
-      handler(distInKM) {
-        this.zoom = false;
-        this.results = this.filterData();
-        // set maxDistance in store
-        // this.$store.commit("search/setMaxDistance", distInKM);
-
-        console.log("set zoom...");
-        let newZoom = Math.log2(40000 / (distInKM / 2));
-        this.zoom = Math.round(newZoom);
-
-        console.log(this.zoom);
-      },
-      "$store.state.search.query": function () {
-        this.results = this.filterData();
-      },
-      "$store.state.search.placeValue": function () {
-        this.results = this.filterData();
-      },
+    maxDistance: function (newDistance) {
+      this.results = this.filterData(); // uses new maxDistance value to refilter
+      console.log("Num results: " + this.results.length);
+      let newZoom = Math.log2(40000 / (newDistance / 1));
+      // let lat = this.$store.state.search.place.geometry.location.lat();
+      // let newZoom = Math.log2((38000 * Math.cos((lat * Math.PI) / 180)) / distInKM) + 3;
+      this.zoom = newZoom;
+    },
+    "$store.state.search.query": function () {
+      this.results = this.filterData();
+    },
+    "$store.state.search.placeValue": function () {
+      this.results = this.filterData();
     },
   },
 
@@ -109,7 +102,7 @@ export default {
 
       // filter to local results only
       if (place) {
-        results = this.$store.state.data.ads.filter((a) => a.distance < this.maxDistance);
+        results = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
       } else {
         console.log("Error: unknown search location");
         return [];
@@ -125,4 +118,5 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped></style>

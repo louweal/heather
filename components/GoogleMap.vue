@@ -1,16 +1,16 @@
 <template>
-  <div class="map-container" :key="zoom">
+  <div class="map-container">
     <div id="map" ref="map" class="map ml-md-1"></div>
 
     <div
-      :class="marker.show ? 'map-info--active' : false"
+      :class="markerInfo.show ? 'map-info--active' : false"
       class="card shadow-sm map-info position-absolute start-50 translate-middle-x top-0"
       style="z-index: 5; margin-top: 100px"
     >
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
-          <nuxt-link :to="'/app/detail/' + marker.id">
-            <h3 class="mb-0 fs-5">{{ marker.title }}</h3>
+          <nuxt-link :to="'/app/detail/' + markerInfo.id">
+            <h3 class="mb-0 fs-5">{{ markerInfo.title }}</h3>
           </nuxt-link>
 
           <button class="bg-light rounded rounded-circle p-1 lh-1" @click="hideInfo()">
@@ -18,10 +18,10 @@
           </button>
         </div>
 
-        <p v-if="marker.available">
-          To {{ marker.type }}
+        <p v-if="markerInfo.available">
+          To {{ markerInfo.type }}
 
-          <span v-if="marker.type === 'rent' && marker.rent" class="opacity-50">€{{ marker.rent.start }}</span>
+          <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">€{{ markerInfo.rent.start }}</span>
         </p>
         <p v-else>Not available</p>
       </div>
@@ -29,11 +29,11 @@
         <div class="d-flex gap-2 align-items-center">
           <button
             class="bg-light p-2 rounded-circle lh-1 text-white"
-            @click="$store.commit('modals/show', { name: 'request', data: marker })"
+            @click="$store.commit('modals/show', { name: 'request', data: markerInfo })"
           >
             <i class="bi bi-chat-text-fill"></i>
           </button>
-          <div>{{ marker.name }}</div>
+          <div>{{ markerInfo.name }}</div>
         </div>
       </div>
     </div>
@@ -44,20 +44,13 @@
 export default {
   data() {
     return {
-      // map: false,
-      markers: [],
-      marker: { show: false },
+      markerInfo: { show: false },
+      gmapmarkers: [],
     };
   },
 
   mounted() {
-    console.log("map mounted");
     this.initMap();
-  },
-
-  beforeDestroy() {
-    console.log("map destroy");
-    this.$map = undefined;
   },
 
   props: {
@@ -65,52 +58,78 @@ export default {
       type: Number,
       default: 16,
     },
+    results: {
+      type: [Array, Object],
+      default: () => {},
+    },
+  },
+
+  watch: {
+    zoom: function (val) {
+      this.$map.setZoom(val);
+    },
+    results: {
+      deep: true,
+      handler(n, o) {
+        const objectsEqual = (o1, o2) => Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every((p) => o1[p] === o2[p]);
+        if (!objectsEqual(o, n)) {
+          // remove the old markers
+          for (let i = 0; i < this.gmapmarkers.length; i++) {
+            this.gmapmarkers[i].setMap(null);
+          }
+          this.gmapmarkers = [];
+          this.setMarkers(n); // place new markers
+        }
+      },
+    },
   },
 
   computed: {},
 
   methods: {
     hideInfo() {
-      this.marker.show = false;
+      this.markerInfo.show = false;
     },
+
+    getCenter() {
+      if (this.$store.state.search.place) {
+        let place = this.$store.state.search.place;
+        return { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+      }
+      return this.$store.state.defaultLoc;
+    },
+
     async initMap() {
       console.log("initmap");
-      // copy all ads to markers
-      this.markers = [...this.$store.state.data.ads];
-      // add owner data (location and name) to markers
-      this.markers.forEach(
-        (a) => (a["location"] = this.$store.state.data.owners.find((o) => o.id === a.owner).location)
-      );
-      this.markers.forEach((a) => (a["name"] = this.$store.state.data.owners.find((o) => o.id === a.owner).name));
-      this.markers.sort((a, b) => (a.available > b.available ? -1 : 1));
-
-      console.log(this.markers.length);
 
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
 
-      let center = this.$store.state.defaultLoc;
-      if (this.$store.state.search.place) {
-        let place = this.$store.state.search.place;
-        center = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
-      }
-
       this.$map = new Map(this.$refs["map"], {
         zoom: this.zoom,
-        center: center,
+        center: this.getCenter(),
         mapId: "f7886dcdb440711",
         disableDefaultUI: true,
       });
 
+      this.setMarkers(this.results);
+
+      // google.maps.event.addListener(this.$map, "click", function (event) {
+      //   this.markerInfo.show = false; // hides marker info when clicking on map
+      // });
+    },
+
+    setMarkers(markers) {
       const iconBase = "https://heather.codesparks.nl/";
       const pins = {
         primary: iconBase + "pin-primary.svg",
         secondary: iconBase + "pin-secondary.svg",
         grey: iconBase + "pin-grey.svg",
       };
+      // copy all results to markers
 
-      for (let i = 0; i < this.markers.length; i++) {
-        let m = this.markers[i];
+      for (let i = 0; i < markers.length; i++) {
+        let m = markers[i];
 
         const marker = new google.maps.Marker({
           map: this.$map,
@@ -119,34 +138,36 @@ export default {
           icon: m.available ? pins.primary : pins.grey,
         });
 
+        this.gmapmarkers.push(marker);
+
         google.maps.event.addListener(
           marker,
           "click",
           ((marker) => {
             return () => {
-              this.marker = { show: false };
-
-              this.marker["available"] = m.available;
-              this.marker["title"] = m.title;
-              this.marker["type"] = m.type;
-              this.marker["visual"] = m.visuals[0];
-
-              if (m.type === "rent") {
-                this.marker["rent"] = m.rent;
-              }
-              this.marker["name"] = m.name;
-              this.marker["id"] = m.id;
-              this.marker.show = true;
-
+              this.setCurrentMarker(m); // sets data in info box
               this.$map.panTo(marker.getPosition());
             };
           })(marker)
         );
       }
 
-      google.maps.event.addListener(this.$map, "click", function (event) {
-        this.marker.show = false;
-      });
+      console.log("Num markers:" + this.gmapmarkers.length);
+    },
+
+    setCurrentMarker(m) {
+      // sets data in info box
+      this.markerInfo = { show: false };
+      this.markerInfo["available"] = m.available;
+      this.markerInfo["title"] = m.title;
+      this.markerInfo["type"] = m.type;
+      this.markerInfo["visual"] = m.visuals[0];
+      if (m.type === "rent") {
+        this.markerInfo["rent"] = m.rent;
+      }
+      this.markerInfo["name"] = m.name;
+      this.markerInfo["id"] = m.id;
+      this.markerInfo.show = true;
     },
   },
 };
