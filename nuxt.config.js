@@ -26,7 +26,7 @@ export default {
     script: [
       {
         hid: "gmap",
-        src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAE_N9EHsQ5QvJ-ZyaBBlaWJW2K5lYNznA&libraries=places",
+        src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAE_N9EHsQ5QvJ-ZyaBBlaWJW2K5lYNznA&libraries=geometry,places",
         defer: true,
         async: true,
       },

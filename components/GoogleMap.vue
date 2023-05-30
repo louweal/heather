@@ -1,6 +1,6 @@
 <template>
-  <div class="map-container">
-    <div id="map" ref="map" class="map"></div>
+  <div class="map-container" :key="zoom">
+    <div id="map" ref="map" class="map ml-md-1"></div>
 
     <div
       :class="marker.show ? 'map-info--active' : false"
@@ -44,22 +44,27 @@
 export default {
   data() {
     return {
-      map: false,
+      // map: false,
       markers: [],
-      content: "bdfdfdflb",
       marker: { show: false },
     };
   },
 
   mounted() {
+    console.log("map mounted");
     this.initMap();
+  },
 
-    // copy all ads to markers
-    this.markers = [...this.$store.state.data.ads];
-    // add owner data (position and name) to markers
-    this.markers.forEach((a) => (a["position"] = this.$store.state.data.owners.find((o) => o.id === a.owner).position));
-    this.markers.forEach((a) => (a["name"] = this.$store.state.data.owners.find((o) => o.id === a.owner).name));
-    this.markers.sort((a, b) => (a.available > b.available ? 1 : -1));
+  beforeDestroy() {
+    console.log("map destroy");
+    this.$map = undefined;
+  },
+
+  props: {
+    zoom: {
+      type: Number,
+      default: 16,
+    },
   },
 
   computed: {},
@@ -69,12 +74,30 @@ export default {
       this.marker.show = false;
     },
     async initMap() {
+      console.log("initmap");
+      // copy all ads to markers
+      this.markers = [...this.$store.state.data.ads];
+      // add owner data (location and name) to markers
+      this.markers.forEach(
+        (a) => (a["location"] = this.$store.state.data.owners.find((o) => o.id === a.owner).location)
+      );
+      this.markers.forEach((a) => (a["name"] = this.$store.state.data.owners.find((o) => o.id === a.owner).name));
+      this.markers.sort((a, b) => (a.available > b.available ? -1 : 1));
+
+      console.log(this.markers.length);
+
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
 
-      this.map = new Map(this.$refs["map"], {
-        zoom: 16,
-        center: { lat: 52.16869, lng: 4.47094 }, // to do
+      let center = this.$store.state.defaultLoc;
+      if (this.$store.state.search.place) {
+        let place = this.$store.state.search.place;
+        center = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+      }
+
+      this.$map = new Map(this.$refs["map"], {
+        zoom: this.zoom,
+        center: center,
         mapId: "f7886dcdb440711",
         disableDefaultUI: true,
       });
@@ -90,8 +113,8 @@ export default {
         let m = this.markers[i];
 
         const marker = new google.maps.Marker({
-          map: this.map,
-          position: m.position,
+          map: this.$map,
+          position: m.location,
           title: m.title,
           icon: m.available ? pins.primary : pins.grey,
         });
@@ -115,13 +138,13 @@ export default {
               this.marker["id"] = m.id;
               this.marker.show = true;
 
-              this.map.panTo(marker.getPosition());
+              this.$map.panTo(marker.getPosition());
             };
           })(marker)
         );
       }
 
-      google.maps.event.addListener(this.map, "click", function (event) {
+      google.maps.event.addListener(this.$map, "click", function (event) {
         this.marker.show = false;
       });
     },
@@ -152,9 +175,9 @@ export default {
 .map {
   min-height: 100vh;
 
-  @include media-breakpoint-up(md) {
-    margin-left: 1.6rem;
-  }
+  // @include media-breakpoint-up(md) {
+  //   margin-left: 1.6rem;
+  // }
 
   &-info {
     opacity: 0;

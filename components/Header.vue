@@ -10,23 +10,28 @@
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
-        <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">Sign in / Register</div>
+        <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">
+          Sign in / Register
+        </div>
         <div class="d-lg-none" @click="$store.commit('pushmenu/toggle')">
-          <i class="bi lh-1 text-primary" style="font-size: 44px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
+          <i
+            class="bi lh-1 text-primary"
+            style="font-size: 44px"
+            :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"
+          ></i>
         </div>
       </div>
     </div>
 
-    <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2 shadow-sm" :class="searchActive ? 'active' : false">
+    <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
       <div class="row g-2">
         <div class="col-12 col-sm">
           <input
             type="text"
             class="form-control"
-            @click="activateSearch()"
             placeholder="Find something..."
-            id="query"
-            :value="$store.state.search.query"
+            ref="query"
+            xxxvalue="$store.state.search.query"
             @input="(e) => (query = e.target.value)"
           />
         </div>
@@ -34,9 +39,10 @@
           <input
             type="text"
             class="form-control"
+            :class="missingInput && !this.placeValue ? 'border-danger' : false"
             placeholder="Address"
             ref="searchLoc"
-            :value="$store.state.search.placeValue"
+            xxxvalue="$store.state.search.placeValue"
             @input="(e) => (placeValue = e.target.value)"
           />
         </div>
@@ -59,6 +65,7 @@ export default {
       query: undefined,
       place: undefined,
       placeValue: undefined,
+      missingInput: false,
     };
   },
 
@@ -113,22 +120,53 @@ export default {
     },
 
     goSearch() {
-      if (this.query) {
-        this.$store.commit("search/setQuery", this.query);
+      if (!this.place) {
+        this.missingInput = true;
+        return;
       }
+
+      this.missingInput = false;
+
+      this.$store.commit("search/setQuery", this.query === "" ? undefined : this.query);
+
       if (this.place) {
         this.$store.commit("search/setPlace", this.place);
       }
       this.placeValue = this.$refs["searchLoc"].value;
+
+      let prevPlaceValue = this.$store.state.search.placeValue;
       if (this.placeValue) {
         this.$store.commit("search/setPlaceValue", this.placeValue);
       }
       this.searchActive = false; // hide search form
       let newPath = "/app/search";
 
-      // the HASH forces page refresh (in most cases)
-      // it does not affect the results!!!!!!!
-      this.$router.push({ path: newPath, hash: "#" + this.query + "-in-" + this.place["name"].toLowerCase() });
+      // location changed
+      if (prevPlaceValue !== this.placeValue) {
+        // update ad distance data in store
+
+        let center;
+        if (this.place) {
+          let lat = this.place.geometry.location.lat();
+          let lng = this.place.geometry.location.lng();
+          let searchLocation = new google.maps.LatLng(lat, lng);
+          center = searchLocation;
+        } else {
+          // use default
+          center = this.$store.state.defaultLoc;
+        }
+
+        this.$store.commit("data/updateDistance", center);
+      }
+
+      this.$router.push({
+        path: newPath,
+        force: true,
+      });
+
+      this.$forceUpdate();
+
+      // google.maps.event.trigger(this.$map, "resize");
     },
 
     activateSearch() {
@@ -189,9 +227,11 @@ export default {
   opacity: 0.2;
   visibility: hidden;
   transition: opacity 0.9s 0.1s cubic-bezier(0.2, 0, 0.1, 1);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
   @include media-breakpoint-up(lg) {
     width: auto;
+    box-shadow: none;
   }
 }
 </style>

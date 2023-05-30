@@ -14,12 +14,17 @@
 
     <div class="card-footer">
       <div class="d-flex gap-2 align-items-center">
-        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'request', data: data })">
+        <button
+          class="bg-light p-2 rounded-circle lh-1 text-white"
+          @click="$store.commit('modals/show', { name: 'request', data: data })"
+        >
           <i class="bi bi-chat-text-fill"></i>
         </button>
         <div>
           <div class="lh-1">{{ data.name }}</div>
-          <div class="lh-sm">Leiden <span class="text-muted fw-medium">1.7km</span></div>
+          <div class="lh-sm" v-if="data.distance">
+            Leiden <span class="text-muted fw-medium"> {{ data.distance }} km</span>
+          </div>
         </div>
       </div>
     </div>

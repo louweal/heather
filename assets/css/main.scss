@@ -19,6 +19,7 @@ $aos-distance: 16px; // It has to be above import
 @import "@/node_modules/bootstrap/scss/forms";
 @import "@/node_modules/bootstrap/scss/type"; // list
 @import "@/node_modules/bootstrap/scss/card";
+// @import "@/node_modules/bootstrap/scss/dropdown";
 
 // Helpers
 @import "@/node_modules/bootstrap/scss/helpers/position";
@@ -48,5 +49,5 @@ button {
 }
 
 section {
-  @extend .py-4;
+  @extend .py-2;
 }

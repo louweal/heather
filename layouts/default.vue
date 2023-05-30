@@ -38,6 +38,7 @@ export default {
 
     this.$store.commit("data/SET_ADS", this.$options.ads);
   },
+
   async mounted() {
     let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     let pushdown = document.querySelector("#pushdown"); // refs?

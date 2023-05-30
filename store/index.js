@@ -1,7 +1,5 @@
 export const state = () => ({
-  user: {
-    name: "",
-  },
+  defaultLoc: { lat: 52.16869, lng: 4.47094 },
 });
 
 export const mutations = {};
