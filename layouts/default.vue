@@ -15,6 +15,22 @@
     <modal name="connect" title="Connect">
       <modal-connect />
     </modal>
+
+    <modal name="register" title="Welcome to Heather!">
+      <modal-register />
+    </modal>
+
+    <modal name="request" title="Send request">
+      <modal-request />
+    </modal>
+
+    <modal name="create" title="Add item">
+      <modal-create />
+    </modal>
+
+    <modal name="call" title="Place a call">
+      <modal-call />
+    </modal>
     <pushmenu />
     <notice v-if="$store.state.notice.active"> </notice>
   </div>
@@ -23,10 +39,12 @@
 <script>
 import owners from "@/data/owners";
 import ads from "@/data/ads";
+import calls from "@/data/calls";
 
 export default {
   owners,
   ads,
+  calls,
 
   transition: {
     name: "page",
@@ -37,6 +55,8 @@ export default {
     this.$store.commit("data/SET_OWNERS", this.$options.owners);
 
     this.$store.commit("data/SET_ADS", this.$options.ads);
+    this.$store.commit("data/SET_CALLS", this.$options.calls);
+    this.$store.commit("data/SET_BOTH"); // combine ads and calls
   },
 
   async mounted() {

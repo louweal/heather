@@ -10,15 +10,15 @@
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
-        <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">
-          Sign in / Register
+        <div class="d-none d-md-block gap-2">
+          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'call' })">Place call</div>
+
+          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'create' })">+</div>
         </div>
+
+        <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">Sign in / Register</div>
         <div class="d-lg-none" @click="$store.commit('pushmenu/toggle')">
-          <i
-            class="bi lh-1 text-primary"
-            style="font-size: 44px"
-            :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"
-          ></i>
+          <i class="bi lh-1 text-primary" style="font-size: 44px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
         </div>
       </div>
     </div>
@@ -26,14 +26,7 @@
     <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
       <div class="row g-2">
         <div class="col-12 col-sm">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Find something..."
-            ref="query"
-            xxxvalue="$store.state.search.query"
-            @input="(e) => (query = e.target.value)"
-          />
+          <input type="text" class="form-control" placeholder="Find something..." ref="query" @input="(e) => (query = e.target.value)" />
         </div>
         <div class="col-9 col-sm">
           <input
@@ -42,7 +35,6 @@
             :class="missingInput && !this.placeValue ? 'border-danger' : false"
             placeholder="Address"
             ref="searchLoc"
-            xxxvalue="$store.state.search.placeValue"
             @input="(e) => (placeValue = e.target.value)"
           />
         </div>
@@ -192,7 +184,7 @@ export default {
   border-bottom: 1px solid rgba(#000, 0.175);
   transition: transform 0.4s ease-in-out;
   will-change: transform;
-  z-index: 20 !important;
+  z-index: 4 !important;
 }
 
 .searchbar {

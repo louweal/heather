@@ -29,15 +29,20 @@
                 <span class="opacity-75">{{ this.$store.state.search.placeValue }}</span> (+{{ maxDistance }} km).
                 <span v-if="results.length === 0"> Try to increase your search area.</span>
               </p>
+
+              <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
             </template>
 
             <template v-else>
               <p>Please use the search bar above to find items in your neighborhood.</p>
+
+              <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
             </template>
 
             <div class="row gy-3">
               <div class="col-12 col-sm-6 col-xxl-3" v-for="a in results" :key="a.id">
-                <card-ad :data="a" />
+                <card-call v-if="a.type === 'call'" :data="a" />
+                <card-ad v-else :data="a" />
               </div>
             </div>
           </div>
@@ -54,10 +59,6 @@
       </div>
       <div class="btn btn-primary" v-if="$store.state.map.show" @click="$store.commit('map/toggle')"><i class="bi bi-grid"></i> List</div>
     </div>
-
-    <modal name="request" title="">
-      <modal-request />
-    </modal>
   </main>
 </template>
 
@@ -65,7 +66,7 @@
 export default {
   data() {
     return {
-      maxDistance: 1, // 1 km
+      maxDistance: 12, // 1 km
       results: [],
       zoom: 16,
       renderMap: true,
@@ -81,8 +82,6 @@ export default {
       this.results = this.filterData(); // uses new maxDistance value to refilter
       console.log("Num results: " + this.results.length);
       let newZoom = Math.log2(40000 / (newDistance / 1));
-      // let lat = this.$store.state.search.place.geometry.location.lat();
-      // let newZoom = Math.log2((38000 * Math.cos((lat * Math.PI) / 180)) / distInKM) + 3;
       this.zoom = newZoom;
     },
     "$store.state.search.query": function () {
@@ -94,15 +93,28 @@ export default {
   },
 
   methods: {
+    explore() {
+      this.$store.commit("search/setPlace");
+
+      this.$router.push({
+        path: newPath,
+        force: true,
+      });
+
+      this.$forceUpdate();
+    },
     filterData() {
       let query = this.$store.state.search.query;
       let place = this.$store.state.search.place;
 
       let results;
 
+      console.log(this.$store.state.data.both);
+
       // filter to local results only
       if (place) {
-        results = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
+        results = this.$store.state.data.both.filter((a) => a.distance <= this.maxDistance);
+        console.log(results.length);
       } else {
         console.log("Error: unknown search location");
         return [];

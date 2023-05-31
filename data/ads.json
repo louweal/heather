@@ -6,14 +6,14 @@
     "visuals": ["drill.avif", "dummy-drill.png"],
     "type": "borrow",
     "available": true,
-    "owner": 0,
+    "owner": 3,
     "date": 1685366941
   },
   {
     "id": 1,
     "title": "Suitcase",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non earum nulla soluta voluptatibus voluptatum aliquam dolore iure assumenda, labore natus libero aut, consectetur debitis tempore, incidunt cum deleniti doloribus. Illo?",
-    "visuals": ["dummy-drill.png", "dummy-drill.png"],
+    "visuals": ["rolmaat.jpg", "dummy-drill.png"],
     "type": "rent",
     "deposit": false,
     "rent": {
@@ -21,7 +21,7 @@
       "extra": "0.07"
     },
     "available": true,
-    "owner": 1,
+    "owner": 4,
     "date": 1685366941
   },
   {

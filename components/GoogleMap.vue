@@ -78,7 +78,8 @@ export default {
             this.gmapmarkers[i].setMap(null);
           }
           this.gmapmarkers = [];
-          this.setMarkers(n); // place new markers
+          this.setCallMarkers(n.filter((i) => i.type === "call"));
+          this.setAdMarkers(n.filter((i) => i.type !== "call"));
         }
       },
     },
@@ -112,14 +113,45 @@ export default {
         disableDefaultUI: true,
       });
 
-      this.setMarkers(this.results);
+      this.setCallMarkers(this.results.filter((i) => i.type === "call"));
+      this.setAdMarkers(this.results.filter((i) => i.type !== "call"));
 
       // google.maps.event.addListener(this.$map, "click", function (event) {
       //   this.markerInfo.show = false; // hides marker info when clicking on map
       // });
     },
 
-    setMarkers(markers) {
+    setCallMarkers(markers) {
+      // copy all results to markers
+
+      for (let i = 0; i < markers.length; i++) {
+        let m = markers[i];
+
+        const marker = new google.maps.Marker({
+          map: this.$map,
+          position: m.location,
+          title: m.title,
+          icon: "https://heather.codesparks.nl/pin-secondary.svg",
+        });
+
+        this.gmapmarkers.push(marker);
+
+        google.maps.event.addListener(
+          marker,
+          "click",
+          ((marker) => {
+            return () => {
+              this.setCallMarkerInfo(m); // sets data in info box
+              // this.$map.panTo(marker.getPosition());
+            };
+          })(marker)
+        );
+      }
+
+      console.log("Num call markers:" + this.gmapmarkers.length);
+    },
+
+    setAdMarkers(markers) {
       const iconBase = "https://heather.codesparks.nl/";
       const pins = {
         primary: iconBase + "pin-primary.svg",
@@ -145,17 +177,17 @@ export default {
           "click",
           ((marker) => {
             return () => {
-              this.setCurrentMarker(m); // sets data in info box
-              this.$map.panTo(marker.getPosition());
+              this.setAdMarkerInfo(m); // sets data in info box
+              // this.$map.panTo(marker.getPosition());
             };
           })(marker)
         );
       }
 
-      console.log("Num markers:" + this.gmapmarkers.length);
+      console.log("Num ad markers:" + this.gmapmarkers.length);
     },
 
-    setCurrentMarker(m) {
+    setAdMarkerInfo(m) {
       // sets data in info box
       this.markerInfo = { show: false };
       this.markerInfo["available"] = m.available;
@@ -166,6 +198,16 @@ export default {
         this.markerInfo["rent"] = m.rent;
       }
       this.markerInfo["name"] = m.name;
+      this.markerInfo["id"] = m.id;
+      this.markerInfo.show = true;
+    },
+
+    setCallMarkerInfo(m) {
+      // sets data in info box
+      this.markerInfo = { show: false };
+      this.markerInfo["title"] = m.title;
+      this.markerInfo["name"] = m.name;
+      this.markerInfo["description"] = m.description;
       this.markerInfo["id"] = m.id;
       this.markerInfo.show = true;
     },
@@ -196,18 +238,16 @@ export default {
 .map {
   min-height: 100vh;
 
-  // @include media-breakpoint-up(md) {
-  //   margin-left: 1.6rem;
-  // }
-
   &-info {
     opacity: 0;
+    visibility: hidden;
     transition: opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1);
     min-width: 270px;
     min-height: 100px;
 
     &--active {
       opacity: 1 !important;
+      visibility: visible;
     }
   }
 }

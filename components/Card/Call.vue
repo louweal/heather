@@ -10,13 +10,13 @@
 
     <div class="card-footer">
       <div class="d-flex gap-2 align-items-center">
-        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'reply', data: data })">
+        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'create', data: data })">
           <i class="bi bi-chat-text-fill"></i>
         </button>
         <div>
           <div class="lh-1">{{ data.name }}</div>
           <div class="lh-sm">
-            {{ data.location.public }} <span class="text-muted fw-medium" v-if="data.distance"> {{ data.distance }} km</span>
+            {{ data.location.public }} <span class="opacity-75 fw-medium" v-if="data.distance"> {{ data.distance }} km</span>
           </div>
         </div>
       </div>
