@@ -1,20 +1,23 @@
 <template>
   <div class="card bg-secondary text-white">
     <div class="card-body">
-      <h5 class="card-title text-white">Party tent</h5>
+      <h5 class="card-title text-white">{{ data.title }}</h5>
 
       <p>
-        Hi, I'm looking to borrow or rent a party tent on the 24th of July because I'm giving a birthday party. Lorem uipsum to get 140
-        characters.
+        {{ data.description }}
       </p>
     </div>
 
     <div class="card-footer">
       <div class="d-flex gap-2 align-items-center">
-        <div class="bg-light p-1 px-2 rounded-circle">A</div>
+        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'reply', data: data })">
+          <i class="bi bi-chat-text-fill"></i>
+        </button>
         <div>
-          <div class="lh-1">Anneloes</div>
-          <div class="lh-sm">Leiden <span class="opacity-50">1.7km</span></div>
+          <div class="lh-1">{{ data.name }}</div>
+          <div class="lh-sm">
+            {{ data.location.public }} <span class="text-muted fw-medium" v-if="data.distance"> {{ data.distance }} km</span>
+          </div>
         </div>
       </div>
     </div>

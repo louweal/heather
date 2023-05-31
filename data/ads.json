@@ -2,6 +2,7 @@
   {
     "id": 0,
     "title": "Drill",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non earum nulla soluta voluptatibus voluptatum aliquam dolore iure assumenda, labore natus libero aut, consectetur debitis tempore, incidunt cum deleniti doloribus. Illo?",
     "visuals": ["drill.avif", "dummy-drill.png"],
     "type": "borrow",
     "available": true,
@@ -11,6 +12,7 @@
   {
     "id": 1,
     "title": "Suitcase",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non earum nulla soluta voluptatibus voluptatum aliquam dolore iure assumenda, labore natus libero aut, consectetur debitis tempore, incidunt cum deleniti doloribus. Illo?",
     "visuals": ["dummy-drill.png", "dummy-drill.png"],
     "type": "rent",
     "deposit": false,
@@ -25,10 +27,11 @@
   {
     "id": 2,
     "title": "Sleeping bag",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non earum nulla soluta voluptatibus voluptatum aliquam dolore iure assumenda, labore natus libero aut, consectetur debitis tempore, incidunt cum deleniti doloribus. Illo?",
     "visuals": ["dummy-drill.png", "dummy-drill.png"],
     "type": "borrow",
-    "available": false,
-    "owner": 0,
+    "available": true,
+    "owner": 2,
     "date": 1685366941
   }
 ]

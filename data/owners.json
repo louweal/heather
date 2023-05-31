@@ -4,6 +4,7 @@
     "name": "Anneloes",
     "wallet": "0.0.3477311",
     "location": {
+      "public": "Leiden",
       "lat": 52.16869,
       "lng": 4.47094
     }
@@ -13,8 +14,19 @@
     "name": "Emma",
     "wallet": "0.0.3477311",
     "location": {
+      "public": "Leiden",
       "lat": 52.16769,
       "lng": 4.46184
+    }
+  },
+  {
+    "id": 2,
+    "name": "Johan",
+    "wallet": "0.0.3477311",
+    "location": {
+      "public": "Rijnsburg",
+      "lat": 52.16669,
+      "lng": 4.45384
     }
   }
 ]
