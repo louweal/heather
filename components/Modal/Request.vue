@@ -1,15 +1,9 @@
 <template>
-  <div v-if="$store.state.modals.show === 'request'">{{ item }}</div>
+  <div v-if="$store.state.modals.show === 'request'">todo</div>
 </template>
 
 <script>
-export default {
-  computed: {
-    item() {
-      return this.$store.state.modals.data;
-    },
-  },
-};
+export default {};
 </script>
 
 <style></style>

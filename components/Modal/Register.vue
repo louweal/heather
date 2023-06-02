@@ -28,6 +28,10 @@
 
       <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" />
 
+      <input type="email" class="form-control" placeholder="Your e-mail" @input="(e) => setEmail(e.target.value)" />
+
+      <input type="tel" class="form-control" placeholder="Your phone number" @input="(e) => setPhone(e.target.value)" />
+
       <div class="btn btn-primary" @click="createAccount()">Create account</div>
 
       <p class="text-center">Creating an account on Heather may involve Hedera network fees.</p>
@@ -48,9 +52,15 @@ export default {
     },
 
     setPlaceName(placeName) {
-      // user input city name/ village name / neighborhood name
-
+      // user input: city name/ village name / neighborhood name
       this.$store.commit("user/setPlaceName", placeName);
+    },
+
+    setEmail(email) {
+      this.$store.commit("user/setEmail", email);
+    },
+    setPhone(phone) {
+      this.$store.commit("user/setPhone", phone);
     },
 
     createAccount() {
