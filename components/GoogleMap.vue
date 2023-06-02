@@ -2,41 +2,7 @@
   <div class="map-container">
     <div id="map" ref="map" class="map ml-md-1"></div>
 
-    <div
-      :class="markerInfo.show ? 'map-info--active' : false"
-      class="card shadow-sm map-info position-absolute start-50 translate-middle-x top-0"
-      style="z-index: 5; margin-top: 100px"
-    >
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center">
-          <nuxt-link :to="'/app/detail/' + markerInfo.id">
-            <h3 class="mb-0 fs-5">{{ markerInfo.title }}</h3>
-          </nuxt-link>
-
-          <button class="bg-light rounded rounded-circle p-1 lh-1" @click="hideInfo()">
-            <i class="bi bi-x"></i>
-          </button>
-        </div>
-
-        <p v-if="markerInfo.available">
-          To {{ markerInfo.type }}
-
-          <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">€{{ markerInfo.rent.start }}</span>
-        </p>
-        <p v-else>Not available</p>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex gap-2 align-items-center">
-          <button
-            class="bg-light p-2 rounded-circle lh-1 text-white"
-            @click="$store.commit('modals/show', { name: 'request', data: markerInfo })"
-          >
-            <i class="bi bi-chat-text-fill"></i>
-          </button>
-          <div>{{ markerInfo.name }}</div>
-        </div>
-      </div>
-    </div>
+    <marker-info :markerInfo="markerInfo" />
   </div>
 </template>
 
@@ -78,8 +44,10 @@ export default {
             this.gmapmarkers[i].setMap(null);
           }
           this.gmapmarkers = [];
-          this.setCallMarkers(n.filter((i) => i.type === "call"));
-          this.setAdMarkers(n.filter((i) => i.type !== "call"));
+
+          // console.log(n);
+
+          this.setMarkers(n);
         }
       },
     },
@@ -88,10 +56,6 @@ export default {
   computed: {},
 
   methods: {
-    hideInfo() {
-      this.markerInfo.show = false;
-    },
-
     getCenter() {
       if (this.$store.state.search.place) {
         let place = this.$store.state.search.place;
@@ -113,17 +77,55 @@ export default {
         disableDefaultUI: true,
       });
 
-      this.setCallMarkers(this.results.filter((i) => i.type === "call"));
-      this.setAdMarkers(this.results.filter((i) => i.type !== "call"));
+      this.setMarkers(this.results);
 
       // google.maps.event.addListener(this.$map, "click", function (event) {
       //   this.markerInfo.show = false; // hides marker info when clicking on map
       // });
     },
 
-    setCallMarkers(markers) {
-      // copy all results to markers
+    setMarkers(data) {
+      console.log(data);
+      if ("wallet" in data[0]) {
+        // user data provided
+        console.log("user markers");
+        this.setUserMarkers(data);
+      } else {
+        // item data
+        this.setCallMarkers(data.filter((i) => i.type === "call"));
+        this.setAdMarkers(data.filter((i) => i.type !== "call"));
+      }
+    },
 
+    setUserMarkers(markers) {
+      for (let i = 0; i < markers.length; i++) {
+        let m = markers[i];
+
+        const marker = new google.maps.Marker({
+          map: this.$map,
+          position: m.location,
+          title: m.title,
+          icon: "https://heather.codesparks.nl/pin-primary.svg",
+        });
+
+        this.gmapmarkers.push(marker);
+
+        google.maps.event.addListener(
+          marker,
+          "click",
+          ((marker) => {
+            return () => {
+              this.setUserMarkerInfo(m); // sets data in info box
+              // this.$map.panTo(marker.getPosition());
+            };
+          })(marker)
+        );
+      }
+
+      console.log("Num user markers:" + this.gmapmarkers.length);
+    },
+
+    setCallMarkers(markers) {
       for (let i = 0; i < markers.length; i++) {
         let m = markers[i];
 
@@ -158,7 +160,6 @@ export default {
         secondary: iconBase + "pin-secondary.svg",
         grey: iconBase + "pin-grey.svg",
       };
-      // copy all results to markers
 
       for (let i = 0; i < markers.length; i++) {
         let m = markers[i];
@@ -207,7 +208,17 @@ export default {
       this.markerInfo = { show: false };
       this.markerInfo["title"] = m.title;
       this.markerInfo["name"] = m.name;
+      this.markerInfo["type"] = "call";
       this.markerInfo["description"] = m.description;
+      this.markerInfo["id"] = m.id;
+      this.markerInfo.show = true;
+    },
+
+    setUserMarkerInfo(m) {
+      // sets data in info box
+      this.markerInfo = { show: false };
+      this.markerInfo["type"] = "user";
+      this.markerInfo["name"] = m.name;
       this.markerInfo["id"] = m.id;
       this.markerInfo.show = true;
     },
@@ -237,23 +248,5 @@ export default {
 
 .map {
   min-height: 100vh;
-
-  &-info {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1);
-    min-width: 270px;
-    min-height: 100px;
-
-    &--active {
-      opacity: 1 !important;
-      visibility: visible;
-    }
-  }
-}
-
-.info-window {
-  min-width: 270px;
-  min-height: 200px;
 }
 </style>
