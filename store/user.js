@@ -4,6 +4,8 @@ export const state = () => ({
   name: undefined,
   placeName: undefined,
   location: undefined,
+  phone: undefined,
+  email: undefined,
 });
 
 export const mutations = {
@@ -18,5 +20,11 @@ export const mutations = {
   },
   setLocation(state, payload) {
     state.location = payload;
+  },
+  setEmail(state, payload) {
+    state.email = payload;
+  },
+  setPhone(state, payload) {
+    state.phone = payload;
   },
 };
