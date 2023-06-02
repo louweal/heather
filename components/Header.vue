@@ -11,8 +11,6 @@
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
         <div class="d-none d-md-block gap-2">
-          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'call' })">Place call</div>
-
           <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'create' })">+</div>
         </div>
 

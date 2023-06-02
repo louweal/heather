@@ -6,7 +6,10 @@
         <div class="row">
           <div class="col-12 col-md-6 mr-md-1">
             <div class="row mb-3">
-              <div class="col-8 offset-4 col-sm-7 offset-sm-5 col-xxl-4 offset-xxl-8">
+              <div class="col-4 col-sm-5 col-xxl-8 align-self-center">
+                <nuxt-link to="/app"><i class="bi bi-arrow-left text-primary fs-2"></i> </nuxt-link>
+              </div>
+              <div class="col-8 col-sm-7 col-xxl-4">
                 <div class="d-flex align-items-center gap-2 justify-content-end">
                   <span>Distance:</span>
 
@@ -40,7 +43,10 @@
             </template>
 
             <div class="row gy-3">
-              <div class="col-12 col-sm-6 col-xxl-3" v-for="a in results" :key="a.id">
+              <div class="col-12 col-sm-6 col-xxl-3 order-3 order-sm-1 order-xxl-3">
+                <card-new-call title="Not found what you're looking for?" :query="this.$store.state.search.query" />
+              </div>
+              <div class="col-12 col-sm-6 col-xxl-3" :class="`order-${i}`" v-for="(a, i) in results" :key="a.id">
                 <card-call v-if="a.type === 'call'" :data="a" />
                 <card-ad v-else :data="a" />
               </div>
@@ -53,12 +59,7 @@
       </div>
     </section>
 
-    <div class="position-fixed start-50 translate-middle bottom-0 d-md-none" style="z-index: 4">
-      <div class="btn btn-primary" v-if="!$store.state.map.show" @click="$store.commit('map/toggle')">
-        <i class="bi bi-geo-alt-fill"></i> Map
-      </div>
-      <div class="btn btn-primary" v-if="$store.state.map.show" @click="$store.commit('map/toggle')"><i class="bi bi-grid"></i> List</div>
-    </div>
+    <toggle-map />
   </main>
 </template>
 
@@ -68,7 +69,7 @@ export default {
     return {
       maxDistance: 12, // 1 km
       results: [],
-      zoom: 16,
+      zoom: 15.5,
       renderMap: true,
     };
   },
@@ -80,7 +81,7 @@ export default {
   watch: {
     maxDistance: function (newDistance) {
       this.results = this.filterData(); // uses new maxDistance value to refilter
-      console.log("Num results: " + this.results.length);
+      // console.log("Num results: " + this.results.length);
       let newZoom = Math.log2(40000 / (newDistance / 1));
       this.zoom = newZoom;
     },
@@ -109,12 +110,12 @@ export default {
 
       let results;
 
-      console.log(this.$store.state.data.both);
+      // console.log(this.$store.state.data.both);
 
       // filter to local results only
       if (place) {
         results = this.$store.state.data.both.filter((a) => a.distance <= this.maxDistance);
-        console.log(results.length);
+        // console.log(results.length);
       } else {
         console.log("Error: unknown search location");
         return [];
