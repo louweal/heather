@@ -20,7 +20,7 @@
         <div>
           <div class="lh-1">{{ data.name }}</div>
           <div class="lh-sm">
-            {{ data.location.public }} <span class="opacity-75" v-if="data.distance"> {{ data.distance }} km</span>
+            {{ data.location.public }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
           </div>
         </div>
       </div>
@@ -34,6 +34,12 @@ export default {
     data: {
       type: [Object, Array],
       default: () => {},
+    },
+  },
+
+  computed: {
+    place() {
+      return this.$store.state.search.place;
     },
   },
 };
