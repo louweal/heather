@@ -1,6 +1,6 @@
 <template>
   <div class="card overflow-hidden" v-if="data">
-    <visual :data="{ visual: data.visuals[0], name: data.title }" />
+    <ratio-visual :data="{ visual: data.visuals[0], name: data.title }" />
     <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
 

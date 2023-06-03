@@ -1,15 +1,10 @@
 <template>
-  <div
-    class="visual ratio"
-    :class="`ratio-${ratio}`"
-    :style="{ backgroundImage: data.visual ? `url(${require(`/assets/images/${data.visual}`)})` : 'none' }"
-  >
-    <!-- <component
-      :is="data.visual ? 'img' : 'div'"
+  <div class="test d-grid justify-content-center">
+    <img
       :src="data.visual ? require(`/assets/images/${data.visual}`) : false"
       :alt="data.visual ? data.name : false"
-      class="visual"
-    /> -->
+      class="visual rounded"
+    />
   </div>
 </template>
 
@@ -33,9 +28,21 @@ div.visual {
   background-color: $light;
 }
 
+.test {
+  height: min(100%, 89vh) !important;
+  max-height: 89vh !important;
+  max-width: 100% !important;
+}
+
 .visual {
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  max-width: 100% !important;
+  // min-height: min(100%, 89vh);
+  max-height: min(100%, 89vh);
+  object-fit: cover;
+
+  @include media-breakpoint-up(xxl) {
+    // min-height: 89vh !important;
+    min-height: 89vh;
+  }
 }
 </style>

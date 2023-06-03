@@ -14,8 +14,8 @@ export const mutations = {
   },
   SET_CALLS(state, payload) {
     state.calls = payload;
-    state.calls.forEach((a) => (a["location"] = state.owners.find((o) => o.id === a.owner).location));
-    state.calls.forEach((a) => (a["name"] = state.owners.find((o) => o.id === a.owner).name));
+    state.calls.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
+    state.calls.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
   },
   SET_OWNERS(state, payload) {
     state.owners = payload;

@@ -226,7 +226,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .map-container {
   z-index: 3;
   position: relative;
