@@ -8,8 +8,8 @@ export const state = () => ({
 export const mutations = {
   SET_ADS(state, payload) {
     state.ads = payload;
-    state.ads.forEach((a) => (a["location"] = state.owners.find((o) => o.id === a.owner).location));
-    state.ads.forEach((a) => (a["name"] = state.owners.find((o) => o.id === a.owner).name));
+    state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
+    state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
     state.ads.sort((a, b) => (a.available > b.available ? -1 : 1));
   },
   SET_CALLS(state, payload) {
@@ -39,6 +39,14 @@ export const mutations = {
 };
 
 export const actions = {};
+
+function setOwnerName(owner) {
+  return owner ? owner.name : "";
+}
+
+function setOwnerLocation(owner) {
+  return owner ? owner.location : "";
+}
 
 function getDistance(location, searchLocation) {
   let lat = location.lat;

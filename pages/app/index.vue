@@ -5,16 +5,19 @@
     <section>
       <div class="container-fluid" v-if="$store.state.data.ads">
         <div class="row gy-3">
-          <div class="col-md-6 mr-md-1">
+          <div class="col-md-6 mr-md-2">
             <div class="row g-2">
-              <div class="col-12 col-sm-6 col-xxl-3 order-3 order-sm-1 order-xxl-3">
-                <card-new-call />
-              </div>
-              <div class="col-12 col-sm-6 col-xxl-3" :class="`order-${i}`" v-for="(a, i) in $store.state.data.both" :key="a.id">
-                <card-call v-if="a.type === 'call'" :data="a" />
+              <template v-for="(a, i) in $store.state.data.both">
+                <div class="col-12 col-sm-6 col-xxl-3" :key="'banner_' + a.id" v-if="i === 3">
+                  <card-new-call />
+                </div>
 
-                <card-ad v-else :data="a" />
-              </div>
+                <div class="col-12 col-sm-6 col-xxl-3" xxxclass="`order-${i}`" :id="i" :key="a.id">
+                  <card-call v-if="a.type === 'call'" :data="a" />
+
+                  <card-ad v-else :data="a" />
+                </div>
+              </template>
             </div>
           </div>
         </div>

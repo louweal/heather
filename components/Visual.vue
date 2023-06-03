@@ -1,6 +1,15 @@
 <template>
-  <div class="ratio" :class="`ratio-${ratio}`">
-    <component :is="data.visual ? 'img' : 'div'" :src="data.visual || false" :alt="data.visual ? data.name : false" class="visual" />
+  <div
+    class="visual ratio"
+    :class="`ratio-${ratio}`"
+    :style="{ backgroundImage: data.visual ? `url(${require(`/assets/images/${data.visual}`)})` : 'none' }"
+  >
+    <!-- <component
+      :is="data.visual ? 'img' : 'div'"
+      :src="data.visual ? require(`/assets/images/${data.visual}`) : false"
+      :alt="data.visual ? data.name : false"
+      class="visual"
+    /> -->
   </div>
 </template>
 
@@ -22,5 +31,11 @@ export default {
 <style lang="scss" scoped>
 div.visual {
   background-color: $light;
+}
+
+.visual {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 </style>

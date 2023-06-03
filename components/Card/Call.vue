@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer" v-if="data.name">
       <div class="d-flex gap-2 align-items-center">
         <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'create', data: data })">
           <i class="bi bi-chat-text-fill"></i>

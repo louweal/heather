@@ -1,6 +1,6 @@
 <template>
   <div class="card overflow-hidden" v-if="data">
-    <visual :data="{ visual: require(`/assets/images/${data.visuals[0]}`), name: data.title }" />
+    <visual :data="{ visual: data.visuals[0], name: data.title }" />
     <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
 
@@ -12,7 +12,7 @@
       <p v-else>Not available</p>
     </nuxt-link>
 
-    <div class="card-footer">
+    <div class="card-footer" v-if="data.name">
       <div class="d-flex gap-2 align-items-center">
         <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'request', data: data })">
           <i class="bi bi-chat-text-fill"></i>

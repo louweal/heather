@@ -1,6 +1,6 @@
 <template>
   <div class="map-container">
-    <div id="map" ref="map" class="map ml-md-1"></div>
+    <div id="map" ref="map" class="map ml-md-2"></div>
 
     <marker-info :markerInfo="markerInfo" />
   </div>
