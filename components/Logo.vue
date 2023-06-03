@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/" event="" aria-label="to homepage">
+  <nuxt-link to="/" aria-label="to homepage">
     <div class="logo"></div>
   </nuxt-link>
 </template>

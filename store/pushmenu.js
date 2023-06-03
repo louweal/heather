@@ -5,5 +5,6 @@ export const state = () => ({
 export const mutations = {
   toggle(state) {
     state.open = !state.open;
+    document.body.classList.toggle("disable-scroll");
   },
 };

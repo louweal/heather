@@ -19,6 +19,13 @@ export const mutations = {
   },
   SET_OWNERS(state, payload) {
     state.owners = payload;
+    state.owners.forEach((a) => (a["location"] = { lat: a.lat, lng: a.lng }));
+    state.owners.forEach((o) => (o["numItems"] = setNumItems(state.ads.filter((a) => o.id === a.owner))));
+    state.owners = state.owners.filter((o) => o["numItems"] > 0);
+
+    console.log(state.owners);
+    delete state.owners.lat;
+    delete state.owners.lng;
   },
 
   SET_BOTH(state) {
@@ -39,6 +46,10 @@ export const mutations = {
 };
 
 export const actions = {};
+
+function setNumItems(items) {
+  return items ? items.length : 0;
+}
 
 function setOwnerName(owner) {
   return owner ? owner.name : "";

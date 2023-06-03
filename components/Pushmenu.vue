@@ -14,13 +14,63 @@
     </div>
 
     <div class="pushmenu--body">
-      <ul>
-        <li>Sign in</li>
-        <li>Register</li>
+      <ul class="list-unstyled">
+        <li>
+          <nuxt-link
+            to="/"
+            event=""
+            @click.native="
+              $store.commit('pushmenu/toggle');
+              $router.push('/');
+            "
+            class="nav-link"
+          >
+            Home
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link
+            to="/"
+            event=""
+            @click.native="
+              $store.commit('pushmenu/toggle');
+              $router.push('/app');
+            "
+            class="nav-link"
+          >
+            App
+          </nuxt-link>
+        </li>
+
+        <li v-if="this.$store.state.user.signedIn === true">
+          <nuxt-link
+            to="/"
+            event=""
+            @click.native="
+              $store.commit('pushmenu/toggle');
+              $router.push('/account');
+            "
+            class="nav-link"
+          >
+            Account
+          </nuxt-link>
+        </li>
       </ul>
     </div>
 
-    <div class="pushmenu--footer"></div>
+    <div class="pushmenu--footer d-grid">
+      <div
+        class="btn btn-primary"
+        @click="
+          $store.commit('pushmenu/toggle');
+          $store.commit('modals/show', { name: 'connect' });
+        "
+        v-if="this.$store.state.user.signedIn === false"
+      >
+        Sign in / Register
+      </div>
+      <div class="btn btn-primary" xxxclick="disconnect()" v-else>Disconnect</div>
+    </div>
   </div>
 </template>
 

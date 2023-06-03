@@ -6,7 +6,7 @@
   >
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center">
-        <nuxt-link :to="'/app/detail/' + markerInfo.id">
+        <nuxt-link :to="infoPath">
           <h3 class="mb-0 fs-5 mb-0 font-family-base">{{ infoTitle }}</h3>
         </nuxt-link>
 
@@ -23,6 +23,8 @@
         </p>
         <p v-else>Not available</p>
       </template>
+
+      <p v-if="markerInfo.type === 'user' && numItems > 0">{{ numItems }} item<span v-if="numItems > 1">s</span></p>
 
       <p v-if="markerInfo.type === 'call'">{{ markerInfo.description.slice(0, 60) }}...</p>
     </div>
@@ -56,8 +58,16 @@ export default {
       return this.markerInfo.type === "user" ? this.markerInfo.name : this.markerInfo.title;
     },
 
+    infoPath() {
+      return "/app" + (this.markerInfo.type === "user" ? "/user" : " /detail") + "/" + this.markerInfo.id;
+    },
+
     modalName() {
       return this.markerInfo.type === "call" ? "create" : "request";
+    },
+
+    numItems() {
+      return this.markerInfo.numItems;
     },
   },
 

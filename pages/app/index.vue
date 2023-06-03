@@ -1,6 +1,6 @@
 <template>
   <main>
-    <google-map :class="$store.state.map.show ? 'd-block' : 'd-none d-md-block'" :zoom="zoom" :results="results" />
+    <google-map class="d-none d-md-block" :zoom="zoom" :results="results" />
 
     <section>
       <div class="container-fluid" v-if="$store.state.data.ads">
@@ -23,8 +23,6 @@
         </div>
       </div>
     </section>
-
-    <toggle-map />
   </main>
 </template>
 
@@ -33,7 +31,7 @@ export default {
   data() {
     return {
       results: [],
-      maxDistance: 12, // 1 km
+      maxDistance: 1, // 1 km
       zoom: 15.5,
     };
   },

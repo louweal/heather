@@ -4,6 +4,8 @@
       <div class="btn btn-primary">HashPack</div>
     </div>
 
+    <br />
+
     <div class="" @click="$store.commit('modals/show', { name: 'register' })">Sign up</div>
   </div>
 </template>

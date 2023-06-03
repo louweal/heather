@@ -20,7 +20,7 @@
         <div>
           <div class="lh-1">{{ data.name }}</div>
           <div class="lh-sm">
-            {{ data.location.public }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
+            {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
           </div>
         </div>
       </div>

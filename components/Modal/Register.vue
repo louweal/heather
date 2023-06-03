@@ -12,12 +12,7 @@
         @input="(e) => setName(e.target.value)"
       />
 
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Your neigborhood / village / city (shown publicly)"
-        @input="(e) => setPlaceName(e.target.value)"
-      />
+      <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => setPlaceName(e.target.value)" />
 
       <span class="fw-bold">Personal details</span>
 

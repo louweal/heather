@@ -224,7 +224,7 @@
     "type": "borrow",
     "deposit": "FALSE",
     "available": "TRUE",
-    "owner": 30,
+    "owner": 0,
     "date": 1684052151000
   },
   {

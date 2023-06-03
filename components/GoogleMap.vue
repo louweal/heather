@@ -86,14 +86,16 @@ export default {
 
     setMarkers(data) {
       console.log(data);
-      if ("wallet" in data[0]) {
-        // user data provided
-        console.log("user markers");
-        this.setUserMarkers(data);
-      } else {
-        // item data
-        this.setCallMarkers(data.filter((i) => i.type === "call"));
-        this.setAdMarkers(data.filter((i) => i.type !== "call"));
+      if (data) {
+        if ("wallet" in data[0]) {
+          // user data provided
+          console.log("user markers");
+          this.setUserMarkers(data);
+        } else {
+          // item data
+          this.setCallMarkers(data.filter((i) => i.type === "call"));
+          this.setAdMarkers(data.filter((i) => i.type !== "call"));
+        }
       }
     },
 
@@ -194,7 +196,6 @@ export default {
       this.markerInfo["available"] = m.available;
       this.markerInfo["title"] = m.title;
       this.markerInfo["type"] = m.type;
-      this.markerInfo["visual"] = m.visuals[0];
       if (m.type === "rent") {
         this.markerInfo["rent"] = m.rent;
       }
@@ -215,10 +216,14 @@ export default {
     },
 
     setUserMarkerInfo(m) {
+      // this.markerInfo = m;
+      // this.markerInfo["show"] = true;
+      // return;
       // sets data in info box
       this.markerInfo = { show: false };
       this.markerInfo["type"] = "user";
       this.markerInfo["name"] = m.name;
+      this.markerInfo["numItems"] = m.numItems;
       this.markerInfo["id"] = m.id;
       this.markerInfo.show = true;
     },

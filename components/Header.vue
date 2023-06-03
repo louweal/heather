@@ -13,7 +13,7 @@
         <div class="d-none d-md-block g-5 me-2">
           <nuxt-link to="/account">Account</nuxt-link>
 
-          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'create' })"><i class="bi bi-flower2"></i> Share</div>
+          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'create' })">Share</div>
         </div>
 
         <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">Sign in / Register</div>

@@ -48,10 +48,14 @@ export default {};
     color: $primary;
     min-height: 152px;
     span {
-      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: $primary;
       color: transparent;
       color: $light;
+
+      @include media-breakpoint-up(md) {
+        -webkit-text-stroke-width: 2px;
+      }
     }
   }
 

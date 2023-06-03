@@ -14,11 +14,11 @@
                   <span>Distance:</span>
 
                   <select class="form-select" aria-label="select distance" v-model="maxDistance">
-                    <option :value="1" selected>1 km</option>
+                    <option :value="0.5" selected>0.5 km</option>
+                    <option :value="1">1 km</option>
+                    <option :value="1.5">1.5 km</option>
                     <option :value="2">2 km</option>
-                    <option :value="3">3 km</option>
-                    <option :value="6">6 km</option>
-                    <option :value="12">12 km</option>
+                    <option :value="2.5">2.5 km</option>
                   </select>
                 </div>
               </div>
@@ -42,14 +42,27 @@
               <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
             </template>
 
-            <div class="row gy-3">
-              <div class="col-12 col-sm-6 col-xxl-3 order-3 order-sm-1 order-xxl-3">
-                <card-new-call title="Not found what you're looking for?" :query="this.$store.state.search.query" />
-              </div>
-              <div class="col-12 col-sm-6 col-xxl-3" :class="`order-${i}`" v-for="(a, i) in results" :key="a.id">
-                <card-call v-if="a.type === 'call'" :data="a" />
-                <card-ad v-else :data="a" />
-              </div>
+            <div class="row g-2">
+              <template v-if="results.length > 0">
+                <template v-for="(a, i) in results">
+                  <div class="col-12 col-sm-6 col-xxl-3" :key="a.id">
+                    <card-call v-if="a.type === 'call'" :data="a" />
+                    <card-ad v-else :data="a" />
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 col-xxl-3"
+                    :key="'banner_' + a.id"
+                    v-if="i === 2 || (results.length < 2 && i === results.length - 1)"
+                  >
+                    <card-new-call title="Not found what you're looking for?" :query="$store.state.search.query" />
+                  </div>
+                </template>
+              </template>
+              <template v-else>
+                <div class="col-12 col-sm-6 col-xxl-3" key="banner">
+                  <card-new-call title="Not found what you're looking for?" :query="$store.state.search.query" />
+                </div>
+              </template>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -67,7 +80,7 @@
 export default {
   data() {
     return {
-      maxDistance: 12, // 1 km
+      maxDistance: 1, // 1 km
       results: [],
       zoom: 15.5,
       renderMap: true,

@@ -43,7 +43,7 @@
                   <div>
                     <div class="lh-sm">{{ item.name }}</div>
                     <div class="lh-sm">
-                      {{ item.location.public }}
+                      {{ item.neighborhood }}
                       <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
                     </div>
                   </div>
