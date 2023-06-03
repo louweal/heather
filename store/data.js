@@ -20,10 +20,6 @@ export const mutations = {
   SET_OWNERS(state, payload) {
     state.owners = payload;
     state.owners.forEach((a) => (a["location"] = { lat: a.lat, lng: a.lng }));
-    state.owners.forEach((o) => (o["numItems"] = setNumItems(state.ads.filter((a) => o.id === a.owner))));
-    state.owners = state.owners.filter((o) => o["numItems"] > 0);
-
-    console.log(state.owners);
     delete state.owners.lat;
     delete state.owners.lng;
   },
@@ -31,6 +27,10 @@ export const mutations = {
   SET_BOTH(state) {
     state.both = state.ads.concat(state.calls);
     state.both.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+    // remove users that don't have any ads or calls
+    state.owners.forEach((o) => (o["numItems"] = setNumItems(state.ads.filter((a) => o.id === a.owner))));
+    state.owners = state.owners.filter((o) => o["numItems"] > 0);
   },
 
   updateDistance(state, searchLocation) {

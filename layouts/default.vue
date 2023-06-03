@@ -52,11 +52,10 @@ export default {
   },
 
   async fetch() {
+    this.$store.commit("data/SET_OWNERS", this.$options.owners);
     this.$store.commit("data/SET_ADS", this.$options.ads);
     this.$store.commit("data/SET_CALLS", this.$options.calls);
     this.$store.commit("data/SET_BOTH"); // combine ads and calls
-
-    this.$store.commit("data/SET_OWNERS", this.$options.owners); // set last!
   },
 
   async mounted() {
