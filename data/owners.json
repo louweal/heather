@@ -1,52 +1,242 @@
 [
   {
     "id": 0,
-    "name": "Anneloes",
-    "wallet": "0.0.3477311",
-    "location": {
-      "public": "Leiden",
-      "lat": 52.16869,
-      "lng": 4.47094
-    }
+    "name": "Charlean",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.162261208,
+    "lng": 4.500855377
   },
   {
     "id": 1,
-    "name": "Emma",
-    "wallet": "0.0.3477311",
-    "location": {
-      "public": "Leiden",
-      "lat": 52.16769,
-      "lng": 4.46184
-    }
+    "name": "Jaye",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.160047592,
+    "lng": 4.49195154
   },
   {
     "id": 2,
-    "name": "Johan",
-    "wallet": "0.0.3477311",
-    "location": {
-      "public": "Leiden",
-      "lat": 52.16469,
-      "lng": 4.50384
-    }
+    "name": "Carie",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.160243695,
+    "lng": 4.501290312
   },
   {
     "id": 3,
-    "name": "Ingrid",
-    "wallet": "0.0.3477311",
-    "location": {
-      "public": "Leiden",
-      "lat": 52.16369,
-      "lng": 4.48384
-    }
+    "name": "Janifer",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.161993915,
+    "lng": 4.50048762
   },
   {
     "id": 4,
-    "name": "Henk",
-    "wallet": "0.0.3477311",
-    "location": {
-      "public": "Leiden",
-      "lat": 52.16269,
-      "lng": 4.49384
-    }
+    "name": "Dallas",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.162642916,
+    "lng": 4.488305203
+  },
+  {
+    "id": 5,
+    "name": "Mark",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.158165011,
+    "lng": 4.485494867
+  },
+  {
+    "id": 6,
+    "name": "Glory",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.156310099,
+    "lng": 4.489235199
+  },
+  {
+    "id": 7,
+    "name": "Sansone",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.157801708,
+    "lng": 4.494256645
+  },
+  {
+    "id": 8,
+    "name": "Tadd",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.160547012,
+    "lng": 4.496086221
+  },
+  {
+    "id": 9,
+    "name": "Jemmie",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.154180798,
+    "lng": 4.499794256
+  },
+  {
+    "id": 10,
+    "name": "Anabella",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.161294383,
+    "lng": 4.490418799
+  },
+  {
+    "id": 11,
+    "name": "Janeen",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.162831782,
+    "lng": 4.499092631
+  },
+  {
+    "id": 12,
+    "name": "Dru",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.156208643,
+    "lng": 4.492402243
+  },
+  {
+    "id": 13,
+    "name": "Eb",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.157187743,
+    "lng": 4.497991581
+  },
+  {
+    "id": 14,
+    "name": "Rowney",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.157899044,
+    "lng": 4.486274189
+  },
+  {
+    "id": 15,
+    "name": "Geri",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.158576047,
+    "lng": 4.489369837
+  },
+  {
+    "id": 16,
+    "name": "Dawna",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.157266502,
+    "lng": 4.494197394
+  },
+  {
+    "id": 17,
+    "name": "Sella",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.158084062,
+    "lng": 4.485868615
+  },
+  {
+    "id": 18,
+    "name": "Freedman",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.154568054,
+    "lng": 4.486209854
+  },
+  {
+    "id": 19,
+    "name": "Myrtia",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.158588846,
+    "lng": 4.497869393
+  },
+  {
+    "id": 20,
+    "name": "Francene",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.157962371,
+    "lng": 4.483700613
+  },
+  {
+    "id": 21,
+    "name": "Stephanie",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.158660749,
+    "lng": 4.485703367
+  },
+  {
+    "id": 22,
+    "name": "Andre",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.160179025,
+    "lng": 4.495282851
+  },
+  {
+    "id": 23,
+    "name": "Marissa",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.156006606,
+    "lng": 4.497193902
+  },
+  {
+    "id": 24,
+    "name": "Brice",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.159388847,
+    "lng": 4.499889877
+  },
+  {
+    "id": 25,
+    "name": "Reidar",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.163073494,
+    "lng": 4.499306582
+  },
+  {
+    "id": 26,
+    "name": "Lonnie",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.155055272,
+    "lng": 4.484516499
+  },
+  {
+    "id": 27,
+    "name": "Klaus",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.160974574,
+    "lng": 4.492012486
+  },
+  {
+    "id": 28,
+    "name": "Meryl",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.161328208,
+    "lng": 4.501678769
+  },
+  {
+    "id": 29,
+    "name": "Heather",
+    "wallet": "FALSE",
+    "neighborhood": "Leiden",
+    "lat": 52.161592239,
+    "lng": 4.485764377
   }
 ]
