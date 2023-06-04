@@ -43,11 +43,8 @@ export default {
   methods: {
     filterOwners() {
       let defaultCenter = this.$store.state.defaultLoc;
-
       this.$store.commit("data/updateOwnerDistance", defaultCenter);
-
       let results = this.$store.state.data.owners.filter((a) => a.distance <= this.maxDistance);
-      console.log(results.length);
 
       return results;
     },

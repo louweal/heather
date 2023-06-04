@@ -33,6 +33,8 @@
     </modal>
     <pushmenu />
     <notice v-if="$store.state.notice.active"> </notice>
+
+    <spinner />
   </div>
 </template>
 

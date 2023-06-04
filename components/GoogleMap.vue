@@ -1,6 +1,10 @@
 <template>
   <div class="map-container">
-    <div id="map" ref="map" class="map ml-md-2"></div>
+    <div id="map" ref="map" class="map ml-md-2">
+      <div v-if="error" class="text-center mt-5 pt-5">
+        <p>{{ error }}</p>
+      </div>
+    </div>
 
     <marker-info :markerInfo="markerInfo" />
   </div>
@@ -12,6 +16,7 @@ export default {
     return {
       markerInfo: { show: false },
       gmapmarkers: [],
+      error: undefined,
     };
   },
 
@@ -37,15 +42,14 @@ export default {
     results: {
       deep: true,
       handler(n, o) {
-        const objectsEqual = (o1, o2) => Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every((p) => o1[p] === o2[p]);
+        const objectsEqual = (o1, o2) =>
+          Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every((p) => o1[p] === o2[p]);
         if (!objectsEqual(o, n)) {
           // remove the old markers
           for (let i = 0; i < this.gmapmarkers.length; i++) {
             this.gmapmarkers[i].setMap(null);
           }
           this.gmapmarkers = [];
-
-          // console.log(n);
 
           this.setMarkers(n);
         }
@@ -65,7 +69,10 @@ export default {
     },
 
     async initMap() {
-      console.log("initmap");
+      if (!google) {
+        this.error = "Google map didn't load correctly, please reload page.";
+        return;
+      }
 
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
@@ -85,11 +92,9 @@ export default {
     },
 
     setMarkers(data) {
-      console.log(data);
       if (data) {
         if ("wallet" in data[0]) {
           // user data provided
-          console.log("user markers");
           this.setUserMarkers(data);
         } else {
           // item data
@@ -123,8 +128,6 @@ export default {
           })(marker)
         );
       }
-
-      console.log("Num user markers:" + this.gmapmarkers.length);
     },
 
     setCallMarkers(markers) {
@@ -151,8 +154,6 @@ export default {
           })(marker)
         );
       }
-
-      console.log("Num call markers:" + this.gmapmarkers.length);
     },
 
     setAdMarkers(markers) {
@@ -186,8 +187,6 @@ export default {
           })(marker)
         );
       }
-
-      console.log("Num ad markers:" + this.gmapmarkers.length);
     },
 
     setAdMarkerInfo(m) {

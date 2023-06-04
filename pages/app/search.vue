@@ -94,7 +94,6 @@ export default {
   watch: {
     maxDistance: function (newDistance) {
       this.results = this.filterData(); // uses new maxDistance value to refilter
-      // console.log("Num results: " + this.results.length);
       let newZoom = Math.log2(40000 / (newDistance / 1));
       this.zoom = newZoom;
     },
@@ -123,12 +122,9 @@ export default {
 
       let results;
 
-      // console.log(this.$store.state.data.both);
-
       // filter to local results only
       if (place) {
         results = this.$store.state.data.both.filter((a) => a.distance <= this.maxDistance);
-        // console.log(results.length);
       } else {
         console.log("Error: unknown search location");
         return [];
