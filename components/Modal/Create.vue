@@ -163,7 +163,11 @@ export default {
         this.isInteger(this.newData.deposit)
       ) {
         // todo create contract
-        this.$store.dispatch("hedera/createContract", this.newData);
+        if (this.newData.type === "borrow") {
+          this.$store.dispatch("hedera/createBorrowContract", this.newData);
+        } else {
+          this.$store.dispatch("hedera/createRentContract", this.newData);
+        }
 
         this.$store.commit("modals/hide");
       } else {
