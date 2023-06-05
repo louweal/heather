@@ -5,7 +5,7 @@
         <div>
           <Header />
 
-          <div id="pushdown" class="w-100" :class="$route.path === '/' ? 'd-none' : false"></div>
+          <div id="pushdown" class="w-100" style="height: 80px" :class="$route.path === '/' ? 'd-none' : false"></div>
           <Nuxt />
         </div>
 
@@ -59,9 +59,9 @@ export default {
   },
 
   async mounted() {
-    let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
-    let pushdown = document.querySelector("#pushdown"); // refs?
-    pushdown.style.height = headerHeight + "px";
+    // let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
+    // let pushdown = document.querySelector("#pushdown"); // refs?
+    // pushdown.style.height = headerHeight + "px";
   },
 };
 </script>
