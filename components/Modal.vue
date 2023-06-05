@@ -4,7 +4,7 @@
     <div class="modal__inner">
       <div class="modal__content p-3 rounded border">
         <div class="d-flex justify-content-between mb-3">
-          <h5 class="modal-title fs-5 align-self-center">{{ title }}</h5>
+          <h5 class="modal-title fs-5 align-self-center font-family-base">{{ title }}</h5>
 
           <button type="button" class="btn-close" aria-label="Close" @click="$store.commit('modals/hide')"></button>
         </div>

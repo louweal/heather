@@ -19,13 +19,10 @@ export default {
 
   methods: {
     getCenter() {
-      console.log(this.marker.location);
       return { lat: this.marker.location.lat, lng: this.marker.location.lng };
     },
 
     async initMap() {
-      console.log("initmap");
-
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
 

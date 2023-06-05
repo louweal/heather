@@ -45,8 +45,6 @@ export const mutations = {
   },
 };
 
-export const actions = {};
-
 function setNumItems(items) {
   return items ? items.length : 0;
 }

@@ -12,13 +12,24 @@
         @input="(e) => setName(e.target.value)"
       />
 
-      <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => setPlaceName(e.target.value)" />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Your neigborhood"
+        @input="(e) => setPlaceName(e.target.value)"
+      />
 
       <span class="fw-bold">Personal details</span>
 
       <div class="input-group">
         <span class="input-group-text" id="basic-addon1">Account Id</span>
-        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.accountId" disabled />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Wallet address*"
+          :value="this.$store.state.user.accountId"
+          disabled
+        />
       </div>
 
       <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" />
@@ -65,7 +76,11 @@ export default {
 
   mounted() {
     var input = this.$refs["accountLoc"];
-    console.log(input);
+
+    if (!google) {
+      console.log("Failed to load google autocomplete");
+      return;
+    }
     const autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener("place_changed", () => {

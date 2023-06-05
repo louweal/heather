@@ -24,7 +24,8 @@
     "bootstrap": "^5.2.1",
     "core-js": "^3.25.2",
     "nuxt": "^2.15.8",
-    "vue-typed-js": "^0.1.2"
+    "vue-typed-js": "^0.1.2",
+    "vue2-datepicker": "^3.11.1"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
