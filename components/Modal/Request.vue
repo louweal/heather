@@ -19,20 +19,14 @@
           valueType="date"
           format="MM/DD/YYYY"
           :default-value="new Date()"
-          xxxplaceholder="`${today} (today)`"
+          :placeholder="`${today} (today)`"
           class="form-control w-100"
         ></date-picker>
       </div>
       <div class="form-group">
         <label class="fw-bold">Date: Until</label>
 
-        <date-picker
-          v-model="to"
-          valueType="date"
-          format="MM/DD/YYYY"
-          placeholder="End date"
-          class="form-control w-100"
-        ></date-picker>
+        <date-picker v-model="to" valueType="date" format="MM/DD/YYYY" class="form-control w-100"></date-picker>
       </div>
 
       <div class="btn btn-primary" @click="sendRequest()">Send request</div>
@@ -50,6 +44,8 @@ export default {
   data() {
     return {
       request: { message: "", from: undefined, to: undefined },
+      from: undefined,
+      to: undefined,
     };
   },
 

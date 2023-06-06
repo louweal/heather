@@ -37,14 +37,16 @@
                 <!-- <p class="opacity-25">Shared on: <formatted-date :date="item.date" /></p> -->
 
                 <div class="d-flex gap-2 align-items-center mt-3" v-if="item.name">
-                  <button class="bg-light p-2 rounded-circle lh-1 text-white">
+                  <div class="bg-light p-2 rounded-circle lh-1 text-white">
                     <i class="bi bi-person-fill"></i>
-                  </button>
+                  </div>
                   <div>
                     <div class="lh-sm">{{ item.name }}</div>
                     <div class="lh-sm">
                       {{ item.neighborhood }}
-                      <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
+                      <span class="opacity-75" v-if="item.distance && $store.state.search.place">
+                        {{ item.distance }} km</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -52,7 +54,10 @@
 
               <div class="mt-3">
                 <div class="d-grid mt-2">
-                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'request', data: data })">
+                  <button
+                    class="btn btn-primary"
+                    @click="$store.commit('modals/show', { name: 'request', data: item })"
+                  >
                     Request to {{ item.type }}
                   </button>
                 </div>

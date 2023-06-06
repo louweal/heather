@@ -25,12 +25,10 @@ export const mutations = {
     state.data = undefined;
 
     document.body.classList.toggle("disable-scroll"); // enable scroll
-    console.log(state.scrollY);
+    // console.log(state.scrollY);
 
     setTimeout(function () {
       window.scrollTo(0, this.scrollY);
     }, 2000);
-    console.log(state.scrollY);
-    // window.scrollTo(0, this.scrollY);
   },
 };
