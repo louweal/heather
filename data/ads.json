@@ -7,6 +7,7 @@
     "visuals": ["agility-set.jpeg", "agility-set-1.jpg", "agility-set-2.jpg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 13,
     "date": 1663174231000
@@ -19,6 +20,7 @@
     "visuals": ["alhambra.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 28,
     "date": 1681485220000
@@ -31,6 +33,7 @@
     "visuals": ["bernini.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 18,
     "date": 1669458938000
@@ -38,11 +41,12 @@
   {
     "id": 3,
     "title": "Dog bicycle basket",
-    "description": "Bicycle basket for small dogs",
+    "description": "Basil buddy bicycle basket for small dogs for Basil carrier plates only. Without carrier plate.",
     "category": "dogs",
     "visuals": ["bicycle-basket.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 21,
     "date": 1672975765000
@@ -55,6 +59,7 @@
     "visuals": ["catan.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 26,
     "date": 1669764070000
@@ -67,18 +72,20 @@
     "visuals": ["catan-dicegame.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 3,
     "date": 1680168396000
   },
   {
     "id": 6,
-    "title": "Dog cooling mat",
+    "title": "Cooling mat for dogs",
     "description": "",
     "category": "dogs",
     "visuals": ["cooling-mat.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 27,
     "date": 1681854976000
@@ -91,6 +98,7 @@
     "visuals": ["dieven.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 13,
     "date": 1667623474000
@@ -103,6 +111,7 @@
     "visuals": ["glue-gun.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 27,
     "date": 1668888168000
@@ -115,6 +124,7 @@
     "visuals": ["hammer.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 28,
     "date": 1663834606000
@@ -127,6 +137,7 @@
     "visuals": ["jambo.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 2,
     "date": 1662011105000
@@ -139,6 +150,7 @@
     "visuals": ["konijnenhokken.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 10,
     "date": 1664933799000
@@ -151,6 +163,7 @@
     "visuals": ["lost-cities.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 22,
     "date": 1658544459000
@@ -163,6 +176,7 @@
     "visuals": ["machiavelli.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 9,
     "date": 1672458470000
@@ -175,6 +189,7 @@
     "visuals": ["mastermind.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 5,
     "date": 1668646910000
@@ -182,11 +197,12 @@
   {
     "id": 15,
     "title": "Playing cards",
-    "description": "",
+    "description": "Two sets of playing cards",
     "category": "boardgames",
     "visuals": ["playing-cards.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 10,
     "date": 1682283432000
@@ -199,6 +215,7 @@
     "visuals": ["regenwormen.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 19,
     "date": 1662469851000
@@ -211,6 +228,7 @@
     "visuals": ["scrabble.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 19,
     "date": 1684352636000
@@ -223,6 +241,7 @@
     "visuals": ["skeelers.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 0,
     "date": 1684052151000
@@ -235,6 +254,7 @@
     "visuals": ["take-5.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 22,
     "date": 1667200008000
@@ -247,6 +267,7 @@
     "visuals": ["tape-measure.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 5,
     "date": 1681632024000
@@ -259,6 +280,7 @@
     "visuals": ["tools.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 6,
     "date": 1684402151000
@@ -271,8 +293,217 @@
     "visuals": ["triominos.jpeg"],
     "type": "borrow",
     "deposit": "FALSE",
+    "rent": "FALSE",
     "available": "TRUE",
     "owner": 24,
     "date": 1658101186000
+  },
+  {
+    "id": 23,
+    "title": "Allen keys",
+    "description": "",
+    "category": "tools",
+    "visuals": ["allen-keys.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 10,
+    "date": 1665245196000
+  },
+  {
+    "id": 24,
+    "title": "Construction lamp",
+    "description": "",
+    "category": "tools",
+    "visuals": ["construction-lamp.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 14,
+    "date": 1658570873000
+  },
+  {
+    "id": 25,
+    "title": "Hedge trimmer",
+    "description": "",
+    "category": "tools",
+    "visuals": ["hedge-trimmer.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 11,
+    "date": 1662178721000
+  },
+  {
+    "id": 26,
+    "title": "Impact drill",
+    "description": "",
+    "category": "tools",
+    "visuals": ["impact-drill.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 15,
+    "date": 1672083649000
+  },
+  {
+    "id": 27,
+    "title": "Level",
+    "description": "",
+    "category": "tools",
+    "visuals": ["level.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 25,
+    "date": 1681560842000
+  },
+  {
+    "id": 28,
+    "title": "Orbital sander",
+    "description": "",
+    "category": "tools",
+    "visuals": ["orbital-sander.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 10,
+    "date": 1657559222000
+  },
+  {
+    "id": 29,
+    "title": "Pressure washer",
+    "description": "",
+    "category": "tools",
+    "visuals": ["pressure-washer.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 7,
+    "date": 1661522374000
+  },
+  {
+    "id": 30,
+    "title": "Tape measure",
+    "description": "",
+    "category": "tools",
+    "visuals": ["tape-measure-2.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 21,
+    "date": 1665918909000
+  },
+  {
+    "id": 31,
+    "title": "Transport trolley",
+    "description": "",
+    "category": "tools",
+    "visuals": ["transport-trolley.jpeg"],
+    "type": "rent",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 19,
+    "date": 1663284051000
+  },
+  {
+    "id": 32,
+    "title": "Bicycle tire pump",
+    "description": "",
+    "category": "tools",
+    "visuals": ["bicycle-tire-pump.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 1,
+    "date": 1673717425000
+  },
+  {
+    "id": 33,
+    "title": "Folding chair",
+    "description": "",
+    "category": "",
+    "visuals": ["folding-chair.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 27,
+    "date": 1676817385000
+  },
+  {
+    "id": 34,
+    "title": "Game of Thrones boardgame",
+    "description": "",
+    "category": "boardgames",
+    "visuals": ["got-game.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 17,
+    "date": 1678192713000
+  },
+  {
+    "id": 35,
+    "title": "Hand truck",
+    "description": "",
+    "category": "tools",
+    "visuals": ["hand-truck.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 0,
+    "date": 1678930059000
+  },
+  {
+    "id": 36,
+    "title": "Level",
+    "description": "",
+    "category": "tools",
+    "visuals": ["level-2.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 25,
+    "date": 1668001465000
+  },
+  {
+    "id": 37,
+    "title": "Litter box",
+    "description": "Litter box for cats",
+    "category": "cats",
+    "visuals": ["litter-box.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 24,
+    "date": 1669575324000
+  },
+  {
+    "id": 38,
+    "title": "Yoga mat",
+    "description": "",
+    "category": "sports",
+    "visuals": ["yogamat.jpeg"],
+    "type": "borrow",
+    "deposit": "FALSE",
+    "rent": "FALSE",
+    "available": "TRUE",
+    "owner": 3,
+    "date": 1658095604000
   }
 ]
