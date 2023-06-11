@@ -53,7 +53,7 @@ export const mutations = {
   },
   signOut(state) {
     state.signedIn = false;
-    state.accountId = undefined;
+    // state.accountId = undefined;
   },
 };
 

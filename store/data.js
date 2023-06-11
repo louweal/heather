@@ -36,8 +36,9 @@ export const mutations = {
   updateDistance(state, searchLocation) {
     state.ads.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
     state.calls.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
-    state.both.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
-    state.owners.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
+    state.both = state.ads.concat(state.calls);
+
+    // state.owners.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
   },
 
   updateOwnerDistance(state, searchLocation) {
