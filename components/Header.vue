@@ -13,10 +13,21 @@
         <div class="d-none d-md-block g-5 me-2">
           <nuxt-link to="/account">Account</nuxt-link>
 
-          <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'create' })">Share</div>
+          <!-- <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'welcome' })">Welcome</div> -->
         </div>
 
-        <div class="btn btn-primary d-none d-lg-block" @click="$store.commit('modals/show', { name: 'connect' })">Sign in / Register</div>
+        <div
+          class="btn btn-primary d-none d-lg-block"
+          v-if="!$store.state.user.signedIn"
+          @click="$store.commit('modals/show', { name: 'connect' })"
+        >
+          Sign in / Register
+        </div>
+
+        <div class="btn btn-primary d-none d-lg-block" v-else @click="$store.commit('modals/show', { name: 'create' })">Share</div>
+
+        <!-- <div class="btn btn-primary d-none d-lg-block" v-else @click="$store.commit('user/signOut')">Sign out</div> -->
+
         <div class="d-lg-none" @click="$store.commit('pushmenu/toggle')">
           <i class="bi lh-1 text-primary" style="font-size: 44px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
         </div>

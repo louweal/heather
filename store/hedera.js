@@ -9,6 +9,8 @@ export const actions = {
 
   async createBorrowContract(state, payload) {
     state.awaiting = true;
+
+    // deploy
     await delay(5000);
     state.awaiting = false;
   },

@@ -54,6 +54,8 @@ export default {
   plugins: ["~/plugins/typed.js", "~/plugins/aos.js", "~/plugins/maps.js", "~/plugins/translate.js"],
 
   modules: ["@nuxtjs/style-resources"],
+  buildModules: ["@nuxtjs/dotenv"], //"@nuxtjs/style-resources"
+
   build: {
     extend(config) {
       config.node = {

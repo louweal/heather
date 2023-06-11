@@ -6,10 +6,11 @@
           <Header />
 
           <div id="pushdown" class="w-100" style="height: 80px" :class="$route.path === '/' ? 'd-none' : false"></div>
-          <Nuxt />
         </div>
+        <Nuxt />
 
-        <Footer v-if="$route.path == '/'" />
+        <Footer v-if="!$route.path.includes('/app')" />
+        <div v-else><!-- empty --></div>
       </div>
     </div>
     <modal name="connect" title="Connect">
@@ -18,6 +19,14 @@
 
     <modal name="register" title="Welcome to Heather!">
       <modal-register />
+    </modal>
+
+    <modal name="update" title="Update your account">
+      <modal-update />
+    </modal>
+
+    <modal name="welcome" :title="`Welcome to Heather, ${$store.state.user.name}!`">
+      <modal-welcome />
     </modal>
 
     <modal name="request" title="Send request">

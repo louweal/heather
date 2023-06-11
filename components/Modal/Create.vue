@@ -2,20 +2,10 @@
   <div v-if="$store.state.modals.show === 'create'">
     <div class="d-grid gap-2">
       <div class="btn-group w-100 d-flex" role="group" aria-label="type">
-        <button
-          type="button"
-          class="btn"
-          :class="newData['type'] === 'borrow' ? 'btn-primary' : 'btn-light'"
-          @click="setType('borrow')"
-        >
+        <button type="button" class="btn" :class="newData['type'] === 'borrow' ? 'btn-primary' : 'btn-light'" @click="setType('borrow')">
           To borrow
         </button>
-        <button
-          type="button"
-          class="btn"
-          :class="newData['type'] === 'rent' ? 'btn-primary' : 'btn-light'"
-          @click="setType('rent')"
-        >
+        <button type="button" class="btn" :class="newData['type'] === 'rent' ? 'btn-primary' : 'btn-light'" @click="setType('rent')">
           To rent
         </button>
       </div>
@@ -40,7 +30,7 @@
       <textarea class="form-control" placeholder="Description" @input="(e) => setDescription(e.target.value)" />
 
       <div class="input-group" v-if="newData.type === 'borrow'">
-        <span class="input-group-text" id="basic-addon1">ħ</span>
+        <span class="input-group-text">ħ</span>
 
         <input
           type="text"
@@ -52,7 +42,7 @@
       </div>
 
       <div class="input-group" v-if="newData.type === 'rent'">
-        <span class="input-group-text" id="basic-addon1">ħ</span>
+        <span class="input-group-text">ħ</span>
 
         <input
           type="text"

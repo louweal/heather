@@ -69,7 +69,7 @@
       >
         Sign in / Register
       </div>
-      <div class="btn btn-primary" xxxclick="disconnect()" v-else>Disconnect</div>
+      <div class="btn btn-primary" v-else @click="$store.commit('modals/show', { name: 'create' })">Share</div>
     </div>
   </div>
 </template>

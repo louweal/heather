@@ -42,8 +42,7 @@ export default {
     results: {
       deep: true,
       handler(n, o) {
-        const objectsEqual = (o1, o2) =>
-          Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every((p) => o1[p] === o2[p]);
+        const objectsEqual = (o1, o2) => Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every((p) => o1[p] === o2[p]);
         if (!objectsEqual(o, n)) {
           // remove the old markers
           for (let i = 0; i < this.gmapmarkers.length; i++) {
@@ -92,7 +91,7 @@ export default {
     },
 
     setMarkers(data) {
-      if (data) {
+      if (data.length > 0) {
         if ("wallet" in data[0]) {
           // user data provided
           this.setUserMarkers(data);
