@@ -6,9 +6,9 @@
           {{ user.name }}
         </h1>
 
-        <p>{{ user.neighborhood }}</p>
-
-        <p>todo distance</p>
+        <p>
+          {{ user.neighborhood }} <span class="opacity-75" v-if="distance"> {{ distance }} km</span>
+        </p>
 
         <div class="row">
           <div class="col-12 col-sm-6 col-xxl-3" v-for="a in items" :key="a.id">
@@ -40,6 +40,10 @@ export default {
 
     user() {
       return this.$store.state.data.owners.find((u) => u.id === this.id);
+    },
+
+    distance() {
+      return this.user.distance;
     },
   },
 };

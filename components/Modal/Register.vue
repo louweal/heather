@@ -69,9 +69,18 @@ export default {
         this.$store.commit("modals/show", { name: "welcome" });
 
         this.$store.commit("user/signIn");
+        this.updateDistance();
       } else {
         // todo
+        console.log("Something went wrong");
       }
+    },
+
+    updateDistance() {
+      let lat = this.$store.state.user.location.lat;
+      let lng = this.$store.state.user.location.lng;
+      let userLocation = new google.maps.LatLng(lat, lng);
+      this.$store.commit("data/updateOwnerDistance", userLocation);
     },
   },
 
