@@ -92,7 +92,7 @@ export default {
 
     setMarkers(data) {
       if (data.length > 0) {
-        if ("wallet" in data[0]) {
+        if ("id" in data[0]) {
           // user data provided
           this.setUserMarkers(data);
         } else {

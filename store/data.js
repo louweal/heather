@@ -18,17 +18,27 @@ export const mutations = {
     state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
     state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
     state.ads.sort((a, b) => (a.available > b.available ? -1 : 1));
+
+    // set users also in localstorage
+    localStorage.setItem("ads", JSON.stringify(state.ads));
   },
   SET_CALLS(state, payload) {
     state.calls = payload;
     state.calls.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
     state.calls.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
   },
-  SET_OWNERS(state, payload) {
+  // SET_OWNERS(state, payload) {
+  //   state.owners = payload;
+  //   state.owners.forEach((a) => (a["location"] = { lat: a.lat, lng: a.lng }));
+  //   delete state.owners.lat;
+  //   delete state.owners.lng;
+  // },
+
+  SET_USERS(state, payload) {
     state.owners = payload;
-    state.owners.forEach((a) => (a["location"] = { lat: a.lat, lng: a.lng }));
-    delete state.owners.lat;
-    delete state.owners.lng;
+
+    // set users also in localstorage
+    localStorage.setItem("owners", JSON.stringify(state.owners));
   },
 
   SET_BOTH(state) {
@@ -54,6 +64,8 @@ export const mutations = {
 };
 
 export const actions = {
+  // async SET_USERS({ commit, dispatch }, payload) {},
+
   async createDummyAdContract({ commit, state }, payload) {
     console.log("in createAdContract");
 
@@ -64,7 +76,7 @@ export const actions = {
       { type: "address", value: payload.dummyOwner },
     ];
 
-    let newContractId = await contractExecuteTransaction(adFactoryId, "deployDummyAd", params, "address", false);
+    let newContractId = await contractExecuteTransaction(payload.factoryContractId, "deployDummyAd", params, "address", false);
     console.log(newContractId);
 
     // return;
@@ -80,7 +92,7 @@ export const actions = {
       },
     ];
 
-    let status = await contractExecuteTransaction(userLookupId, "addAd", params2, false, false);
+    let status = await contractExecuteTransaction(payload.lookupContractId, "addAd", params2, false, false);
 
     console.log(status);
 

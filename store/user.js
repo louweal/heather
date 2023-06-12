@@ -44,8 +44,6 @@ export const mutations = {
     state.location = dd.location;
     state.email = dd.email;
     state.phone = dd.phone;
-
-    console.log(state.email);
   },
 
   signIn(state) {
@@ -62,7 +60,12 @@ export const actions = {
   async getUserData({ commit, state }, payload) {
     // try to get userdata from contract
     let params = [{ type: "address", value: payload.accountId }];
-    return await contractCallQuery(payload.contractId, "userdata", params, "string");
+    let metadata = await contractCallQuery(payload.contractId, "userdata", params, "string");
+
+    if (metadata) {
+      return decodeData(metadata);
+    }
+    return undefined;
   },
 
   async getUserId({ commit, state }, payload) {
@@ -75,11 +78,10 @@ export const actions = {
     // get number of registered users
 
     // console.log(payload.contractId);
-    return 99; // await contractCallQuery(payload.contractId, "numUsers", undefined, "uint32");
+    return await contractCallQuery(payload.contractId, "numUsers", undefined, "uint32");
   },
 
   async addUser({ commit, state }, payload) {
-    console.log(state.accountId);
     let params = [
       { type: "address", value: state.accountId },
       { type: "string", value: state.userData },
@@ -90,14 +92,13 @@ export const actions = {
 
   async addDummyUser({ commit, dispatch }, payload) {
     let isReg = await dispatch("getUserData", { accountId: payload.accountId, contractId: payload.contractId });
+    let encodedMetadata = encodeData(payload.metadata);
 
     if (!isReg) {
       let params = [
         { type: "address", value: payload.accountId },
-        { type: "string", value: payload.metadata },
+        { type: "string", value: encodedMetadata },
       ];
-      await delay(1000);
-      console.log("blub");
       let res = await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
       return res;
     } else {

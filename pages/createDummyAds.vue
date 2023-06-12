@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <div class="btn btn-primary mb-2" @click="createAds()">Create dummy users on Hedera</div>
+  <main class="text-center">
+    <div class="btn btn-primary mb-2" @click="createAds()">Create dummy ads on Hedera</div>
 
     <p>Inspect the console for details</p>
   </main>
@@ -73,6 +73,8 @@ export default {
           deposit: ad.deposit,
           rent: ad.rent,
           dummyOwner: owner,
+          lookupContractId: process.env.USER_LOOKUP_CONTRACT,
+          factoryContractId: process.env.AD_FACTORY,
         };
 
         let res = this.$store.dispatch("data/createDummyAdContract", payload);
