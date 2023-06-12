@@ -1,19 +1,11 @@
 export const state = () => ({
-  awaiting: false,
+  waiting: false,
 });
 
 export const mutations = {};
 
 export const actions = {
   // borrow contract
-
-  async createBorrowContract(state, payload) {
-    state.awaiting = true;
-
-    // deploy
-    await delay(5000);
-    state.awaiting = false;
-  },
 
   async sendBorrowRequest() {
     state.awaiting = true;

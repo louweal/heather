@@ -118,9 +118,7 @@ async function signerTransactionFlow(tx, isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     console.log(await provider.getTransactionReceipt(exTx.transactionId));
-    let rec = await provider.call(
-      new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)
-    ); // undefined .setIncludeChildren(true)
+    let rec = await provider.call(new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)); // undefined .setIncludeChildren(true)
     console.log(rec);
     return rec;
   }
@@ -160,7 +158,7 @@ export function getSolidityAddress(str) {
 }
 
 export async function contractExecuteTransaction(id, name, params, returnType = false, value = false) {
-  let tx = new ContractExecuteTransaction().setContractId(id).setGas(3000000);
+  let tx = new ContractExecuteTransaction().setContractId(id).setGas(9000000);
 
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));
@@ -176,11 +174,12 @@ export async function contractExecuteTransaction(id, name, params, returnType = 
 }
 
 export async function contractCallQuery(id, name, params, returnType) {
-  let tx = new ContractCallQuery().setContractId(id).setGas(200000);
+  let tx = new ContractCallQuery().setContractId(id).setGas(460000);
 
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));
   } else {
+    console.log("no params");
     tx = tx.setFunction(name);
   }
 

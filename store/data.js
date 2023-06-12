@@ -1,9 +1,16 @@
+import { encodeData, decodeData } from "../utils/encodeHelper";
+import { contractCallQuery, contractExecuteTransaction } from "../utils/contractService";
+
 export const state = () => ({
   ads: [],
   calls: [],
   owners: [],
   both: [], // combines ads and calls, sorted by date
+  waiting: false,
 });
+
+let adFactoryId = "0.0.14170753";
+let userLookupId = "0.0.14143945";
 
 export const mutations = {
   SET_ADS(state, payload) {
@@ -43,6 +50,51 @@ export const mutations = {
 
   updateOwnerDistance(state, searchLocation) {
     state.owners.forEach((a) => (a["distance"] = getDistance(a.location, searchLocation)));
+  },
+};
+
+export const actions = {
+  async createDummyAdContract({ commit, state }, payload) {
+    console.log("in createAdContract");
+
+    let params = [
+      { type: "string", value: encodeData(payload.metadata) },
+      { type: "uint32", value: payload.deposit * 1e8 },
+      { type: "uint32", value: payload.rent * 1e8 },
+      { type: "address", value: payload.dummyOwner },
+    ];
+
+    let newContractId = await contractExecuteTransaction(adFactoryId, "deployDummyAd", params, "address", false);
+    console.log(newContractId);
+
+    // return;
+
+    let params2 = [
+      {
+        type: "address",
+        value: payload.dummyOwner, // dummy owner of the contract
+      },
+      {
+        type: "address",
+        value: newContractId,
+      },
+    ];
+
+    let status = await contractExecuteTransaction(userLookupId, "addAd", params2, false, false);
+
+    console.log(status);
+
+    // add to store?
+
+    return newContractId;
+  },
+
+  async createBorrowContract(state, payload) {
+    state.waiting = true;
+
+    // deploy
+
+    state.waiting = false;
   },
 };
 

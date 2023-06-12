@@ -14,11 +14,11 @@
 
     <div class="card-footer" v-if="data.name">
       <div class="d-flex gap-2 align-items-center">
-        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="$store.commit('modals/show', { name: 'request', data: data })">
+        <button class="bg-light p-2 rounded-circle lh-1 text-white" @click="showModal()">
           <i class="bi bi-chat-text-fill"></i>
         </button>
         <div>
-          <div class="lh-1">{{ data.name }}</div>
+          <nuxt-link class="lh-1" :to="`/app/user/${data.id}`">{{ data.name }}</nuxt-link>
           <div class="lh-sm">
             {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
           </div>
@@ -40,6 +40,16 @@ export default {
   computed: {
     place() {
       return this.$store.state.search.place;
+    },
+  },
+
+  methods: {
+    showModal() {
+      if (this.$store.state.user.signedIn) {
+        this.$store.commit("modals/show", { name: "request", data: this.data });
+      } else {
+        this.$store.commit("modals/show", { name: "connect" });
+      }
     },
   },
 };

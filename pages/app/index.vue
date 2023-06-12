@@ -4,6 +4,7 @@
 
     <section>
       <div class="container-fluid" v-if="$store.state.data.ads">
+        {{ numUsers }}
         <div class="row gy-3">
           <div class="col-md-6 mr-md-2">
             <div class="row g-2">
@@ -33,11 +34,22 @@ export default {
       results: [],
       maxDistance: 1, // 1 km
       zoom: 15.5,
+      numUsers: -1,
     };
   },
 
-  created() {
+  async created() {
     this.results = this.filterOwners(this.maxDistance);
+
+    this.numUsers = await this.$store.dispatch("user/getNumUsers", { contractId: process.env.USER_LOOKUP_CONTRACT });
+
+    for (let i = 0; i < this.numUsers; i++) {
+      // let userId = await this.$store.dispatch("user/getUserId", {
+      //   contractId: process.env.USER_LOOKUP_CONTRACT,
+      //   i,
+      // });
+      // console.log(userId);
+    }
   },
 
   methods: {

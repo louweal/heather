@@ -19,6 +19,7 @@ async function main() {
   const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
   const contractName = "UserLookup";
+  // const contractName = "AdFactory";
 
   const bytecode = fs.readFileSync(`./utils/contracts/${contractName}_sol_${contractName}.bin`);
 
@@ -29,7 +30,7 @@ async function main() {
   const createContractRx = await createContractTx.getReceipt(client);
   const contractId = createContractRx.contractId;
 
-  console.log(`Contract created with ID: ${contractId}`);
+  console.log(`New ${contractName} contract created with ID: ${contractId}`);
 
   process.exit();
 }

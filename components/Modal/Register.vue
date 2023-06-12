@@ -12,7 +12,7 @@
         @input="(e) => (name = e.target.value)"
       />
 
-      <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => (placeName = e.target.value)" />
+      <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => (neighborhood = e.target.value)" />
 
       <span class="fw-bold">Personal details</span>
 
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       name: undefined,
-      placeName: undefined,
+      neighborhood: undefined,
       location: undefined,
       email: undefined,
       phone: undefined,
@@ -54,7 +54,7 @@ export default {
       // add user data to store
       this.$store.commit("user/setUserData", {
         name: this.name,
-        placeName: this.placeName,
+        neighborhood: this.neighborhood,
         email: this.email,
         phone: this.phone,
       });

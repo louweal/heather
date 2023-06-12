@@ -45,7 +45,7 @@
               <div class="rounded bg-white p-3">
                 <h3 class="mb-0 font-family-base">{{ name }}</h3>
 
-                <div><i class="bi bi-houses-fill"></i> {{ placeName }}</div>
+                <div><i class="bi bi-houses-fill"></i> {{ neighborhood }}</div>
                 <br />
                 <h4 class="font-family-base fs-6">Personal details</h4>
                 <div>
@@ -98,8 +98,8 @@ export default {
     name() {
       return this.$store.state.user.name;
     },
-    placeName() {
-      return this.$store.state.user.placeName;
+    neighborhood() {
+      return this.$store.state.user.neighborhood;
     },
     lat() {
       return this.$store.state.user.location ? this.$store.state.user.location.lat : 0;

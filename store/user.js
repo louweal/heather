@@ -1,4 +1,5 @@
 import { contractCallQuery, contractExecuteTransaction } from "../utils/contractService";
+import { encodeData, decodeData } from "../utils/encodeHelper";
 
 export const state = () => ({
   signedIn: false,
@@ -6,7 +7,7 @@ export const state = () => ({
   userData: undefined, // encoded
   // new user input:
   name: "Jane Doe",
-  placeName: undefined,
+  neighborhood: undefined,
   location: undefined,
   phone: undefined,
   email: undefined,
@@ -23,7 +24,7 @@ export const mutations = {
 
   setUserData(state, payload) {
     state.name = payload.name ? payload.name : state.name;
-    state.placeName = payload.placeName ? payload.placeName : state.placeName;
+    state.neighborhood = payload.neighborhood ? payload.neighborhood : state.neighborhood;
     state.email = payload.email ? payload.email : state.email;
     state.phone = payload.phone ? payload.phone : state.phone;
 
@@ -39,7 +40,7 @@ export const mutations = {
 
     let dd = decodeData(payload);
     state.name = dd.name;
-    state.placeName = dd.placeName;
+    state.neighborhood = dd.neighborhood;
     state.location = dd.location;
     state.email = dd.email;
     state.phone = dd.phone;
@@ -58,10 +59,23 @@ export const mutations = {
 };
 
 export const actions = {
-  async isRegistered({ commit, state }, payload) {
+  async getUserData({ commit, state }, payload) {
     // try to get userdata from contract
     let params = [{ type: "address", value: payload.accountId }];
     return await contractCallQuery(payload.contractId, "userdata", params, "string");
+  },
+
+  async getUserId({ commit, state }, payload) {
+    // try to get userdata from contract
+    let params = [{ type: "uint256", value: payload.i }];
+    return await contractCallQuery(payload.contractId, "users", params, "address");
+  },
+
+  async getNumUsers({ commit, state }, payload) {
+    // get number of registered users
+
+    // console.log(payload.contractId);
+    return 99; // await contractCallQuery(payload.contractId, "numUsers", undefined, "uint32");
   },
 
   async addUser({ commit, state }, payload) {
@@ -73,16 +87,23 @@ export const actions = {
 
     return await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
   },
+
+  async addDummyUser({ commit, dispatch }, payload) {
+    let isReg = await dispatch("getUserData", { accountId: payload.accountId, contractId: payload.contractId });
+
+    if (!isReg) {
+      let params = [
+        { type: "address", value: payload.accountId },
+        { type: "string", value: payload.metadata },
+      ];
+      await delay(1000);
+      console.log("blub");
+      let res = await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
+      return res;
+    } else {
+      console.log(`User ${payload.accountId} was already registered`);
+    }
+  },
 };
 
-// helper functions
-
-function encodeData(data) {
-  return Buffer.from(JSON.stringify(data)).toString("base64");
-}
-
-function decodeData(str) {
-  let decoded = Buffer.from(str, "base64").toString();
-  // console.log("decoded :>> ", decoded);
-  return JSON.parse(decoded);
-}
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

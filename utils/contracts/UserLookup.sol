@@ -4,13 +4,23 @@ pragma solidity ^0.8.17;
 contract UserLookup {
     address public operator;
 
+    uint32 public numUsers;
     mapping(address => address[]) public ads;
     mapping(address => address[]) public calls;
     mapping(address => string) public userdata; // encoded data
+    address[] public users;
 
     constructor() {
         operator = msg.sender;
     }
+
+    // function getUserId(uint256 i) public view returns (address) {
+    //     return users[i];
+    // }
+
+    // function getNumUsers() public view returns (uint32) {
+    //     return numUsers;
+    // }
 
     // ads
     function getAd(address _accountId, uint32 i) public view returns (address) {
@@ -40,7 +50,9 @@ contract UserLookup {
     }
 
     function addUser(address _accountId, string memory _userData) public onlyOperator() {
+        users.push(_accountId);
         userdata[_accountId] = _userData;
+        emit NewUser(numUsers++);
     }
 
     // modifiers
@@ -54,4 +66,7 @@ contract UserLookup {
         }
         _;
     }
+
+        // events
+    event NewUser(uint256 indexed numUsers);
 }
