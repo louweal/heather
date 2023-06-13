@@ -13,7 +13,7 @@ export default {
   owners,
 
   methods: {
-    createUsers() {
+    async createUsers() {
       let dummies = [
         "0.0.14171302",
         "0.0.14171303",
@@ -69,7 +69,7 @@ export default {
 
         // console.log(payload);
 
-        let res = this.$store.dispatch("user/addDummyUser", payload);
+        let res = await this.$store.dispatch("user/addDummyUser", payload);
       }
     },
   },

@@ -41,8 +41,6 @@ async function main() {
     dummies.push(newAccountId.toString());
   }
 
-  console.log(dummies);
-
   //Verify the account balance
   // const accountBalance = await new AccountBalanceQuery().setAccountId(newAccountId).execute(client);
 

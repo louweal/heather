@@ -179,7 +179,7 @@ export async function contractCallQuery(id, name, params, returnType) {
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));
   } else {
-    console.log("no params");
+    // console.log("no params");
     tx = tx.setFunction(name);
   }
 

@@ -19,7 +19,7 @@
         <p v-if="markerInfo.available">
           To {{ markerInfo.type }}
 
-          <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">€{{ markerInfo.rent.start }}</span>
+          <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">ħ{{ markerInfo.rent.start }}</span>
         </p>
         <p v-else>Not available</p>
       </template>

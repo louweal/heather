@@ -19,7 +19,7 @@ export default {
   },
 
   methods: {
-    createAds() {
+    async createAds() {
       let ads = this.$options.ads;
 
       let dummies = [
@@ -55,7 +55,9 @@ export default {
         "0.0.14171335",
       ];
 
-      for (let i = 0; i < ads.length; i++) {
+      let l = ads.length;
+
+      for (let i = 0; i < l; i++) {
         let ad = ads[i];
 
         let owner = dummies[ad.owner];
@@ -66,6 +68,10 @@ export default {
           visuals: ad.visuals,
           type: ad.type,
           category: ad.category,
+          owner: owner,
+          deposit: ad.deposit,
+          rent: ad.rent,
+          date: ad.date,
         };
 
         let payload = {
@@ -77,7 +83,7 @@ export default {
           factoryContractId: process.env.AD_FACTORY,
         };
 
-        let res = this.$store.dispatch("data/createDummyAdContract", payload);
+        let res = await this.$store.dispatch("data/deployDummyAd", payload);
       }
     },
   },

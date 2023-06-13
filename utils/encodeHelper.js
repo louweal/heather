@@ -4,6 +4,5 @@ export function encodeData(data) {
 
 export function decodeData(str) {
   let decoded = Buffer.from(str, "base64").toString();
-  // console.log("decoded :>> ", decoded);
   return JSON.parse(decoded);
 }

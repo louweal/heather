@@ -14,7 +14,6 @@
 export default {
   methods: {
     async connect() {
-      console.log(process.env.USER_LOOKUP_CONTRACT);
       let userdata = await this.$store.dispatch("user/getUserData", {
         contractId: process.env.USER_LOOKUP_CONTRACT,
         accountId: process.env.MY_ACCOUNT_ID,

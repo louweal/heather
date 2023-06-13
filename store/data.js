@@ -15,12 +15,17 @@ let userLookupId = "0.0.14143945";
 export const mutations = {
   SET_ADS(state, payload) {
     state.ads = payload;
+
     state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
     state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
     state.ads.sort((a, b) => (a.available > b.available ? -1 : 1));
 
     // set users also in localstorage
-    localStorage.setItem("ads", JSON.stringify(state.ads));
+    let ls = JSON.parse(localStorage.getItem("ads"));
+    if (payload) {
+      // todo: don't overwrite existing?
+      localStorage.setItem("ads", JSON.stringify(state.ads));
+    }
   },
   SET_CALLS(state, payload) {
     state.calls = payload;
@@ -37,8 +42,11 @@ export const mutations = {
   SET_USERS(state, payload) {
     state.owners = payload;
 
-    // set users also in localstorage
-    localStorage.setItem("owners", JSON.stringify(state.owners));
+    // set owners also in localstorage
+    let ls = JSON.parse(localStorage.getItem("owners"));
+    if (!ls && payload) {
+      localStorage.setItem("owners", JSON.stringify(state.owners));
+    }
   },
 
   SET_BOTH(state) {
@@ -66,20 +74,23 @@ export const mutations = {
 export const actions = {
   // async SET_USERS({ commit, dispatch }, payload) {},
 
-  async createDummyAdContract({ commit, state }, payload) {
-    console.log("in createAdContract");
-
+  async deployDummyAd({ commit, state }, payload) {
     let params = [
       { type: "string", value: encodeData(payload.metadata) },
       { type: "uint32", value: payload.deposit * 1e8 },
-      { type: "uint32", value: payload.rent * 1e8 },
+      { type: "uint32", value: payload.rent.start * 1e8 },
+      { type: "uint32", value: payload.rent.extra * 1e8 },
       { type: "address", value: payload.dummyOwner },
     ];
 
-    let newContractId = await contractExecuteTransaction(payload.factoryContractId, "deployDummyAd", params, "address", false);
-    console.log(newContractId);
-
-    // return;
+    let newContractId;
+    try {
+      console.log("start deployDummyAd");
+      newContractId = await contractExecuteTransaction(payload.factoryContractId, "deployDummyAd", params, "address", false);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
 
     let params2 = [
       {
@@ -88,26 +99,92 @@ export const actions = {
       },
       {
         type: "address",
-        value: newContractId,
+        value: newContractId.toString(),
       },
     ];
 
-    let status = await contractExecuteTransaction(payload.lookupContractId, "addAd", params2, false, false);
-
-    console.log(status);
-
-    // add to store?
-
-    return newContractId;
+    console.log("start addAd");
+    try {
+      let status = await contractExecuteTransaction(payload.lookupContractId, "addAd", params2, false, false);
+      console.log(status);
+      return newContractId;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   },
 
-  async createBorrowContract(state, payload) {
-    state.waiting = true;
+  async deployAd({ commit, state }, payload) {
+    let params = [
+      { type: "string", value: encodeData(payload.metadata) },
+      { type: "uint32", value: payload.deposit * 1e8 },
+      { type: "uint32", value: payload.rent.start * 1e8 },
+      { type: "uint32", value: payload.rent.extra * 1e8 },
+    ];
 
-    // deploy
+    let newContractId;
+    try {
+      console.log("start deployAd");
+      newContractId = await contractExecuteTransaction(payload.factoryContractId, "deployAd", params, "address", false);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
 
-    state.waiting = false;
+    let params2 = [
+      {
+        type: "address",
+        value: payload.accountId, // dummy owner of the contract
+      },
+      {
+        type: "address",
+        value: newContractId.toString(),
+      },
+    ];
+
+    console.log("start addAd");
+    try {
+      let status = await contractExecuteTransaction(payload.lookupContractId, "addAd", params2, false, false);
+      console.log(status);
+      return newContractId;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   },
+
+  async getAd({ commit, state }, payload) {
+    let params = [
+      {
+        type: "address",
+        value: payload.accountId, // dummy owner of the contract
+      },
+      {
+        type: "uint32",
+        value: payload.i,
+      },
+    ];
+
+    console.log("start getAd");
+    let adContractId = await contractCallQuery(payload.contractId, "getAd", params, "address");
+
+    if (adContractId) {
+      // get add metadata
+      console.log("start get add metadata");
+      let metadata = await contractCallQuery(adContractId, "metadata", false, "string");
+
+      return [adContractId, decodeData(metadata)];
+    }
+    return [undefined, undefined];
+  },
+
+  // async createBorrowContract(state, payload) {
+  //   state.waiting = true;
+
+  //   // deploy
+
+  //   state.waiting = false;
+  // },
 };
 
 function setNumItems(items) {

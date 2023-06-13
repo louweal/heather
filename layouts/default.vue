@@ -10,6 +10,7 @@
         <Nuxt />
 
         <Footer v-if="!$route.path.includes('/app')" />
+
         <div v-else><!-- empty --></div>
       </div>
     </div>
@@ -44,6 +45,12 @@
     <notice v-if="$store.state.notice.active"> </notice>
 
     <spinner />
+    <div class="btn btn-primary" @click="setUsers()">set users</div>
+    <div class="btn btn-primary" @click="setAds()">set ads /both</div>
+
+    <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>
+
+    <nuxt-link class="btn btn-secondary" to="/createDummyAds">create dummy ads</nuxt-link>
   </div>
 </template>
 
@@ -64,16 +71,6 @@ export default {
 
   async fetch() {
     // this.$store.commit("data/SET_OWNERS", this.$options.owners);
-
-    let users = await this.getUsers();
-    this.$store.commit("data/SET_USERS", users);
-
-    let ads = await this.getAds();
-    this.$store.commit("data/SET_ADS", ads);
-
-    // this.$store.commit("data/SET_ADS", this.$options.ads);
-    // this.$store.commit("data/SET_CALLS", this.$options.calls);
-    // this.$store.commit("data/SET_BOTH"); // combine ads and calls
   },
 
   async mounted() {
@@ -83,13 +80,27 @@ export default {
   },
 
   methods: {
+    async setUsers() {
+      let users = await this.getUsers();
+      await this.$store.commit("data/SET_USERS", users);
+    },
+
+    async setAds() {
+      console.log("setads");
+      let ads = await this.getAds();
+      this.$store.commit("data/SET_ADS", ads);
+
+      // this.$store.commit("data/SET_ADS", this.$options.ads);
+      this.$store.commit("data/SET_CALLS", this.$options.calls);
+      this.$store.commit("data/SET_BOTH"); // combine ads and calls
+    },
     async getUsers() {
       // find owners in localstorage
 
-      let lsOwners = JSON.parse(localStorage.getItem("owners"));
+      let lsOwners = localStorage.getItem("owners");
 
-      if (lsOwners) {
-        return lsOwners;
+      if (lsOwners && lsOwners !== "[]") {
+        return JSON.parse(lsOwners);
       } else {
         // get owners from hedera network
         let numUsers = await this.$store.dispatch("user/getNumUsers", { contractId: process.env.USER_LOOKUP_CONTRACT });
@@ -117,27 +128,39 @@ export default {
     },
 
     async getAds() {
-      let lsAds = JSON.parse(localStorage.getItem("ads"));
+      let lsAds = localStorage.getItem("ads");
 
-      if (lsAds) {
-        return lsAds;
+      if (lsAds && lsAds != "[]") {
+        return JSON.parse(lsAds);
       } else {
         // get ads from hedera network
 
         let users = this.$store.state.data.owners;
+
+        let ads = [];
         for (let i = 0; i < users.length; i++) {
           let user = users[i];
           let userId = user.id; //
+
           let numUserAds = await this.$store.dispatch("user/getNumAds", {
             contractId: process.env.USER_LOOKUP_CONTRACT,
             accountId: userId,
           });
 
           for (let j = 0; j < numUserAds; j++) {
-            // todo getAd
+            let payload = {
+              contractId: process.env.USER_LOOKUP_CONTRACT,
+              accountId: userId,
+              i: j,
+            };
+
+            let [adContractId, ad] = await this.$store.dispatch("data/getAd", payload);
+            let adData = { ...ad, id: adContractId, available: true };
+
+            ads.push(adData);
           }
         }
-        return users;
+        return ads;
       }
     },
   },

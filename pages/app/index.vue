@@ -3,7 +3,7 @@
     <google-map class="d-none d-md-block" :zoom="zoom" :results="results" />
 
     <section>
-      <div class="container-fluid" v-if="$store.state.data.ads">
+      <div class="container-fluid" v-if="$store.state.data.both">
         <div class="row gy-3">
           <div class="col-md-6 mr-md-2">
             <div class="row g-2">

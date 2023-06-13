@@ -77,8 +77,16 @@ export const actions = {
   async getNumUsers({ commit, state }, payload) {
     // get number of registered users
 
-    // console.log(payload.contractId);
     return await contractCallQuery(payload.contractId, "numUsers", undefined, "uint32");
+  },
+
+  async getNumAds({ commit, state }, payload) {
+    // get number of ads for user
+    let params = [{ type: "address", value: payload.accountId }];
+
+    // console.log(payload.contractId);
+    console.log("start getNumAds");
+    return await contractCallQuery(payload.contractId, "getNumAds", params, "uint32");
   },
 
   async addUser({ commit, state }, payload) {
@@ -87,7 +95,12 @@ export const actions = {
       { type: "string", value: state.userData },
     ];
 
-    return await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
+    try {
+      return await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   },
 
   async addDummyUser({ commit, dispatch }, payload) {
@@ -99,8 +112,12 @@ export const actions = {
         { type: "address", value: payload.accountId },
         { type: "string", value: encodedMetadata },
       ];
-      let res = await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
-      return res;
+      try {
+        return await contractExecuteTransaction(payload.contractId, "addUser", params, false, false);
+      } catch (error) {
+        console.log(error);
+        return undefined;
+      }
     } else {
       console.log(`User ${payload.accountId} was already registered`);
     }

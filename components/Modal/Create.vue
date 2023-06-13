@@ -49,7 +49,7 @@
           class="form-control"
           :class="isInteger(newData.rent.start) ? false : 'border-danger'"
           placeholder="Rent first day (optional)"
-          @input="(e) => (newData['rent']['start'] = e.target.value)"
+          @input="(e) => (newData['rent']['start'] = +e.target.value)"
         />
       </div>
 
@@ -61,7 +61,7 @@
           class="form-control"
           :class="isInteger(newData.rent.extra) ? false : 'border-danger'"
           placeholder="Rent for each additional day (optional)"
-          @input="(e) => (newData['rent']['extra'] = e.target.value)"
+          @input="(e) => (newData['rent']['extra'] = +e.target.value)"
         />
       </div>
 
@@ -78,7 +78,7 @@ import Vue from "vue";
 export default {
   data() {
     return {
-      newData: { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "" },
+      newData: { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined },
       photos: [],
       submitted: false,
       errors: false,
@@ -136,12 +136,11 @@ export default {
 
     setDeposit(value) {
       this.isInteger(value); //check
-      Vue.set(this.newData, "deposit", value);
+      Vue.set(this.newData, "deposit", +value);
     },
 
     async createListing() {
       this.submitted = true;
-      console.log(this.newData);
 
       // check title is longer than 2
       this.isValue(this.newData.title);
@@ -153,11 +152,30 @@ export default {
         this.isInteger(this.newData.deposit)
       ) {
         // todo create contract
-        if (this.newData.type === "borrow") {
-          this.$store.dispatch("hedera/createBorrowContract", this.newData);
+
+        if (this.newData.rent.start > 0) {
+          this.newData["type"] = "rent";
         } else {
-          this.$store.dispatch("hedera/createRentContract", this.newData);
+          this.newData["type"] = "borrow";
         }
+
+        // console.log(this.newData);
+
+        let ad = this.newData;
+        let metadata = ad;
+
+        let payload = {
+          metadata,
+          deposit: +ad.deposit,
+          rent: ad.rent,
+          accountId: process.env.MY_ACCOUNT_ID,
+          factoryContractId: process.env.AD_FACTORY,
+          lookupContractId: process.env.USER_LOOKUP_CONTRACT,
+        };
+
+        // console.log(payload);
+        // return;
+        this.$store.dispatch("data/deployAd", payload);
 
         this.$store.commit("modals/hide");
       } else {

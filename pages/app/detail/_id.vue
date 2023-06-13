@@ -1,29 +1,32 @@
 <template>
-  <main>
+  <main v-if="item">
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-md-6 col-xl-8 position-relative order-1 order-md-0">
-            <template v-for="(v, i) in item.visuals">
-              <div class="align-self-center" :class="i === curImage ? false : 'd-none'" :key="i">
-                <visual :data="{ visual: v, name: item.title }" />
-              </div>
-            </template>
-            <button
-              @click="curImage -= 1"
-              class="prev btn btn-primary position-absolute start-0 top-50 translate-middle-y m-3 p-2 lh-1 text-white"
-              v-if="curImage > 0"
-            >
-              <i class="bi bi-arrow-left"></i>
-            </button>
+            <template v-if="item.visuals">
+              <template v-for="(v, i) in item.visuals">
+                <div class="align-self-center" :class="i === curImage ? false : 'd-none'" :key="i">
+                  <visual :data="{ visual: v, name: item.title }" />
+                </div>
+              </template>
 
-            <button
-              @click="curImage += 1"
-              class="next btn btn-primary position-absolute end-0 top-50 translate-middle-y m-3 p-2 lh-1 text-white"
-              v-if="item.visuals.length > curImage + 1"
-            >
-              <i class="bi bi-arrow-right"></i>
-            </button>
+              <button
+                @click="curImage -= 1"
+                class="prev btn btn-primary position-absolute start-0 top-50 translate-middle-y m-3 p-2 lh-1 text-white"
+                v-if="curImage > 0"
+              >
+                <i class="bi bi-arrow-left"></i>
+              </button>
+
+              <button
+                @click="curImage += 1"
+                class="next btn btn-primary position-absolute end-0 top-50 translate-middle-y m-3 p-2 lh-1 text-white"
+                v-if="item.visuals.length > curImage + 1"
+              >
+                <i class="bi bi-arrow-right"></i>
+              </button>
+            </template>
           </div>
           <div class="col-12 col-md-6 col-xl-4 order-0 order-md-1 h-100">
             <div class="bg-white rounded p-3 pt-2 d-flex justify-content-between flex-column">
@@ -64,7 +67,7 @@
         </div>
       </div>
     </section>
-    <section>
+    <section v-if="similar.length > 0">
       <div class="container-fluid">
         <h3>Similar items</h3>
 
@@ -90,7 +93,7 @@ export default {
   },
 
   created() {
-    this.id = +this.$route.params.id;
+    this.id = this.$route.params.id;
   },
   computed: {
     item() {
