@@ -62,9 +62,13 @@ export default {
     getCenter() {
       if (this.$store.state.search.place) {
         let place = this.$store.state.search.place;
-        return { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+        if (place.geometry) {
+          return { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+        } else if (this.$store.state.user.location) {
+          return { lat: this.$store.state.user.location.lat, lng: this.$store.state.user.location.lng };
+        }
       }
-      return this.$store.state.defaultLoc;
+      return this.$store.state.origin;
     },
 
     async initMap() {
@@ -170,7 +174,7 @@ export default {
           map: this.$map,
           position: m.location,
           title: m.title,
-          icon: m.available ? pins.primary : pins.grey,
+          icon: pins.primary,
         });
 
         this.gmapmarkers.push(marker);
@@ -191,7 +195,6 @@ export default {
     setAdMarkerInfo(m) {
       // sets data in info box
       this.markerInfo = { show: false };
-      this.markerInfo["available"] = m.available;
       this.markerInfo["title"] = m.title;
       this.markerInfo["type"] = m.type;
       if (m.type === "rent") {

@@ -16,12 +16,11 @@
       </div>
 
       <template v-if="markerInfo.type === 'rent' || markerInfo.type === 'borrow'">
-        <p v-if="markerInfo.available">
+        <p>
           To {{ markerInfo.type }}
 
           <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">ħ{{ markerInfo.rent.start }}</span>
         </p>
-        <p v-else>Not available</p>
       </template>
 
       <p v-if="markerInfo.type === 'user' && numItems > 0">{{ numItems }} item<span v-if="numItems > 1">s</span></p>

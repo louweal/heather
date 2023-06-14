@@ -61,12 +61,21 @@
                 <div><i class="bi bi-telephone-fill"></i> {{ phone }}</div>
 
                 <div class="mt-3 d-grid">
-                  <button class="btn btn-primary" @click="$store.commit('user/signOut')">Sign out</button>
+                  <button
+                    class="btn btn-primary"
+                    @click="
+                      $store.commit('user/signOut');
+                      $router.push('/');
+                    "
+                  >
+                    Sign out
+                  </button>
                 </div>
               </div>
               <button class="btn" @click="$store.commit('modals/show', { name: 'update' })">
                 <i class="bi bi-pencil-square"></i> Edit profile
               </button>
+              <button class="btn text-danger" @click="removeUser()"><i class="bi bi-x-lg"></i> Delete profile</button>
             </div>
           </sticky>
         </div>
@@ -76,6 +85,8 @@
 </template>
 
 <script>
+const { removeUser } = require("@/utils/storage/users.js");
+
 export default {
   data() {
     return {};
@@ -131,10 +142,10 @@ export default {
     },
 
     ads() {
-      return this.$store.state.data.ads.filter((a) => a.owner !== this.$store.state.user.accountId);
+      return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.accountId);
     },
     calls() {
-      return this.$store.state.data.calls.filter((a) => a.owner !== this.$store.state.user.accountId);
+      return this.$store.state.data.calls.filter((a) => a.owner === this.$store.state.user.accountId);
     },
 
     numAds() {
@@ -152,6 +163,14 @@ export default {
           statusCode: 403,
           message: "Access denied",
         });
+      }
+    },
+
+    async removeUser() {
+      let res = await removeUser();
+      if (res === "SUCCESS") {
+        this.$store.commit("user/signOut");
+        this.$router.push("/");
       }
     },
   },

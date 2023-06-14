@@ -125,6 +125,7 @@ export default {
       // filter to local results only
       if (place) {
         results = this.$store.state.data.both.filter((a) => a.distance <= this.maxDistance);
+        console.log(this.$store.state.data.both);
       } else {
         console.log("Error: unknown search location");
         return [];

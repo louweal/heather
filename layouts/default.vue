@@ -51,10 +51,23 @@
     <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>
 
     <nuxt-link class="btn btn-secondary" to="/createDummyAds">create dummy ads</nuxt-link>
+
+    <br />
+    Users: <br />
+
+    {{ $store.state.data.owners }}
+
+    <br />
+    Ads:
+    <br />
+    {{ $store.state.data.ads }}
   </div>
 </template>
 
 <script>
+const { getUserId, getUserData } = require("@/utils/storage/users.js");
+const { getAd } = require("@/utils/storage/ads.js");
+
 // import owners from "@/data/owners";
 import ads from "@/data/ads";
 import calls from "@/data/calls";
@@ -74,7 +87,6 @@ export default {
   },
 
   async mounted() {
-    console.log(process.env.STORAGE_CONTRACT);
     // let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     // let pushdown = document.querySelector("#pushdown"); // refs?
     // pushdown.style.height = headerHeight + "px";
@@ -87,82 +99,69 @@ export default {
     },
 
     async setAds() {
-      console.log("setads");
-      let ads = await this.getAds();
-      this.$store.commit("data/SET_ADS", ads);
+      if (this.$store.state.user.signedIn) {
+        let ads = await this.getAds();
+        console.log(ads);
+        this.$store.commit("data/SET_ADS", ads);
 
-      // this.$store.commit("data/SET_ADS", this.$options.ads);
-      this.$store.commit("data/SET_CALLS", this.$options.calls);
-      this.$store.commit("data/SET_BOTH"); // combine ads and calls
+        // this.$store.commit("data/SET_ADS", this.$options.ads);
+        this.$store.commit("data/SET_CALLS", this.$options.calls);
+        this.$store.commit("data/SET_BOTH"); // combine ads and calls
+      } else {
+        console.log("Please sign in first");
+      }
     },
     async getUsers() {
-      // find owners in localstorage
+      // get owners from hedera network
 
-      let lsOwners = localStorage.getItem("owners");
+      let users = [];
+      for (let i = 0; i < 999999; i++) {
+        let userId = await getUserId(i);
+        console.log(userId);
 
-      if (lsOwners && lsOwners !== "[]") {
-        return JSON.parse(lsOwners);
-      } else {
-        // get owners from hedera network
-        let numUsers = await this.$store.dispatch("user/getNumUsers", { contractId: process.env.USER_LOOKUP_CONTRACT });
+        // get user data
+        if (userId) {
+          let userData = await getUserData(userId);
+          // add user's accountId to data
+          userData = { ...userData, id: userId };
 
-        let users = [];
-        for (let i = 0; i < numUsers; i++) {
-          let userId = await this.$store.dispatch("user/getUserId", {
-            contractId: process.env.USER_LOOKUP_CONTRACT,
-            i,
-          });
-
-          // get user data
-          if (userId) {
-            let userData = await this.$store.dispatch("user/getUserData", {
-              contractId: process.env.USER_LOOKUP_CONTRACT,
-              accountId: userId,
-            });
-            // add user's accountId to data
-            userData = { ...userData, id: userId };
-            users.push(userData);
-          }
+          users.push(userData);
+        } else {
+          //reached end of userlist
+          break;
         }
-        return users;
       }
+      return users;
     },
 
     async getAds() {
-      let lsAds = localStorage.getItem("ads");
+      // get ads from hedera network
+      let users = this.$store.state.data.owners;
 
-      if (lsAds && lsAds != "[]") {
-        return JSON.parse(lsAds);
-      } else {
-        // get ads from hedera network
+      let origin = this.$store.state.user.location || this.$store.state.origin;
+      console.log("origin :>> ", origin);
+      this.$store.commit("data/updateOwnerDistance", origin);
 
-        let users = this.$store.state.data.owners;
+      let neighbors = users.filter((a) => a.distance <= 12);
+      console.log(neighbors.length);
 
-        let ads = [];
-        for (let i = 0; i < users.length; i++) {
-          let user = users[i];
-          let userId = user.id; //
+      let ads = [];
+      for (let i = 0; i < neighbors.length; i++) {
+        let user = users[i];
 
-          let numUserAds = await this.$store.dispatch("user/getNumAds", {
-            contractId: process.env.USER_LOOKUP_CONTRACT,
-            accountId: userId,
-          });
+        for (let j = 0; j < 9999; j++) {
+          let ad = await getAd(user.id, j);
 
-          for (let j = 0; j < numUserAds; j++) {
-            let payload = {
-              contractId: process.env.USER_LOOKUP_CONTRACT,
-              accountId: userId,
-              i: j,
-            };
-
-            let [adContractId, ad] = await this.$store.dispatch("data/getAd", payload);
-            let adData = { ...ad, id: adContractId, available: true };
-
+          if (ad) {
+            let adData = { ...ad, owner: user.id, i: j };
             ads.push(adData);
+          } else {
+            //reached end of ad list
+            break;
           }
         }
-        return ads;
       }
+      return ads;
     },
   },
 };

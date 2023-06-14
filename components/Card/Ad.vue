@@ -4,12 +4,11 @@
     <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
 
-      <p v-if="data.available">
+      <p>
         To {{ data.type }}
 
         <span v-if="data.type === 'rent' && data.rent" class="opacity-50">ħ{{ data.rent.start }}</span>
       </p>
-      <p v-else>Not available</p>
     </nuxt-link>
 
     <div class="card-footer" v-if="data.name">
@@ -18,7 +17,7 @@
           <i class="bi bi-chat-text-fill"></i>
         </button>
         <div>
-          <nuxt-link class="lh-1" :to="`/app/user/${data.id}`">{{ data.name }}</nuxt-link>
+          <nuxt-link class="lh-1" :to="`/app/user/${data.owner}`">{{ data.name }}</nuxt-link>
           <div class="lh-sm">
             {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
           </div>
@@ -40,6 +39,9 @@ export default {
   computed: {
     place() {
       return this.$store.state.search.place;
+    },
+    userId() {
+      // return this.$store.state.data.owners.find(o => o.id === this.data.owner).
     },
   },
 

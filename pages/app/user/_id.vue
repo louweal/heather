@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main v-if="user">
     <section>
       <div class="container-xl">
         <h1>
@@ -30,7 +30,7 @@ export default {
   },
 
   created() {
-    this.id = +this.$route.params.id;
+    this.id = this.$route.params.id;
   },
 
   computed: {

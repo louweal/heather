@@ -10,10 +10,8 @@
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
-        <div class="d-none d-md-block g-5 me-2">
+        <div class="d-none d-md-block g-5 me-2" v-if="$store.state.user.signedIn">
           <nuxt-link to="/account">Account</nuxt-link>
-
-          <!-- <div class="btn btn-primary" @click="$store.commit('modals/show', { name: 'welcome' })">Welcome</div> -->
         </div>
 
         <div
@@ -156,7 +154,7 @@ export default {
           center = searchLocation;
         } else {
           // use default
-          center = this.$store.state.defaultLoc;
+          center = this.$store.state.origin;
         }
 
         this.$store.commit("data/updateDistance", center);

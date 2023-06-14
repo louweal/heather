@@ -63,6 +63,11 @@
             </div>
 
             <quick-map class="my-3" :marker="item" />
+
+            <button class="btn" @click="$store.commit('modals/show', { name: 'updateAd' })">
+              <i class="bi bi-pencil-square"></i> Edit item
+            </button>
+            <button class="btn text-danger" @click="removeAd()"><i class="bi bi-x-lg"></i> Delete item</button>
           </div>
         </div>
       </div>
@@ -84,6 +89,8 @@
 </template>
 
 <script>
+const { removeAd } = require("@/utils/storage/ads.js");
+
 export default {
   data() {
     return {
@@ -109,6 +116,12 @@ export default {
         .filter((a) => a.id !== this.id)
         .filter((a) => a.category === category)
         .slice(0, 6);
+    },
+  },
+
+  methods: {
+    async removeAd() {
+      // await removeAd(this.item.owner, this.item.i);
     },
   },
 };
