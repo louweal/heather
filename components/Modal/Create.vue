@@ -1,15 +1,6 @@
 <template>
   <div v-if="$store.state.modals.show === 'create'">
     <div class="d-grid gap-2">
-      <!-- <div class="btn-group w-100 d-flex" role="group" aria-label="type">
-        <button type="button" class="btn" :class="newData['type'] === 'borrow' ? 'btn-primary' : 'btn-light'" @click="setType('borrow')">
-          To borrow
-        </button>
-        <button type="button" class="btn" :class="newData['type'] === 'rent' ? 'btn-primary' : 'btn-light'" @click="setType('rent')">
-          To rent
-        </button>
-      </div> -->
-
       <div v-if="photos.length > 0" class="row row-cols-3 g-2">
         <div class="col align-self-center" v-for="(p, i) in photos" :key="i">
           <img :src="photos[i]" width="100%" />
@@ -154,17 +145,12 @@ export default {
     async createListing() {
       this.submitted = true;
 
-      // check title is longer than 2
-      this.isValue(this.newData.title);
-
       if (
         this.isValue(this.newData.title) &&
         this.isInteger(this.newData.rent.start) &&
         this.isInteger(this.newData.rent.extra) &&
         this.isInteger(this.newData.deposit)
       ) {
-        // todo create contract
-
         this.newData["visuals"] = this.visuals;
 
         if (this.newData.rent.start > 0) {
@@ -172,8 +158,6 @@ export default {
         } else {
           this.newData["type"] = "borrow";
         }
-
-        // console.log(this.newData);
 
         let data = { ...this.newData, id: self.crypto.randomUUID(), date: parseInt(new Date().getTime() / 1000) };
 

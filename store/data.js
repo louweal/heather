@@ -48,6 +48,10 @@ export const mutations = {
 
   updateAd(state, ad) {},
 
+  removeAd(state, id) {
+    state.ads = state.ads.filter((a) => a.id !== id);
+  },
+
   addCall(state, call) {
     let newCall = {
       ...call,
@@ -96,10 +100,10 @@ function getDistance(origin, destination) {
     destination = new google.maps.LatLng(destination.lat(), destination.lng());
   } catch (err) {}
 
+  console.log(origin);
+  console.log("destination :>> ", destination);
   let distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
-  console.log(distance);
   distance = isNaN(distance) ? 0 : distance;
-  console.log(distance);
 
   let distanceInKm = parseFloat(distance / 1000).toFixed(1);
   return distanceInKm;

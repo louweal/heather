@@ -63,11 +63,14 @@
             </div>
 
             <quick-map class="my-3" :marker="item" />
+            <template v-if="$store.state.user.accountId === item.owner">
+              <!-- <button class="btn" @click="$store.commit('modals/show', { name: 'updateAd' })">
+                <i class="bi bi-pencil-square"></i> Edit item
+              </button> -->
+              <button class="btn text-danger" @click="removeAd()"><i class="bi bi-x-lg"></i> Delete item</button>
 
-            <button class="btn" @click="$store.commit('modals/show', { name: 'updateAd' })">
-              <i class="bi bi-pencil-square"></i> Edit item
-            </button>
-            <button class="btn text-danger" @click="removeAd()"><i class="bi bi-x-lg"></i> Delete item</button>
+              <nuxt-link :to="$route.path + '/request/0.0.1234567'">Request page</nuxt-link>
+            </template>
           </div>
         </div>
       </div>
@@ -120,8 +123,13 @@ export default {
   },
 
   methods: {
+    async updateAd() {},
     async removeAd() {
-      // await removeAd(this.item.owner, this.item.i);
+      console.log(this.item.owner);
+      console.log(this.item.i);
+      await removeAd(this.item.owner, this.item.i);
+      this.$store.commit("data/removeAd", this.item.id);
+      this.$router.push("/account");
     },
   },
 };

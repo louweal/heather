@@ -38,6 +38,10 @@
       <modal-create />
     </modal>
 
+    <modal name="updateAd" title="Change item details">
+      <modal-update-ad />
+    </modal>
+
     <modal name="call" title="Place a call">
       <modal-call />
     </modal>
@@ -46,7 +50,16 @@
 
     <spinner />
     <div class="btn btn-primary" @click="setUsers()">set users</div>
-    <div class="btn btn-primary" @click="setAds()">set ads /both</div>
+    <div
+      class="btn btn-primary"
+      @click="
+        setAds();
+        setCalls();
+        $store.commit('data/SET_BOTH');
+      "
+    >
+      set ads & calls
+    </div>
 
     <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>
 
@@ -67,15 +80,16 @@
 <script>
 const { getUserId, getUserData } = require("@/utils/storage/users.js");
 const { getAd } = require("@/utils/storage/ads.js");
+const { getCall } = require("@/utils/storage/calls.js");
 
 // import owners from "@/data/owners";
-import ads from "@/data/ads";
-import calls from "@/data/calls";
+// import ads from "@/data/ads";
+// import calls from "@/data/calls";
 
 export default {
   // owners,
-  ads,
-  calls,
+  // ads,
+  // calls,
 
   transition: {
     name: "page",
@@ -103,14 +117,20 @@ export default {
         let ads = await this.getAds();
         console.log(ads);
         this.$store.commit("data/SET_ADS", ads);
-
-        // this.$store.commit("data/SET_ADS", this.$options.ads);
-        this.$store.commit("data/SET_CALLS", this.$options.calls);
-        this.$store.commit("data/SET_BOTH"); // combine ads and calls
       } else {
-        console.log("Please sign in first");
+        console.log("Please sign in first to get local results");
       }
     },
+
+    async setCalls() {
+      if (this.$store.state.user.signedIn) {
+        let calls = await this.getCalls();
+        console.log(calls);
+      } else {
+        console.log("Please sign in first to get local results");
+      }
+    },
+
     async getUsers() {
       // get owners from hedera network
 
@@ -135,6 +155,7 @@ export default {
     },
 
     async getAds() {
+      return [];
       // get ads from hedera network
       let users = this.$store.state.data.owners;
 
@@ -162,6 +183,37 @@ export default {
         }
       }
       return ads;
+    },
+
+    async getCalls() {
+      // get calls from hedera network
+      let users = this.$store.state.data.owners;
+
+      let origin = this.$store.state.user.location || this.$store.state.origin;
+      console.log("origin :>> ", origin);
+      this.$store.commit("data/updateOwnerDistance", origin);
+
+      let neighbors = users.filter((a) => a.distance <= 12);
+      console.log(neighbors.length);
+
+      let calls = [];
+      for (let i = 0; i < neighbors.length; i++) {
+        let user = users[i];
+
+        for (let j = 0; j < 9999; j++) {
+          let call = await getCall(user.id, j);
+
+          if (call) {
+            let callData = { ...call, owner: user.id, i: j };
+            ads.push(callData);
+          } else {
+            //reached end of ad list
+            break;
+          }
+        }
+      }
+      console.log("Num calls: " + calls.length);
+      return calls;
     },
   },
 };
