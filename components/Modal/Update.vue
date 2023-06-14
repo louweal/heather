@@ -25,7 +25,7 @@
 
       <input type="tel" class="form-control" :value="$store.state.user.phone" @input="(e) => (phone = e.target.value)" />
 
-      <div class="btn btn-primary" @click="updateAccount()">Update account</div>
+      <div class="btn btn-primary" @click="updateUser()">Update account</div>
 
       <p class="text-center">Updating your account on Heather may involve Hedera network fees.</p>
     </div>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+const { updateUser } = require("@/utils/storage/users.js");
+
 export default {
   data() {
     return {
@@ -46,21 +48,24 @@ export default {
   computed: {},
 
   methods: {
-    async updateAccount() {
+    async updateUser() {
       //todo validate form
 
-      // add user data to store
-      this.$store.commit("user/setUserData", {
-        name: this.name,
-        neighborhood: this.neighborhood,
-        email: this.email,
-        phone: this.phone,
-      });
+      let data = {
+        name: this.name || this.$store.state.user.name,
+        neighborhood: this.neighborhood || this.$store.state.user.neighborhood,
+        email: this.email || this.$store.state.user.email,
+        phone: this.phone || this.$store.state.user.phone,
+        location: this.place
+          ? { lat: this.place.geometry.location.lat(), lng: this.place.geometry.location.lng() }
+          : this.$store.state.user.location,
+      };
 
-      // add user to user lookup contract
-      let status = await this.$store.dispatch("user/addUser", {
-        contractId: process.env.USER_LOOKUP_CONTRACT,
-      });
+      // add user data to store
+      this.$store.commit("user/setUserData", data);
+
+      // update user in hedera storage
+      let status = await updateUser(data);
 
       if (status === "SUCCESS") {
         this.$store.commit("modals/hide");

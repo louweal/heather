@@ -13,15 +13,14 @@ const {
   Hbar,
 } = require("@hashgraph/sdk");
 
-async function transactionFlow(tx, returnType) {
+async function transactionFlow(id, tx, returnType) {
   let rx; // response
   let isVoid = returnType === false; // get returned value if function has returnType
 
-  if (process.env.MY_ACCOUNT_ID && process.env.MY_PRIVATE_KEY) {
-    //.env file found -> testing on localhost
-    rx = await clientTransactionFlow(tx, isVoid);
-  } else {
+  if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
     rx = await signerTransactionFlow(tx, isVoid);
+  } else {
+    rx = await clientTransactionFlow(tx, isVoid);
   }
 
   let val;
@@ -40,15 +39,15 @@ async function transactionFlow(tx, returnType) {
   return val; // return value
 }
 
-async function queryFlow(tx, returnType) {
+async function queryFlow(id, tx, returnType) {
   let exTx;
 
-  if (process.env.MY_ACCOUNT_ID && process.env.MY_PRIVATE_KEY) {
-    //.env file found -> testing on localhost
-    exTx = await clientQueryFlow(tx);
-  } else {
+  if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
     exTx = await signerQueryFlow(tx);
+  } else {
+    exTx = await clientQueryFlow(tx);
   }
+
   let val;
   switch (returnType) {
     case "string":
@@ -170,7 +169,12 @@ export async function contractExecuteTransaction(id, name, params, returnType = 
     tx = tx.setPayableAmount(Hbar.fromTinybars(value));
   }
 
-  return await transactionFlow(tx, returnType);
+  try {
+    return await transactionFlow(id, tx, returnType);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 }
 
 export async function contractCallQuery(id, name, params, returnType) {
@@ -183,5 +187,10 @@ export async function contractCallQuery(id, name, params, returnType) {
     tx = tx.setFunction(name);
   }
 
-  return await queryFlow(tx, returnType);
+  try {
+    return await queryFlow(id, tx, returnType);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 }

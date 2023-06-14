@@ -1,31 +1,32 @@
 <template>
   <div v-if="$store.state.modals.show === 'connect'">
-    <div class="d-grid">
-      <div class="btn btn-primary" @click="connect()">Connect</div>
+    <div class="d-grid gap-2">
+      <div class="btn btn-primary" @click="connectHashpack()">Connect using HashPack</div>
+
+      <div class="text-center" @click="connect()">or connect using a demo wallet</div>
     </div>
-
-    <!-- <br /> -->
-
-    <!-- <div class="" @click="$store.commit('modals/show', { name: 'register' })">Sign up</div> -->
   </div>
 </template>
 
 <script>
+const { getUserData } = require("@/utils/storage/users.js");
+
 export default {
   methods: {
     async connect() {
-      let userdata = await this.$store.dispatch("user/getUserData", {
-        contractId: process.env.USER_LOOKUP_CONTRACT,
-        accountId: process.env.MY_ACCOUNT_ID,
-      });
+      let userdata = await getUserData(process.env.MY_ACCOUNT_ID); // todo hashpack option
       if (userdata) {
-        this.$store.commit("user/decodeAndSetUserData", userdata);
+        this.$store.commit("user/setUserData", userdata);
         this.$store.commit("user/signIn");
         this.$store.commit("modals/hide");
       } else {
         // show register modal
         this.$store.commit("modals/show", { name: "register" });
       }
+    },
+
+    async connectHashPack() {
+      console.log("todo connect hashpack");
     },
   },
 };

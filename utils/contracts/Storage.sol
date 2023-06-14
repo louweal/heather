@@ -69,8 +69,7 @@ contract Storage {
     }
 
     // user delete
-    function removeUser(address _accountId, uint32 i) public {
-        delete users[i];
+    function removeUser(address _accountId) public {
         delete userdata[_accountId];
     }
 }

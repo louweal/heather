@@ -16,7 +16,10 @@
         </div>
       </div>
 
-      <input type="file" id="files" name="files" multiple class="form-control" ref="files" @change="setPhotos()" />
+      <div>
+        <label for="files" class="btn btn-light">Upload images</label>
+        <input type="file" id="files" name="files" multiple class="form-control" style="display: none" ref="files" @change="setPhotos()" />
+      </div>
 
       <input
         type="text"
@@ -73,13 +76,16 @@
 </template>
 
 <script>
+const { addAd } = require("@/utils/storage/ads.js");
+
 import Vue from "vue";
 
 export default {
   data() {
     return {
       newData: { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined },
-      photos: [],
+      photos: [], // preview photos
+      visuals: [],
       submitted: false,
       errors: false,
     };
@@ -103,13 +109,19 @@ export default {
       this.photos = [];
       let photos = this.$refs.files.files;
 
+      console.log(photos);
+
       for (let i = 0; i < photos.length; i++) {
+        // for preview
         const image = photos[i];
         const reader = new FileReader();
         reader.readAsDataURL(image);
         reader.onload = (e) => {
           this.photos.push(e.target.result);
         };
+
+        // store image NAME only
+        this.visuals.push(photos[i].name);
       }
     },
 
@@ -153,6 +165,8 @@ export default {
       ) {
         // todo create contract
 
+        this.newData["visuals"] = this.visuals;
+
         if (this.newData.rent.start > 0) {
           this.newData["type"] = "rent";
         } else {
@@ -161,26 +175,30 @@ export default {
 
         // console.log(this.newData);
 
-        let ad = this.newData;
-        let metadata = ad;
+        let data = { ...this.newData, id: self.crypto.randomUUID(), date: parseInt(new Date().getTime() / 1000) };
 
-        let payload = {
-          metadata,
-          deposit: +ad.deposit,
-          rent: ad.rent,
-          accountId: process.env.MY_ACCOUNT_ID,
-          factoryContractId: process.env.AD_FACTORY,
-          lookupContractId: process.env.USER_LOOKUP_CONTRACT,
-        };
+        // todo: add data to vuex store
 
-        // console.log(payload);
+        console.log(data);
+
+        // add new ad to hedera storage
+        let userId = this.$store.state.user.accountId; // todo
+        let status = await addAd(userId, data);
+
+        if (status === "SUCCESS") {
+          this.$store.commit("modals/hide");
+
+          // reset data
+          this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
+          this.photos = undefined;
+          this.visuals = undefined;
+        }
+
         // return;
-        this.$store.dispatch("data/deployAd", payload);
-
-        this.$store.commit("modals/hide");
       } else {
         this.errors = true;
       }
+      this.submitted = false;
     },
 
     setType(t) {

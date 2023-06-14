@@ -35,6 +35,8 @@
 </template>
 
 <script>
+const { addUser } = require("@/utils/storage/users.js");
+
 export default {
   data() {
     return {
@@ -43,6 +45,7 @@ export default {
       location: undefined,
       email: undefined,
       phone: undefined,
+      googleLoc: undefined,
     };
   },
   computed: {},
@@ -51,21 +54,22 @@ export default {
     async createAccount() {
       //todo validate form
 
-      // add user data to store
-      this.$store.commit("user/setUserData", {
+      let data = {
         name: this.name,
         neighborhood: this.neighborhood,
         email: this.email,
         phone: this.phone,
-      });
+      };
 
-      // add user to user lookup contract
-      let status = await this.$store.dispatch("user/addUser", {
-        contractId: process.env.USER_LOOKUP_CONTRACT,
-        accountId: process.env.MY_ACCOUNT_ID,
-      });
+      // add user data to store
+      this.$store.commit("user/setUserData", data);
+
+      // add user to hedera storage
+      let status = await addUser(data);
 
       if (status === "SUCCESS") {
+        this.$store.commit("search/setPlace", this.googleLoc);
+
         this.$store.commit("modals/show", { name: "welcome" });
 
         this.$store.commit("user/signIn");
@@ -96,6 +100,7 @@ export default {
     autocomplete.addListener("place_changed", () => {
       let place = autocomplete.getPlace();
       if (place) {
+        this.googleLoc = place;
         let lat = place.geometry.location.lat();
         let lng = place.geometry.location.lng();
 
