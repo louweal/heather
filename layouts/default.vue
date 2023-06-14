@@ -74,6 +74,7 @@ export default {
   },
 
   async mounted() {
+    console.log(process.env.STORAGE_CONTRACT);
     // let headerHeight = document.querySelector("#header").offsetHeight; //refs ?
     // let pushdown = document.querySelector("#pushdown"); // refs?
     // pushdown.style.height = headerHeight + "px";
