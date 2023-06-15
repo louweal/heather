@@ -121,11 +121,15 @@ export default {
       let place = this.$store.state.search.place;
 
       let results;
+      let ads;
+      let calls;
 
       // filter to local results only
       if (place) {
-        results = this.$store.state.data.both.filter((a) => a.distance <= this.maxDistance);
-        console.log(this.$store.state.data.both);
+        calls = this.$store.state.data.calls.filter((a) => a.distance <= this.maxDistance);
+        ads = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
+        results = calls.concat(ads);
+        console.log(results);
       } else {
         console.log("Error: unknown search location");
         return [];

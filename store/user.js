@@ -7,7 +7,7 @@ export const state = () => ({
   // new user input:
   name: "Jane Doe",
   neighborhood: undefined,
-  location: undefined,
+  location: { lat: 52.168732, lng: 4.47334 },
   phone: undefined,
   email: undefined,
 });

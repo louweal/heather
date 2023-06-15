@@ -74,16 +74,16 @@ export default {
           date: ad.date,
         };
 
-        let payload = {
-          metadata,
-          deposit: ad.deposit,
-          rent: ad.rent,
-          dummyOwner: owner,
-          lookupContractId: process.env.USER_LOOKUP_CONTRACT,
-          factoryContractId: process.env.AD_FACTORY,
-        };
+        // let payload = {
+        //   metadata,
+        //   deposit: ad.deposit,
+        //   rent: ad.rent,
+        //   dummyOwner: owner,
+        //   lookupContractId: process.env.USER_LOOKUP_CONTRACT,
+        //   factoryContractId: process.env.AD_FACTORY,
+        // };
 
-        let res = await this.$store.dispatch("data/deployDummyAd", payload);
+        // let res = await this.$store.dispatch("data/deployDummyAd", payload);
       }
     },
   },

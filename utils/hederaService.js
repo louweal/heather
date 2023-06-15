@@ -117,7 +117,9 @@ async function signerTransactionFlow(tx, isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     console.log(await provider.getTransactionReceipt(exTx.transactionId));
-    let rec = await provider.call(new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)); // undefined .setIncludeChildren(true)
+    let rec = await provider.call(
+      new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)
+    ); // undefined .setIncludeChildren(true)
     console.log(rec);
     return rec;
   }
@@ -131,19 +133,22 @@ function functionParameters(params) {
     let value = params[i]["value"];
 
     switch (type) {
-      case "string":
-        cfp = cfp.addString(value);
-        break;
-      case "uint256":
-        cfp = cfp.addUint256(value);
-        break;
-      case "uint32":
-        cfp = cfp.addUint32(value);
-        break;
       case "address": {
         cfp = cfp.addAddress(ContractId.fromString(value).toSolidityAddress());
         break;
       }
+      case "string":
+        cfp = cfp.addString(value);
+        break;
+      case "uint8":
+        cfp = cfp.addUint8(value);
+        break;
+      case "uint32":
+        cfp = cfp.addUint32(value);
+        break;
+      case "uint256":
+        cfp = cfp.addUint256(value);
+        break;
       default:
         console.log("Unknown parameter type");
     }
@@ -156,7 +161,7 @@ export function getSolidityAddress(str) {
   return AccountId.fromString(str).toSolidityAddress().toString();
 }
 
-export async function contractExecuteTransaction(id, name, params, returnType = false, value = false) {
+export async function contractExecuteTransaction(id, name, params, returnType, value) {
   let tx = new ContractExecuteTransaction().setContractId(id).setGas(9000000);
 
   if (params) {
@@ -178,7 +183,7 @@ export async function contractExecuteTransaction(id, name, params, returnType = 
 }
 
 export async function contractCallQuery(id, name, params, returnType) {
-  let tx = new ContractCallQuery().setContractId(id).setGas(460000);
+  let tx = new ContractCallQuery().setContractId(id).setGas(50000);
 
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));

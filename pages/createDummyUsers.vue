@@ -61,15 +61,15 @@ export default {
           phone: "01234567",
         };
 
-        let payload = {
-          contractId: process.env.USER_LOOKUP_CONTRACT,
-          accountId: id,
-          metadata: metadata,
-        };
+        // let payload = {
+        //   contractId: process.env.S_CONTRACT,
+        //   accountId: id,
+        //   metadata: metadata,
+        // };
 
-        // console.log(payload);
+        // // console.log(payload);
 
-        let res = await this.$store.dispatch("user/addDummyUser", payload);
+        // let res = await this.$store.dispatch("user/addDummyUser", payload);
       }
     },
   },

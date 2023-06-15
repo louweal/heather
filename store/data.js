@@ -2,13 +2,11 @@ export const state = () => ({
   ads: [],
   calls: [],
   owners: [],
-  both: [], // combines ads and calls, sorted by date
 });
 
 export const mutations = {
   SET_ADS(state, payload) {
     state.ads = payload;
-
     state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
     state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
   },
@@ -28,14 +26,14 @@ export const mutations = {
     state.owners = payload;
   },
 
-  SET_BOTH(state) {
-    state.both = state.ads.concat(state.calls);
-    state.both.sort((a, b) => (a.date > b.date ? -1 : 1));
+  // SET_BOTH(state) {
+  //   state.both = state.ads.concat(state.calls);
+  //   state.both.sort((a, b) => (a.date > b.date ? -1 : 1));
 
-    // remove users that don't have any ads or calls
-    state.owners.forEach((o) => (o["numItems"] = setNumItems(state.ads.filter((a) => o.id === a.owner))));
-    state.owners = state.owners.filter((o) => o["numItems"] > 0);
-  },
+  //   // remove users that don't have any ads or calls
+  //   state.owners.forEach((o) => (o["numItems"] = setNumItems(state.ads.filter((a) => o.id === a.owner))));
+  //   state.owners = state.owners.filter((o) => o["numItems"] > 0);
+  // },
 
   addAd(state, ad) {
     let newAd = {
@@ -63,12 +61,14 @@ export const mutations = {
 
   updateCall(state, call) {},
 
+  removeCall(state, id) {
+    state.calls = state.calls.filter((a) => a.id !== id);
+  },
+
   updateDistance(state, origin) {
+    console.log("updat distance");
     state.ads.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
     state.calls.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
-    state.both = state.ads.concat(state.calls);
-
-    // state.owners.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
   },
 
   updateOwnerDistance(state, origin) {

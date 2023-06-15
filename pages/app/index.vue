@@ -3,19 +3,26 @@
     <google-map class="d-none d-md-block" :zoom="zoom" :results="results" />
 
     <section>
-      <div class="container-fluid" v-if="$store.state.data.both">
+      <div class="container-fluid">
         <div class="row gy-3">
           <div class="col-md-6 mr-md-2">
             <div class="row g-2">
-              <template v-for="(a, i) in $store.state.data.both">
+              <template v-for="(a, i) in $store.state.data.calls">
                 <div class="col-12 col-sm-6 col-xxl-3" :key="'banner_' + a.id" v-if="i === 3">
                   <card-new-call />
                 </div>
 
                 <div class="col-12 col-sm-6 col-xxl-3" xxxclass="`order-${i}`" :id="i" :key="a.id">
-                  <card-call v-if="a.type === 'call'" :data="a" />
+                  <card-call :data="a" />
+                </div>
+              </template>
+              <template v-for="(a, i) in $store.state.data.ads">
+                <div class="col-12 col-sm-6 col-xxl-3" :key="'banner_' + a.id" v-if="i === 3">
+                  <card-new-call />
+                </div>
 
-                  <card-ad v-else :data="a" />
+                <div class="col-12 col-sm-6 col-xxl-3" xxxclass="`order-${i}`" :id="i" :key="a.id">
+                  <card-ad :data="a" />
                 </div>
               </template>
             </div>

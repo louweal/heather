@@ -1,17 +1,6 @@
 <template>
   <div v-if="$store.state.modals.show === 'call'">
     <div class="d-grid gap-2">
-      <!-- <input
-        type="text"
-        class="form-control"
-        :class="true === false ? 'border-danger' : false"
-        placeholder="Title"
-        :value="query ? query : ''"
-        xxxinput="(e) => (newData['title'] = e.target.value)"
-      />
-
-      <textarea class="form-control" placeholder="Describe what you need and when you need it." /> -->
-
       <input
         type="text"
         class="form-control"
@@ -75,16 +64,17 @@ export default {
 
         let data = { ...this.newData, id: self.crypto.randomUUID(), date: parseInt(new Date().getTime() / 1000) };
 
-        // todo: add data to vuex store
-
         console.log(data);
 
         // add new ad to hedera storage
         let userId = this.$store.state.user.accountId; // todo
 
-        let status = await addCall(userId, data);
+        let status = await addCall(userId, data); // return i?
 
         if (status === "SUCCESS") {
+          //  add data to vuex store
+          this.$store.commit("data/addCall", { ...data, owner: userId });
+
           this.$store.commit("modals/hide");
 
           // reset data

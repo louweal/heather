@@ -35,7 +35,9 @@ export default {
 
   computed: {
     items() {
-      return this.$store.state.data.both.filter((d) => d.owner === this.id);
+      let calls = this.$store.state.data.calls.filter((d) => d.owner === this.id);
+      let ads = this.$store.state.data.ads.filter((d) => d.owner === this.id);
+      return calls.concat(ads);
     },
 
     user() {

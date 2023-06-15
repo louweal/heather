@@ -34,6 +34,9 @@
               <div class="row my-3 g-3">
                 <div class="col-12 col-md-6 col-lg-4" v-for="(c, i) in calls" :key="i">
                   <card-call :data="c" />
+                  <button class="btn text-danger" @click="removeCall(c.id, c.i)">
+                    <i class="bi bi-x-lg"></i> Delete
+                  </button>
                 </div>
               </div>
             </div>
@@ -86,6 +89,7 @@
 
 <script>
 const { removeUser } = require("@/utils/storage/users.js");
+const { removeCall } = require("@/utils/storage/calls.js");
 
 export default {
   data() {
@@ -172,6 +176,12 @@ export default {
         this.$store.commit("user/signOut");
         this.$router.push("/");
       }
+    },
+
+    async removeCall(id, i) {
+      await removeCall(this.$store.state.user.accountId, i);
+      this.$store.commit("data/removeCall", id);
+      this.$router.push("/account?removed=" + id);
     },
   },
 };

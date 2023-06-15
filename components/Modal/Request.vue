@@ -86,9 +86,6 @@ export default {
     width: auto !important;
     min-width: 0px !important;
     flex-grow: 0;
-    // padding: $input-btn-padding-x $input-btn-padding-y !important;
-    // background-color: gold;
-    // border: 3px solid gold !important;
   }
 
   .mx-icon-calendar {
