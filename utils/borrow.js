@@ -2,7 +2,6 @@ import { encodeData, decodeData } from "~/utils/encodeHelper";
 import { contractCallQuery, contractExecuteTransaction } from "~/utils/hederaService";
 
 let factoryContractId = process.env.BORROW_CONTRACT;
-// let accountId = process.env.MY_ACCOUNT_ID;
 
 export async function deployBorrow(owner, details, startdate, enddate, deposit, totalRent) {
   let params = [
@@ -10,8 +9,8 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
     { type: "string", value: encodeData(details) },
     { type: "uint32", value: startdate },
     { type: "uint32", value: enddate },
-    { type: "uint32", value: deposit },
-    { type: "uint32", value: totalRent },
+    { type: "uint32", value: deposit * 1e8 },
+    { type: "uint32", value: totalRent * 1e8 },
   ];
 
   return await contractExecuteTransaction(factoryContractId, "deployBorrow", params, "address");

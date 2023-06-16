@@ -4,12 +4,7 @@
       <div class="form-group">
         <label class="fw-bold">Message</label>
 
-        <textarea
-          rows="5"
-          class="form-control"
-          :value="`Hi ${data.name}, I would like to ${data.type} your ${data.title}. Kind regards, your neighbor [user.name]`"
-          @input="(e) => setMessage(e.target.value)"
-        />
+        <textarea rows="5" class="form-control" :value="message" @input="(e) => setMessage(e.target.value)" />
       </div>
 
       <div class="form-group">
@@ -30,6 +25,8 @@
       </div>
 
       <div class="btn btn-primary" @click="sendRequest()">Send request</div>
+
+      <!-- <nuxt-link :to="url">{{ url }}</nuxt-link> -->
     </div>
   </div>
 </template>
@@ -37,6 +34,7 @@
 <script>
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+const { deployBorrow } = require("@/utils/borrow.js");
 
 export default {
   components: { DatePicker },
@@ -48,10 +46,21 @@ export default {
       to: undefined,
     };
   },
+  mounted() {
+    this.from = new Date();
+    this.request["message"] = this.message;
+  },
 
   computed: {
     data() {
       return this.$store.state.modals.data;
+    },
+
+    message() {
+      if (!this.data) {
+        return "";
+      }
+      return `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
     },
 
     today() {
@@ -65,10 +74,28 @@ export default {
   },
 
   methods: {
-    sendRequest() {
-      console.log(this.from.getTime());
-      console.log(this.to.getTime());
-      // todo
+    async sendRequest() {
+      // todo: validate from
+
+      this.request["from"] = parseInt(this.from.getTime() / 1000);
+      this.request["to"] = parseInt(this.to.getTime() / 1000);
+
+      // console.log(this.data);
+
+      // console.log(this.request);
+
+      let owner = this.data.owner;
+      let details = { ...this.request, borrower: this.$store.state.user.accountId };
+      let startdate = this.request.from;
+      let enddate = this.request.to;
+      let deposit = this.data.deposit;
+      let totalRent = this.data.rent.start + this.data.rent.extra;
+
+      let rid = await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
+      console.log(rid);
+      console.log(rid.toString());
+
+      // let url = `/app/detail/${this.data.id}/${rid}/`;
     },
 
     setMessage(value) {

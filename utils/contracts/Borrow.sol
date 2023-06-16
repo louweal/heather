@@ -23,6 +23,9 @@ contract Borrow {
         Ended
     }
     State public state; // getter: state
+    uint32 stateI; // the state in uint formal
+
+    event SetState(uint stateI);
 
     constructor(
         address owner_,
@@ -62,6 +65,7 @@ contract Borrow {
         require((block.timestamp <= startdate),
         "This borrow request is expired"); 
         state = State.Accepted;
+        emit SetState(uint32(state));
     }
 
     function startBorrow() external payable inState(State.Accepted) onlyBorrower {
@@ -70,6 +74,7 @@ contract Borrow {
             "Please send in the item deposit + total rent"
         ); // add the deposit and rent to the contract
         state = State.Borrowed;
+        emit SetState(uint32(state));
         owner.transfer(totalRent); // the owner receives the rent directy at the start
     }
 
@@ -90,16 +95,19 @@ contract Borrow {
 
     function confirmReturn() external inState(State.Borrowed) onlyOwner {
         state = State.Returned;
+        emit SetState(uint32(state)); 
     }
 
     function acceptReturn() external inState(State.Returned) onlyOwner {
         state = State.Ended;
+        emit SetState(uint32(state)); 
         borrower.transfer(deposit);
     }
 
     // report a problem (e.g. broken or incomplete) -> get deposit
     function reportProblem(string memory problem_) external inState(State.Returned) onlyOwner {
         state = State.Ended;
+        emit SetState(uint32(state)); 
         problem = problem_;
         owner.transfer(deposit);
     }
@@ -108,6 +116,7 @@ contract Borrow {
         require(block.timestamp > (enddate + (7 * 86400)), 
         "Report the item as missing when it is at least 7 days after the end of the borrow end date");
         state = State.Ended;
+        emit SetState(uint32(state)); 
         owner.transfer(deposit);
     } 
 

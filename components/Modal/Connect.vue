@@ -3,7 +3,7 @@
     <div class="d-grid gap-2">
       <div class="btn btn-primary" @click="connectHashpack()">Connect using HashPack</div>
 
-      <div class="text-center" @click="connect()">or connect using a demo wallet</div>
+      <button class="btn text-center" @click="connect()">or connect using a demo wallet</button>
     </div>
   </div>
 </template>
