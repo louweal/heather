@@ -4,6 +4,7 @@ import { contractCallQuery, contractExecuteTransaction } from "~/utils/hederaSer
 let factoryContractId = process.env.BORROW_CONTRACT;
 
 export async function deployBorrow(owner, details, startdate, enddate, deposit, totalRent) {
+  // works
   let params = [
     { type: "address", value: owner },
     { type: "string", value: encodeData(details) },
@@ -13,6 +14,8 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
     { type: "uint32", value: totalRent * 1e8 },
   ];
 
+  console.log("THE params");
+  console.log(params);
   return await contractExecuteTransaction(factoryContractId, "deployBorrow", params, "address");
 }
 
@@ -25,12 +28,22 @@ export async function getState(contractId) {
   return await contractCallQuery(contractId, "getState", undefined, "string");
 }
 
+export async function getDeposit(contractId) {
+  return await contractCallQuery(contractId, "deposit", undefined, "uint32");
+}
+
+export async function getTotalRent(contractId) {
+  return await contractCallQuery(contractId, "totalRent", undefined, "uint32");
+}
+
 export async function acceptRequest(contractId) {
+  // works
   return await contractExecuteTransaction(contractId, "acceptRequest");
 }
 
 export async function startBorrow(contractId, value) {
-  return await contractExecuteTransaction(contractId, "startBorrow", params, undefined, value);
+  // error
+  return await contractExecuteTransaction(contractId, "startBorrow", undefined, undefined, value * 1e8);
 }
 
 export async function requestExtend(contractId, extraDays) {
@@ -43,12 +56,14 @@ export async function acceptExtend(contractId) {
 }
 
 export async function returnBorrow(contractId, returndate) {
+  // error
   let params = [{ type: "uint32", value: returndate }];
   return await contractExecuteTransaction(contractId, "returnBorrow", params);
 }
 
 export async function confirmReturn(contractId) {
-  return await contractExecuteTransaction(contractId, "returnBorrow");
+  // works
+  return await contractExecuteTransaction(contractId, "confirmReturn");
 }
 
 export async function reportMissing(contractId) {
@@ -56,6 +71,7 @@ export async function reportMissing(contractId) {
 }
 
 export async function acceptReturn(contractId) {
+  // error
   return await contractExecuteTransaction(contractId, "acceptReturn");
 }
 

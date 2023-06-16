@@ -1,79 +1,165 @@
 <template>
-  <main>
+  <main v-if="this.$store.state.user.signedIn">
     <section>
-      <div class="container-xl text-center">
-        <h1>Owner</h1>
+      <div class="container-xl">
+        <div class="row">
+          <div class="col-12 col-md-9" v-if="item">
+            <card-request :item="item" />
+          </div>
+          <div class="col-12 col-md-3 text-center">
+            <div class="fw-bold mb-2">Actions</div>
 
-        <p>Manage borrow request with ID {{ $route.params.rid }}</p>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <nuxt-link class="nav-link" :to="$route.path + '/view'">View request</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" :to="$route.path + '/state'">Check state</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/accept'">Accept request</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/accept-extend'"
-              >Accept extension request</nuxt-link
-            >
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/confirm-return'">Confirm return</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/accept-return'">Accept return</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/report-problem'">Report problem</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/report-missing'">Report missing</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/write-review'">Write review</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/settle-deposit'">Settle deposit</nuxt-link>
-          </li>
-        </ul>
+            {{ $store.state.request.startdate }}
+
+            {{ $store.state.request.enddate }}
+
+            <div class="d-grid gap-2 border">
+              <template v-if="item && item.owner === $store.state.user.accountId">
+                <!-- owner actions -->
+                <template v-if="$store.state.request.state == 'Created'">
+                  <!-- Created -->
+                  <button class="btn btn-primary" @click="acceptRequest()">Accept borrow request</button>
+                </template>
+
+                <template v-else-if="$store.state.request.state == 'Borrowed'">
+                  <!-- Borrowed -->
+                  <button class="btn btn-primary" @click="confirmReturn()">Confirm item return</button>
+                </template>
+
+                <template v-else-if="$store.state.request.state == 'Returned'">
+                  <!-- Borrowed -->
+                  <button class="btn btn-primary" @click="acceptReturn()">Accept return</button>
+                </template>
+              </template>
+            </div>
+
+            <div class="d-grid border">
+              <template v-if="$store.state.request.borrower === $store.state.user.accountId">
+                <!-- borrower actions -->
+                <template v-if="$store.state.request.state == 'Accepted'">
+                  <!-- Created -->
+                  <button class="btn btn-primary" @click="startBorrow()">Start borrowing</button>
+                </template>
+                <template v-else-if="$store.state.request.state == 'Borrowed'">
+                  <!-- Borrowed -->
+                  <button class="btn btn-primary" @click="returnBorrow()">Return item</button>
+                </template>
+
+                <template xxxv-if="$store.state.request.state == 'Accepted'">
+                  <div><i class="bi bi-envelope-fill"></i> owner email</div>
+                  <div><i class="bi bi-telephone-fill"></i> owner phone</div>
+                </template>
+              </template>
+            </div>
+
+            <p class="pt-3 text-danger" v-if="error">{{ error }}</p>
+          </div>
+        </div>
       </div>
     </section>
-    <section>
-      <div class="container-xl text-center">
-        <h1>Borrower</h1>
 
-        <p>Manage your borrow request with ID {{ $route.params.rid }}</p>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <nuxt-link class="nav-link" :to="$route.path + '/view'">View</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" :to="$route.path + '/state'">Check state</nuxt-link>
-          </li>
+    <div class="btn" @click="$store.commit('modals/show', { name: 'ownerReview' })">Show wor modal</div>
 
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/start'">Borrow</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/request-extend'">Request extend</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/return-borrow'">Return borrow</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link disabled" :to="$route.path + '/write-review'">Write review</nuxt-link>
-          </li>
-        </ul>
-      </div>
-    </section>
+    <modal name="ownerReview" title="Write review">
+      <modal-owner-review />
+    </modal>
   </main>
 </template>
 
 <script>
-export default {};
+const {
+  getRequestDetails,
+  getState,
+  acceptRequest,
+  startBorrow,
+  returnBorrow,
+  confirmReturn,
+  acceptReturn,
+  getDeposit,
+  getTotalRent,
+} = require("@/utils/borrow.js");
+
+export default {
+  data() {
+    return {
+      id: undefined,
+      rid: undefined,
+      error: undefined,
+    };
+  },
+  async created() {
+    this.id = this.$route.params.id;
+    this.rid = this.$route.params.rid;
+
+    if (!this.$store.state.user.signedIn) {
+      this.$store.commit("modals/show", { name: "connect" });
+    }
+
+    // run queries
+    this.getDetails();
+    this.getState();
+  },
+
+  computed: {
+    item() {
+      return this.$store.state.data.ads.find((a) => a.id === this.id);
+    },
+  },
+  methods: {
+    async getDetails() {
+      let details = await getRequestDetails(this.rid);
+      this.$store.commit("request/setRequest", { id: this.rid, ...details });
+    },
+
+    async getState() {
+      let state = await getState(this.rid);
+      this.$store.commit("request/setState", state);
+    },
+
+    async acceptRequest() {
+      let res = await acceptRequest(this.rid);
+      if (res !== "SUCCESS") {
+        this.error = "The borrow request is expired.";
+      }
+    },
+
+    async startBorrow() {
+      let numDays = (this.$store.state.request.enddate - this.$store.state.request.startdate) / 86400;
+      console.log(numDays);
+      let value = this.item.deposit + this.item.rent.start + (numDays - 1) * this.item.rent.extra;
+
+      // return;
+      let res = await startBorrow(this.rid, value);
+
+      if (res !== "SUCCESS") {
+        this.error = "Unexpected error";
+      }
+    },
+
+    async returnBorrow() {
+      let returndate = parseInt(new Date().getTime() / 1000);
+      console.log(returndate);
+      let res = await returnBorrow(this.rid, returndate);
+      if (res !== "SUCCESS") {
+        this.error = "Unexpected error";
+      }
+    },
+
+    async confirmReturn() {
+      let res = await confirmReturn(this.rid);
+      if (res !== "SUCCESS") {
+        this.error = "Unexpected error";
+      }
+    },
+
+    async acceptReturn() {
+      let res = await acceptReturn(this.rid);
+      if (res !== "SUCCESS") {
+        this.error = "Unexpected error";
+      }
+    },
+  },
+};
 </script>
 
 <style></style>

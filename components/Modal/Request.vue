@@ -1,32 +1,60 @@
 <template>
   <div v-if="$store.state.modals.show === 'request'">
     <div class="d-grid gap-2">
-      <div class="form-group">
-        <label class="fw-bold">Message</label>
+      <template v-if="!rid">
+        <div class="form-group">
+          <label class="fw-bold">Message</label>
 
-        <textarea rows="5" class="form-control" :value="message" @input="(e) => setMessage(e.target.value)" />
-      </div>
+          <textarea rows="5" class="form-control" :value="message" @input="(e) => setMessage(e.target.value)" />
+        </div>
 
-      <div class="form-group">
-        <label class="fw-bold">Date: From</label>
-        <date-picker
-          v-model="from"
-          valueType="date"
-          format="MM/DD/YYYY"
-          :default-value="new Date()"
-          :placeholder="`${today} (today)`"
-          class="form-control w-100"
-        ></date-picker>
-      </div>
-      <div class="form-group">
-        <label class="fw-bold">Date: Until</label>
+        <div class="form-group">
+          <label class="fw-bold">Date: From</label>
+          <date-picker
+            v-model="from"
+            valueType="date"
+            format="MM/DD/YYYY"
+            :default-value="new Date()"
+            :placeholder="`${today} (today)`"
+            class="form-control w-100"
+          ></date-picker>
+        </div>
+        <div class="form-group">
+          <label class="fw-bold">Date: Until</label>
 
-        <date-picker v-model="to" valueType="date" format="MM/DD/YYYY" class="form-control w-100"></date-picker>
-      </div>
+          <date-picker v-model="to" valueType="date" format="MM/DD/YYYY" class="form-control w-100"></date-picker>
+        </div>
 
-      <div class="btn btn-primary" @click="sendRequest()">Send request</div>
+        <div class="btn btn-primary" @click="sendRequest()">Send request</div>
+      </template>
 
-      <!-- <nuxt-link :to="url">{{ url }}</nuxt-link> -->
+      <template v-if="rid">
+        <p class="text-center">
+          Your request with ID
+          <nuxt-link
+            class="border-bottom"
+            :to="link"
+            event=""
+            @click.native="
+              $router.push(link);
+              $store.commit('modals/hide');
+            "
+            >{{ rid }}</nuxt-link
+          >
+          was successfully created.
+        </p>
+
+        <nuxt-link
+          class="btn btn-primary"
+          :to="link"
+          event=""
+          @click.native="
+            $router.push(link);
+            $store.commit('modals/hide');
+          "
+          >View request</nuxt-link
+        >
+      </template>
     </div>
   </div>
 </template>
@@ -44,6 +72,7 @@ export default {
       request: { message: "", from: undefined, to: undefined },
       from: undefined,
       to: undefined,
+      rid: undefined, // request ID retrieved after deploying borrow contract
     };
   },
   mounted() {
@@ -54,6 +83,10 @@ export default {
   computed: {
     data() {
       return this.$store.state.modals.data;
+    },
+
+    link() {
+      return `/app/detail/${this.data.id}/${this.rid}`;
     },
 
     message() {
@@ -80,22 +113,16 @@ export default {
       this.request["from"] = parseInt(this.from.getTime() / 1000);
       this.request["to"] = parseInt(this.to.getTime() / 1000);
 
-      // console.log(this.data);
-
-      // console.log(this.request);
-
       let owner = this.data.owner;
       let details = { ...this.request, borrower: this.$store.state.user.accountId };
       let startdate = this.request.from;
       let enddate = this.request.to;
       let deposit = this.data.deposit;
-      let totalRent = this.data.rent.start + this.data.rent.extra;
+      let numDays = (enddate - startdate) / 86400;
 
-      let rid = await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
-      console.log(rid);
-      console.log(rid.toString());
+      let totalRent = this.data.rent.start + (numDays - 1) * this.data.rent.extra;
 
-      // let url = `/app/detail/${this.data.id}/${rid}/`;
+      this.rid = await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
     },
 
     setMessage(value) {

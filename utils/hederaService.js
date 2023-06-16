@@ -15,7 +15,7 @@ const {
 
 async function transactionFlow(id, tx, returnType) {
   let rx; // response
-  let isVoid = returnType === false; // get returned value if function has returnType
+  let isVoid = returnType === undefined; // get returned value if function has returnType
 
   if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
     rx = await signerTransactionFlow(tx, isVoid);
@@ -42,11 +42,13 @@ async function transactionFlow(id, tx, returnType) {
 async function queryFlow(id, tx, returnType) {
   let exTx;
 
-  if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
-    exTx = await signerQueryFlow(tx);
-  } else {
-    exTx = await clientQueryFlow(tx);
-  }
+  exTx = await clientQueryFlow(tx);
+
+  // if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
+  //   exTx = await signerQueryFlow(tx);
+  // } else {
+  //   exTx = await clientQueryFlow(tx);
+  // }
 
   let val;
   switch (returnType) {
@@ -117,9 +119,7 @@ async function signerTransactionFlow(tx, isVoid) {
     return await provider.getTransactionReceipt(exTx.transactionId); //  get status
   } else {
     console.log(await provider.getTransactionReceipt(exTx.transactionId));
-    let rec = await provider.call(
-      new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)
-    ); // undefined .setIncludeChildren(true)
+    let rec = await provider.call(new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)); // undefined .setIncludeChildren(true)
     console.log(rec);
     return rec;
   }
@@ -171,14 +171,14 @@ export async function contractExecuteTransaction(id, name, params, returnType, v
   }
 
   if (value) {
-    tx = tx.setPayableAmount(Hbar.fromTinybars(value));
+    tx = tx.setPayableAmount(Hbar.fromTinybars(parseInt(value)));
   }
 
   try {
     return await transactionFlow(id, tx, returnType);
   } catch (error) {
     console.log(error);
-    return undefined;
+    return error;
   }
 }
 
@@ -196,6 +196,6 @@ export async function contractCallQuery(id, name, params, returnType) {
     return await queryFlow(id, tx, returnType);
   } catch (error) {
     console.log(error);
-    return undefined;
+    return error;
   }
 }

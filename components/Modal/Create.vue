@@ -174,8 +174,8 @@ export default {
 
           // reset data
           this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
-          this.photos = undefined;
-          this.visuals = undefined;
+          this.photos = [];
+          this.visuals = [];
         }
 
         // return;

@@ -48,7 +48,6 @@
     <pushmenu />
     <notice v-if="$store.state.notice.active"> </notice>
 
-    <spinner />
     <div class="btn btn-primary" @click="setUsers()">set users</div>
     <div class="btn btn-primary" @click="setter(true, true)">set ads & calls</div>
 
@@ -82,19 +81,15 @@ export default {
     mode: "out-in",
   },
 
+  fetch() {
+    this.setUsers();
+  },
+
   methods: {
     async setUsers() {
       let users = await this.getUsers();
       this.$store.commit("data/SET_USERS", users);
       this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
-    },
-
-    async setter(setCalls, setAds) {
-      if (this.$store.state.user.signedIn) {
-        this.getter(setCalls, setAds);
-      } else {
-        console.log("Please sign in first to get local results");
-      }
     },
 
     async getUsers() {
@@ -106,7 +101,7 @@ export default {
         console.log(userId);
 
         // get user data
-        if (userId) {
+        if (typeof userId === "string" && userId.startsWith("0.0.")) {
           let userData = await getUserData(userId);
           // add user's accountId to data
           userData = { ...userData, id: userId };
@@ -118,6 +113,14 @@ export default {
         }
       }
       return users;
+    },
+
+    async setter(setCalls, setAds) {
+      if (this.$store.state.user.signedIn) {
+        this.getter(setCalls, setAds);
+      } else {
+        console.log("Please sign in first to get local results");
+      }
     },
 
     async getter(getCalls, getAds) {
@@ -137,9 +140,13 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let call = await getCall(user.id, j);
 
-            if (call) {
+            if (typeof call === "object") {
               let callData = { ...call, owner: user.id, i: j, type: "call" };
               calls.push(callData);
+            }
+            if (call === undefined) {
+              // deleted call -> go to next iteration
+              continue;
             } else {
               //reached end of ad list
               break;
@@ -150,13 +157,16 @@ export default {
         if (getAds) {
           for (let j = 0; j < 9999; j++) {
             let ad = await getAd(user.id, j);
-
-            if (ad) {
+            if (typeof ad === "object") {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
+            }
+            if (ad === undefined) {
+              // deleted add -> go to next iteration
+              continue;
             } else {
-              //reached end of ad list
               break;
+              //reached end of ad list
             }
           }
         }

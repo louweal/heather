@@ -11,7 +11,7 @@ export async function addAd(userId, data) {
     { type: "string", value: encodeData(data) },
   ];
 
-  return await contractExecuteTransaction(contractId, "addAd", params, false, false);
+  return await contractExecuteTransaction(contractId, "addAd", params);
 }
 
 // retrieve ad
@@ -24,10 +24,7 @@ export async function getAd(userId, i) {
   ];
   let ad = await contractCallQuery(contractId, "getAd", params, "string");
 
-  if (ad) {
-    return decodeData(ad);
-  }
-  return undefined;
+  return decodeData(ad);
 }
 
 // update ad
@@ -38,7 +35,7 @@ export async function updateAd(userId, i, data) {
     { type: "string", value: encodeData(data) },
   ];
 
-  return await contractExecuteTransaction(contractId, "updateAd", params, false, false);
+  return await contractExecuteTransaction(contractId, "updateAd", params);
 }
 
 // remove ad
@@ -48,5 +45,5 @@ export async function removeAd(userId, i) {
     { type: "uint32", value: i },
   ];
 
-  return await contractExecuteTransaction(contractId, "removeAd", params, false, false);
+  return await contractExecuteTransaction(contractId, "removeAd", params);
 }

@@ -11,7 +11,7 @@ export async function addCall(userId, data) {
     { type: "string", value: encodeData(data) },
   ];
 
-  return await contractExecuteTransaction(contractId, "addCall", params, false, false);
+  return await contractExecuteTransaction(contractId, "addCall", params);
 }
 
 // retrieve call
@@ -24,10 +24,7 @@ export async function getCall(userId, i) {
   ];
   let call = await contractCallQuery(contractId, "getCall", params, "string");
 
-  if (call) {
-    return decodeData(call);
-  }
-  return undefined;
+  return decodeData(call);
 }
 
 // update call
@@ -38,7 +35,7 @@ export async function updateCall(userId, i, data) {
     { type: "string", value: encodeData(data) },
   ];
 
-  return await contractExecuteTransaction(contractId, "updateCall", params, false, false);
+  return await contractExecuteTransaction(contractId, "updateCall", params);
 }
 
 // remove call
@@ -48,5 +45,5 @@ export async function removeCall(userId, i) {
     { type: "uint32", value: i },
   ];
 
-  return await contractExecuteTransaction(contractId, "removeCall", params, false, false);
+  return await contractExecuteTransaction(contractId, "removeCall", params);
 }

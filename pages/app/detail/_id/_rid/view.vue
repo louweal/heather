@@ -1,23 +1,26 @@
 <template>
   <main>
     <section>
-      <div class="container-xl text-center">
-        <button class="btn" @click="$router.go(-1)"><i class="bi bi-arrow-left text-primary fs-2"></i></button>
+      <div class="container-xl">
+        <back-button />
 
-        <br />
-
-        <div class="btn btn-primary mb-3" @click="getRequest()">View request</div>
-        <p>Viewing the request involves Hedera network fees</p>
-
-        <div class="btn btn-primary mb-3" @click="acceptRequest()">Accept request</div>
-        <p>Accepting the request involves Hedera network fees</p>
+        <card-request :details="details" />
       </div>
     </section>
   </main>
 </template>
 
 <script>
-export default {};
+const { getRequestDetails } = require("@/utils/borrow.js");
+
+export default {
+  async mounted() {
+    let id = this.$route.params.rid;
+    console.log("id :>> ", id);
+    let details = await getRequestDetails(id);
+    console.log(details);
+  },
+};
 </script>
 
 <style></style>

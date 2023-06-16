@@ -64,18 +64,20 @@ contract Borrow {
     function acceptRequest() external inState(State.Created) onlyOwner {
         require((block.timestamp <= startdate),
         "This borrow request is expired"); 
-        state = State.Accepted;
+        state = State.Borrowed; //State.Accepted;
         emit SetState(uint32(state));
     }
 
     function startBorrow() external payable inState(State.Accepted) onlyBorrower {
-        require(
-            msg.value == (deposit + totalRent),
-            "Please send in the item deposit + total rent"
-        ); // add the deposit and rent to the contract
+        // require(
+        //     msg.value == (deposit + totalRent),
+        //     "Please send in the item deposit + total rent"
+        // ); 
         state = State.Borrowed;
-        emit SetState(uint32(state));
-        owner.transfer(totalRent); // the owner receives the rent directy at the start
+        // emit SetState(uint32(state));
+        // if(msg.value > 0) {
+        //     owner.transfer(totalRent); // the owner receives the rent directy at the start
+        // }
     }
 
     function requestExtend(uint8 extraDays_) external inState(State.Borrowed) onlyBorrower {
@@ -100,8 +102,10 @@ contract Borrow {
 
     function acceptReturn() external inState(State.Returned) onlyOwner {
         state = State.Ended;
-        emit SetState(uint32(state)); 
-        borrower.transfer(deposit);
+        // emit SetState(uint32(state)); 
+        if(deposit > 0) {
+            borrower.transfer(uint256(deposit));
+        }
     }
 
     // report a problem (e.g. broken or incomplete) -> get deposit

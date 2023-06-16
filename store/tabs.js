@@ -1,5 +1,5 @@
 export const state = () => ({
-  name: "Requests", // active tab name
+  name: "Your items", // active tab name
 });
 
 export const mutations = {

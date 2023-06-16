@@ -28,10 +28,7 @@ export async function getUserData(userId) {
   let params = [{ type: "address", value: userId }];
   let metadata = await contractCallQuery(contractId, "userdata", params, "string");
 
-  if (metadata) {
-    return decodeData(metadata);
-  }
-  return undefined;
+  return decodeData(metadata);
 }
 
 // update user

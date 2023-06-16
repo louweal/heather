@@ -3,6 +3,16 @@ export function encodeData(data) {
 }
 
 export function decodeData(str) {
-  let decoded = Buffer.from(str, "base64").toString();
-  return JSON.parse(decoded);
+  if (str) {
+    if (typeof str === "string") {
+      if (str.startsWith("StatusError")) {
+        console.log("StatusError");
+        return str;
+      }
+      let decoded = Buffer.from(str, "base64").toString();
+      return JSON.parse(decoded);
+    } else {
+      return str;
+    }
+  }
 }

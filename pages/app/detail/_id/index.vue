@@ -39,11 +39,7 @@
 
                 <!-- <p class="opacity-25">Shared on: <formatted-date :date="item.date" /></p> -->
 
-                <nuxt-link
-                  :to="`/app/user/${item.owner}`"
-                  class="d-flex gap-2 align-items-center mt-3"
-                  v-if="item.name"
-                >
+                <nuxt-link :to="`/app/user/${item.owner}`" class="d-flex gap-2 align-items-center mt-3" v-if="item.name">
                   <div class="bg-light p-2 rounded-circle lh-1 text-white">
                     <i class="bi bi-person-fill"></i>
                   </div>
@@ -51,9 +47,7 @@
                     <div class="lh-sm">{{ item.name }}</div>
                     <div class="lh-sm">
                       {{ item.neighborhood }}
-                      <span class="opacity-75" v-if="item.distance && $store.state.search.place">
-                        {{ item.distance }} km</span
-                      >
+                      <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
                     </div>
                   </div>
                 </nuxt-link>
@@ -61,10 +55,10 @@
 
               <div class="mt-3">
                 <div class="d-grid mt-2">
-                  <button
-                    class="btn btn-primary"
-                    @click="$store.commit('modals/show', { name: 'request', data: item })"
-                  >
+                  <div>{{ item.deposit }} deposit</div>
+                  <div>Rent: {{ item.rent.start }} for the first day, {{ item.rent.start }} for each extra day</div>
+
+                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'request', data: item })">
                     Request to {{ item.type }}
                   </button>
                 </div>
@@ -78,7 +72,7 @@
               </button> -->
               <button class="btn text-danger" @click="removeAd()"><i class="bi bi-x-lg"></i> Delete item</button>
 
-              <nuxt-link :to="$route.path + '/0.0.1234567'">Dummy request</nuxt-link>
+              <nuxt-link :to="$route.path + '/0.0.14593047'">Dummy request</nuxt-link>
             </template>
           </div>
         </div>

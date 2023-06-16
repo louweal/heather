@@ -4,25 +4,10 @@
       <div class="row">
         <div class="col-12 col-md-9 order-1 order-md-0">
           <ul class="nav nav-tabs">
-            <tab name="Requests" :num="numRequests" />
-            <tab name="Renting" :num="numRent" v-if="numRent > 0" />
-            <tab name="Borrowing" :num="numBorrow" v-if="numBorrow > 0" />
             <tab name="Your items" :num="numAds" />
             <tab name="Your wishlist" :num="numCalls" />
           </ul>
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade pt-2" :class="curTab === 'Requests' ? 'show active' : false">
-              <div v-if="numRequests === 0">
-                <p>No pending requests for your items.</p>
-              </div>
-
-              <div>
-                <card-request />
-              </div>
-            </div>
-
-            <div class="tab-pane fade" :class="curTab === 'rent' ? 'show active' : false">rentt</div>
-            <div class="tab-pane fade" :class="curTab === 'borrow' ? 'show active' : false">.bbb</div>
             <div class="tab-pane fade" :class="curTab === 'Your items' ? 'show active' : false">
               <div class="row my-3 g-3">
                 <div class="col-12 col-md-6 col-lg-4" v-for="(a, i) in ads" :key="i">
@@ -34,9 +19,7 @@
               <div class="row my-3 g-3">
                 <div class="col-12 col-md-6 col-lg-4" v-for="(c, i) in calls" :key="i">
                   <card-call :data="c" />
-                  <button class="btn text-danger" @click="removeCall(c.id, c.i)">
-                    <i class="bi bi-x-lg"></i> Delete
-                  </button>
+                  <button class="btn text-danger" @click="removeCall(c.id, c.i)"><i class="bi bi-x-lg"></i> Delete</button>
                 </div>
               </div>
             </div>
