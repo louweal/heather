@@ -73,10 +73,15 @@ export default {
       from: undefined,
       to: undefined,
       rid: undefined, // request ID retrieved after deploying borrow contract
+      message: "",
     };
   },
   mounted() {
     this.from = new Date();
+
+    if (this.data) {
+      this.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
+    }
     this.request["message"] = this.message;
   },
 
@@ -89,12 +94,9 @@ export default {
       return `/app/detail/${this.data.id}/${this.rid}`;
     },
 
-    message() {
-      if (!this.data) {
-        return "";
-      }
-      return `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
-    },
+    // message() {
+
+    // },
 
     today() {
       let locale = "us-EN";

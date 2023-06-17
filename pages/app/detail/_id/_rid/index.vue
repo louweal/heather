@@ -3,20 +3,29 @@
     <section>
       <div class="container-xl">
         <div class="row">
-          <div class="col-12 col-md-9" v-if="item">
-            <card-request :item="item" />
+          <div class="col-12 col-md-3">
+            <badge>State</badge>
+            <borrow-state />
+
+            <div class="d-grid mt-2">
+              <div class="btn btn-primary" @click="getState()">Get state</div>
+            </div>
+
+            <card-user :user="owner" role="owner" v-if="isBorrower" />
+            <card-user :user="borrower" role="borrower" v-if="isOwner" />
           </div>
-          <div class="col-12 col-md-3 text-center">
-            <div class="fw-bold mb-2">Actions</div>
 
-            {{ $store.state.request.startdate }}
+          <div class="col-12 col-md-9">
+            <div class="d-grid gap-3">
+              <card-request :item="item" />
 
-            {{ $store.state.request.enddate }}
-
-            <div class="d-grid gap-2 border">
               <template v-if="item && item.owner === $store.state.user.accountId">
+                owner
                 <!-- owner actions -->
                 <template v-if="$store.state.request.state == 'Created'">
+                  <div class="bg-light rounded p-2">
+                    <p>{{ $store.state.request.message }}</p>
+                  </div>
                   <!-- Created -->
                   <button class="btn btn-primary" @click="acceptRequest()">Accept borrow request</button>
                 </template>
@@ -28,13 +37,32 @@
 
                 <template v-else-if="$store.state.request.state == 'Returned'">
                   <!-- Borrowed -->
-                  <button class="btn btn-primary" @click="acceptReturn()">Accept return</button>
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-secondary" @click="acceptReturn()">Accept return</button>
+                    <button type="button" class="btn btn-outline-primary" @click="$store.commit('modals/show', { name: 'problem' })">
+                      Report problem
+                    </button>
+                    <button v-if="missing" type="button" class="btn btn-dark" @click="reportMissing()">Report missing</button>
+                  </div>
                 </template>
-              </template>
-            </div>
 
-            <div class="d-grid border">
+                <template v-else-if="$store.state.request.state == 'Checked'">
+                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'owner-review' })">Write review</button>
+                </template>
+
+                <div class="bg-light rounded p-2" v-else-if="$store.state.request.state == 'Reviewed'">
+                  <p v-if="borrowerReview">{{ borrowerReview }}</p>
+                  <p v-if="borrowerReview">
+                    <span class="opacity-75 text-primary">You have left following review: </span>
+                    <br />
+                    {{ ownerReview }}
+                  </p>
+                </div>
+              </template>
+
               <template v-if="$store.state.request.borrower === $store.state.user.accountId">
+                borrowerr
+
                 <!-- borrower actions -->
                 <template v-if="$store.state.request.state == 'Accepted'">
                   <!-- Created -->
@@ -44,24 +72,25 @@
                   <!-- Borrowed -->
                   <button class="btn btn-primary" @click="returnBorrow()">Return item</button>
                 </template>
-
-                <template xxxv-if="$store.state.request.state == 'Accepted'">
-                  <div><i class="bi bi-envelope-fill"></i> owner email</div>
-                  <div><i class="bi bi-telephone-fill"></i> owner phone</div>
-                </template>
               </template>
-            </div>
 
-            <p class="pt-3 text-danger" v-if="error">{{ error }}</p>
+              <p class="pt-3 text-danger" v-if="error">{{ error }}</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="btn" @click="$store.commit('modals/show', { name: 'ownerReview' })">Show wor modal</div>
+    <modal name="owner-review" title="Write review">
+      <modal-review role="owner" />
+    </modal>
 
-    <modal name="ownerReview" title="Write review">
-      <modal-owner-review />
+    <modal name="borrower-review" title="Write review">
+      <modal-review role="borrower" />
+    </modal>
+
+    <modal name="problem" title="Report problem">
+      <modal-problem />
     </modal>
   </main>
 </template>
@@ -70,13 +99,16 @@
 const {
   getRequestDetails,
   getState,
+  getBorrower,
   acceptRequest,
   startBorrow,
   returnBorrow,
   confirmReturn,
   acceptReturn,
-  getDeposit,
   getTotalRent,
+  getOwnerReview,
+  getBorrowerReview,
+  getProblem,
 } = require("@/utils/borrow.js");
 
 export default {
@@ -85,8 +117,19 @@ export default {
       id: undefined,
       rid: undefined,
       error: undefined,
+      borrowerReview: undefined,
     };
   },
+
+  watch: {
+    "$store.state.request.state": async function (val) {
+      if (val === "Reviewed") {
+        this.borrowerReview = await getBorrowerReview(this.rid);
+        this.ownerReview = await getOwnerReview(this.rid);
+      }
+    },
+  },
+
   async created() {
     this.id = this.$route.params.id;
     this.rid = this.$route.params.rid;
@@ -98,11 +141,48 @@ export default {
     // run queries
     this.getDetails();
     this.getState();
+
+    let borrower = await getBorrower(this.rid);
+    // let owner = await getOwner(this.rid);
+    console.log("borrower :>> ", borrower);
+    // console.log("owner :>> ", owner);
   },
 
   computed: {
     item() {
-      return this.$store.state.data.ads.find((a) => a.id === this.id);
+      let ads = this.$store.state.data.ads;
+      if (ads.length > 0) {
+        return ads.find((a) => a.id === this.id);
+      }
+      return undefined;
+    },
+
+    owner() {
+      if (this.item) {
+        return this.$store.state.data.owners.find((o) => o.id === this.item.owner);
+      }
+      return undefined;
+    },
+
+    borrowerId() {
+      return this.$store.state.request.borrower;
+    },
+
+    borrower() {
+      return this.$store.state.data.owners.find((o) => o.id === this.borrowerId);
+    },
+
+    isBorrower() {
+      return this.$store.state.user.accountId === this.$store.state.request.borrower;
+    },
+    isOwner() {
+      return this.item ? this.$store.state.user.accountId === this.item.owner : false;
+    },
+
+    missing() {
+      // 7 days late
+      // return true;
+      return this.$store.state.request.enddate + 86400 * 7 <= new Date() / 1000;
     },
   },
   methods: {

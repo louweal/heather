@@ -36,33 +36,42 @@
                 <h1>{{ item.title }}</h1>
 
                 <p v-if="item.description">{{ item.description }}</p>
-
-                <!-- <p class="opacity-25">Shared on: <formatted-date :date="item.date" /></p> -->
-
-                <nuxt-link :to="`/app/user/${item.owner}`" class="d-flex gap-2 align-items-center mt-3" v-if="item.name">
-                  <div class="bg-light p-2 rounded-circle lh-1 text-white">
-                    <i class="bi bi-person-fill"></i>
-                  </div>
-                  <div>
-                    <div class="lh-sm">{{ item.name }}</div>
-                    <div class="lh-sm">
-                      {{ item.neighborhood }}
-                      <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
-                    </div>
-                  </div>
-                </nuxt-link>
               </div>
 
-              <div class="mt-3">
-                <div class="d-grid mt-2">
-                  <div>{{ item.deposit }} deposit</div>
-                  <div>Rent: {{ item.rent.start }} for the first day, {{ item.rent.start }} for each extra day</div>
+              <p class="text-muted fw-bold">To {{ item.rent.start > 0 || item.rent.extra > 0 ? "rent" : "borrow" }}</p>
 
-                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'request', data: item })">
-                    Request to {{ item.type }}
-                  </button>
+              <div class="d-grid mt-2">
+                <!-- <div class="vstack"> -->
+                <div v-if="item.deposit > 0">
+                  <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
                 </div>
+                <div v-if="item.rent.start > 0">
+                  <span class="fw-bold">{{ item.rent.start }} hbar</span> first day
+                </div>
+                <div v-if="item.rent.extra > 0">
+                  <span class="fw-bold">{{ item.rent.extra }} hbar</span> each extra day
+                </div>
+
+                <button class="btn btn-primary mt-2" @click="$store.commit('modals/show', { name: 'request', data: item })">
+                  Request to {{ item.type }}
+                </button>
               </div>
+              <!-- </div> -->
+            </div>
+
+            <div class="bg-white rounded p-3 mt-2">
+              <nuxt-link :to="`/app/user/${item.owner}`" class="d-flex gap-2 align-items-center" v-if="item.name">
+                <div class="bg-light p-2 rounded-circle lh-1 text-white">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+                <div>
+                  <div class="lh-sm">{{ item.name }}</div>
+                  <div class="lh-sm">
+                    {{ item.neighborhood }}
+                    <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
+                  </div>
+                </div>
+              </nuxt-link>
             </div>
 
             <quick-map class="my-3" :marker="item" />
@@ -71,8 +80,6 @@
                 <i class="bi bi-pencil-square"></i> Edit item
               </button> -->
               <button class="btn text-danger" @click="removeAd()"><i class="bi bi-x-lg"></i> Delete item</button>
-
-              <nuxt-link :to="$route.path + '/0.0.14593047'">Dummy request</nuxt-link>
             </template>
           </div>
         </div>

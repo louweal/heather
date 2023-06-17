@@ -1,55 +1,53 @@
 <template>
   <div class="roadmap">
-    <nuxt-link
-      :to="{ hash: `#v${item.id}` }"
-      class="roadmap--item cp"
-      :class="item.current ? 'roadmap--item--active' : false"
-      v-for="(item, i) in $options.items"
+    <div
+      class="roadmap--item"
+      :class="item.i === stateI ? 'roadmap--item--active' : false"
+      v-for="(item, i) in $options.items.filter((item) => item.i <= stateI)"
       :key="i"
     >
       {{ item.version }}
 
-      {{ item.current ? "(current)" : "" }}
-
-      <!-- <span xxxv-if="isActive(item.id)">{{ item.year }}</span> -->
-    </nuxt-link>
+      <!-- {{ item.i === stateI ? "(current)" : "" }} -->
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  states: ["Created", "Accepted", "Borrowed", "Returned", "Ended"],
+
   items: [
     {
-      id: "0",
-      version: "19 May - 26 May",
+      i: 0,
+      version: "Requested",
     },
     {
-      id: "02",
-      version: "26 May - 2 June",
+      i: 1,
+      version: "Accepted",
     },
     {
-      id: "03",
-      version: "2 June - 9 June",
+      i: 2,
+      version: "Borrowed",
     },
     {
-      id: "04",
-      version: "9 June - 19 June",
+      i: 3,
+      version: "Returned",
     },
     {
-      id: "05",
-      version: "19 June - 25 June",
+      i: 4,
+      version: "Checked",
     },
     {
-      id: "06",
-      version: "8 July onwards",
-      current: true,
+      i: 5,
+      version: "Reviewed",
     },
   ],
 
-  methods: {
-    // isActive(id) {
-    //   return this.$store.state.roadmap.active === id;
-    // },
+  computed: {
+    stateI() {
+      return this.$options.states.indexOf(this.$store.state.request.state);
+    },
   },
 };
 </script>
@@ -80,19 +78,22 @@ export default {
       transition: background-color 0.3s 0.1s ease-in;
     }
 
-    &:first-child::before {
+    &:first-child:not(:last-child)::before {
+      // first
       @extend .line;
       top: 40%;
       bottom: 0;
     }
 
     &:not(:last-child):not(:first-child)::before {
+      //middle
       @extend .line;
       top: 0;
       bottom: 0;
     }
 
-    &:last-child::before {
+    &:last-child:not(:first-child)::before {
+      // last
       @extend .line;
       top: 0;
       bottom: 40%;

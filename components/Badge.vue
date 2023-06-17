@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="badge text-uppercase pb-1"
-    data-aos="space"
-    data-aos-duration="1000"
-    data-aos-easing="ease"
-  >
+  <div class="badge text-uppercase pb-1" data-aos="space" data-aos-duration="1000" data-aos-easing="ease">
     <slot />
   </div>
 </template>
@@ -13,4 +8,8 @@
 export default {};
 </script>
 
-<style></style>
+<style lang="scss">
+.badge {
+  font-size: 13px !important;
+}
+</style>

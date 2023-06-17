@@ -9,42 +9,26 @@
       <div class="col-12 col-md-8">
         <div class="p-3 h-100 d-flex flex-column justify-content-between">
           <div>
-            <div class="fw-bold" @click="getState()">
-              State: {{ $store.state.request.state }} <badge><i class="bi bi-arrow-clockwise bg-secondary"></i></badge>
+            <h3>{{ item.title }}</h3>
+
+            <p>{{ item.description }}</p>
+
+            <p class="text-muted fw-bold">To {{ item.rent.start > 0 || item.rent.extra > 0 ? "rent" : "borrow" }}</p>
+
+            <div v-if="item.deposit > 0">
+              <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
+            </div>
+            <div v-if="item.rent.start > 0">
+              <span class="fw-bold">{{ item.rent.start }} hbar</span> first day
+            </div>
+            <div v-if="item.rent.extra > 0">
+              <span class="fw-bold">{{ item.rent.extra }} hbar</span> each extra day
             </div>
 
-            <p>{{ $store.state.request.message }}</p>
+            <hr />
 
-            <div class="row mb-2">
-              <div class="col-12 col-md-6">
-                <nuxt-link :to="`/app/user/${owner.id}`" class="d-flex gap-2 align-items-start mb-2">
-                  <button class="bg-primary p-2 rounded-circle lh-1 text-white">
-                    <i class="bi bi-person-fill"></i>
-                  </button>
-                  <div>
-                    <div class="xxxlh-1">{{ name }}</div>
-                    <div class="xxxlh-sm">
-                      {{ neighborhood }}
-                      <span class="opacity-75 fw-medium" xxxv-if="data.distance && place"> {{ distance }} km</span>
-                    </div>
-                    <div><i class="bi bi-envelope-fill"></i> borrower email</div>
-                    <div><i class="bi bi-telephone-fill"></i> borrower phone</div>
-                  </div>
-                </nuxt-link>
-              </div>
-
-              <div class="col-12 col-md-6">
-                <div class="d-flex gap-2 align-items-start">
-                  <span class="bg-primary p-2 rounded-circle lh-1 text-white">
-                    <i class="bi bi-calendar2-plus-fill"></i>
-                  </span>
-                  <div>
-                    <div class="xxlh-sm">From: <formatted-date :date="$store.state.request.startdate * 1000" /></div>
-                    <div class="xxxlh-sm">Until: <formatted-date :date="$store.state.request.enddate * 1000" /></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <formatted-date :date="$store.state.request.startdate * 1000" /> -
+            <formatted-date :date="$store.state.request.enddate * 1000" />
           </div>
         </div>
       </div>

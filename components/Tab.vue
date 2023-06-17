@@ -1,7 +1,7 @@
 <template>
   <li class="nav-item">
     <button class="nav-link" @click="$store.commit('tabs/switch', name)" :class="$store.state.tabs.name === name ? 'active' : false">
-      {{ name }} <badge v-if="num > 0">{{ num }}</badge>
+      {{ name }} <number-badge v-if="num > 0" class="ms-1">{{ num }}</number-badge>
     </button>
   </li>
 </template>

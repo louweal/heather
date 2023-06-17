@@ -17,7 +17,7 @@ export default {
       let locale = "us-EN";
       return new Date(date).toLocaleDateString(locale, {
         day: "numeric",
-        month: "numeric",
+        month: "long",
         year: "numeric",
       });
     },
