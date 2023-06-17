@@ -32,6 +32,14 @@ export async function getDeposit(contractId) {
   return await contractCallQuery(contractId, "deposit", undefined, "uint32");
 }
 
+export async function getOwner(contractId) {
+  return await contractCallQuery(contractId, "owner", undefined, "uint32");
+}
+
+export async function getBorrower(contractId) {
+  return await contractCallQuery(contractId, "borrower", undefined, "uint32");
+}
+
 export async function getTotalRent(contractId) {
   return await contractCallQuery(contractId, "totalRent", undefined, "uint32");
 }

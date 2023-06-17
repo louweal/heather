@@ -23,9 +23,6 @@ contract Borrow {
         Ended
     }
     State public state; // getter: state
-    uint32 stateI; // the state in uint formal
-
-    event SetState(uint stateI);
 
     constructor(
         address owner_,
@@ -33,11 +30,12 @@ contract Borrow {
         uint32 startdate_,
         uint32 enddate_,
         uint32 deposit_,
-        uint32 totalRent_
+        uint32 totalRent_,
+        address borrower_
     ) payable {
         // request to borrow -> create contract
         owner = payable(owner_);
-        borrower = payable(msg.sender);
+        borrower = payable(borrower_);
         details = details_;
         startdate = startdate_;
         enddate = enddate_; 
@@ -64,20 +62,18 @@ contract Borrow {
     function acceptRequest() external inState(State.Created) onlyOwner {
         require((block.timestamp <= startdate),
         "This borrow request is expired"); 
-        state = State.Borrowed; //State.Accepted;
-        emit SetState(uint32(state));
+        state = State.Accepted;
     }
 
     function startBorrow() external payable inState(State.Accepted) onlyBorrower {
-        // require(
-        //     msg.value == (deposit + totalRent),
-        //     "Please send in the item deposit + total rent"
-        // ); 
+        require(
+            msg.value == (deposit + totalRent),
+            "Please send in the item deposit + total rent"
+        ); 
         state = State.Borrowed;
-        // emit SetState(uint32(state));
-        // if(msg.value > 0) {
-        //     owner.transfer(totalRent); // the owner receives the rent directy at the start
-        // }
+        if(msg.value > 0) {
+            owner.transfer(totalRent); // the owner receives the rent directy at the start
+        }
     }
 
     function requestExtend(uint8 extraDays_) external inState(State.Borrowed) onlyBorrower {
@@ -97,12 +93,10 @@ contract Borrow {
 
     function confirmReturn() external inState(State.Borrowed) onlyOwner {
         state = State.Returned;
-        emit SetState(uint32(state)); 
     }
 
     function acceptReturn() external inState(State.Returned) onlyOwner {
         state = State.Ended;
-        // emit SetState(uint32(state)); 
         if(deposit > 0) {
             borrower.transfer(uint256(deposit));
         }
@@ -111,17 +105,19 @@ contract Borrow {
     // report a problem (e.g. broken or incomplete) -> get deposit
     function reportProblem(string memory problem_) external inState(State.Returned) onlyOwner {
         state = State.Ended;
-        emit SetState(uint32(state)); 
         problem = problem_;
-        owner.transfer(deposit);
+        if(deposit > 0) {
+            owner.transfer(deposit);
+        }
     }
 
     function reportMissing() external inState(State.Borrowed) onlyOwner {
         require(block.timestamp > (enddate + (7 * 86400)), 
         "Report the item as missing when it is at least 7 days after the end of the borrow end date");
         state = State.Ended;
-        emit SetState(uint32(state)); 
-        owner.transfer(deposit);
+        if(deposit > 0) {        
+            owner.transfer(deposit);
+        }
     } 
 
     function writeOwnerReview(string memory review_) external inState(State.Ended) onlyOwner {

@@ -5,7 +5,8 @@ import "./Borrow.sol";
 
 contract BorrowFactory {
     function deployBorrow(address owner, string memory details, uint32 startdate, uint32 enddate, uint32 deposit, uint32 totalRent) external returns (address) {
-        Borrow newBorrow = (new Borrow)(owner, details, startdate, enddate, deposit, totalRent);
+        address borrower = msg.sender;
+        Borrow newBorrow = (new Borrow)(owner, details, startdate, enddate, deposit, totalRent, borrower);
         return (address(newBorrow));
     }
 }
