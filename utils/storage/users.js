@@ -12,7 +12,7 @@ export async function addUser(data) {
     { type: "address", value: accountId },
     { type: "string", value: encodeData(data) },
   ];
-  return await contractExecuteTransaction(contractId, "addUser", params, false, false);
+  return await contractExecuteTransaction(contractId, "addUser", params);
 }
 
 // get user
@@ -40,7 +40,7 @@ export async function updateUser(data) {
     { type: "string", value: encodeData(data) },
   ];
 
-  return await contractExecuteTransaction(contractId, "updateUser", params, false, false);
+  return await contractExecuteTransaction(contractId, "updateUser", params);
 }
 
 // delete user
@@ -48,6 +48,6 @@ export async function removeUser() {
   // todo: check user exists before remove ?
 
   let params = [{ type: "address", value: accountId }];
-  let res = await contractExecuteTransaction(contractId, "removeUser", params, false, false);
+  let res = await contractExecuteTransaction(contractId, "removeUser", params);
   return res;
 }

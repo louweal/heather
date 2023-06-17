@@ -5,7 +5,12 @@
         <div class="form-group">
           <label class="fw-bold">Message</label>
 
-          <textarea rows="5" class="form-control" :value="message" @input="(e) => setMessage(e.target.value)" />
+          <textarea
+            rows="5"
+            class="form-control"
+            :placeholder="`Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`"
+            @input="(e) => setMessage(e.target.value)"
+          />
         </div>
 
         <div class="form-group">
@@ -62,7 +67,7 @@
 <script>
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
-const { deployBorrow } = require("@/utils/borrow.js");
+const { deployBorrow, computeTotalRent } = require("@/utils/borrow.js");
 
 export default {
   components: { DatePicker },
@@ -76,6 +81,8 @@ export default {
       message: "",
     };
   },
+
+  created() {},
   mounted() {
     this.from = new Date();
 
@@ -120,9 +127,7 @@ export default {
       let startdate = this.request.from;
       let enddate = this.request.to;
       let deposit = this.data.deposit;
-      let numDays = (enddate - startdate) / 86400;
-
-      let totalRent = this.data.rent.start + (numDays - 1) * this.data.rent.extra;
+      let totalRent = computeTotalRent(this.data.rent, startdate, enddate);
 
       this.rid = await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
     },

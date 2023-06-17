@@ -24,8 +24,6 @@
       <textarea class="form-control" placeholder="Description" @input="(e) => setDescription(e.target.value)" />
 
       <div class="input-group">
-        <span class="input-group-text">ħ</span>
-
         <input
           type="text"
           class="form-control"
@@ -33,11 +31,10 @@
           placeholder="Deposit (optional)"
           @input="(e) => setDeposit(e.target.value)"
         />
+        <span class="input-group-text">hbar</span>
       </div>
 
       <div class="input-group">
-        <span class="input-group-text">ħ</span>
-
         <input
           type="text"
           class="form-control"
@@ -45,11 +42,10 @@
           placeholder="Rent first day (optional)"
           @input="(e) => (newData['rent']['start'] = +e.target.value)"
         />
+        <span class="input-group-text">hbar</span>
       </div>
 
       <div class="input-group">
-        <span class="input-group-text">ħ</span>
-
         <input
           type="text"
           class="form-control"
@@ -57,6 +53,7 @@
           placeholder="Rent for each additional day (optional)"
           @input="(e) => (newData['rent']['extra'] = +e.target.value)"
         />
+        <span class="input-group-text">hbar</span>
       </div>
 
       <div class="btn btn-primary" @click="createListing()">Create</div>
@@ -161,8 +158,6 @@ export default {
 
         let data = { ...this.newData, id: self.crypto.randomUUID(), date: parseInt(new Date().getTime() / 1000) };
 
-        // todo: add data to vuex store
-
         console.log(data);
 
         // add new ad to hedera storage
@@ -170,6 +165,9 @@ export default {
         let status = await addAd(userId, data);
 
         if (status === "SUCCESS") {
+          // add to vuex store
+          this.$store.commit("data/addAd", { ...data, owner: userId });
+
           this.$store.commit("modals/hide");
 
           // reset data

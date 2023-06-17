@@ -19,13 +19,18 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
   return await contractExecuteTransaction(factoryContractId, "deployBorrow", params, "address");
 }
 
+export function computeTotalRent(rent, startdate, enddate) {
+  let numDays = (enddate - startdate) / 86400;
+  return rent.start + (numDays - 1) * rent.extra;
+}
+
 export async function getRequestDetails(contractId) {
   let encodedDetails = await contractCallQuery(contractId, "details", undefined, "string");
   return decodeData(encodedDetails);
 }
 
 export async function getProblem(contractId) {
-  return await contractCallQuery(contractId, "getProblem", undefined, "string");
+  return await contractCallQuery(contractId, "problem", undefined, "string");
 }
 
 export async function getState(contractId) {

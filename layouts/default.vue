@@ -89,6 +89,7 @@ export default {
     async setUsers() {
       let users = await this.getUsers();
       this.$store.commit("data/SET_USERS", users);
+      console.log(this.$store.state.user.location);
       this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
     },
 
@@ -98,14 +99,12 @@ export default {
       let users = [];
       for (let i = 0; i < 999999; i++) {
         let userId = await getUserId(i);
-        console.log(userId);
 
         // get user data
         if (typeof userId === "string" && userId.startsWith("0.0.")) {
           let userData = await getUserData(userId);
           // add user's accountId to data
           userData = { ...userData, id: userId };
-
           users.push(userData);
         } else {
           //reached end of userlist
@@ -127,8 +126,9 @@ export default {
       // get calls and or ads from hedera network
       let users = this.$store.state.data.owners;
 
-      let neighbors = users.filter((a) => a.distance <= 12);
+      let neighbors = users; //.filter((a) => a.distance <= 12); // todo!!
       console.log(neighbors.length);
+      console.log("neighbors.length :>> ", neighbors.length);
 
       let ads = [];
       let calls = [];
@@ -155,8 +155,9 @@ export default {
         }
 
         if (getAds) {
-          for (let j = 0; j < 9999; j++) {
+          for (let j = 0; j < 5; j++) {
             let ad = await getAd(user.id, j);
+            console.log(ad);
             if (typeof ad === "object") {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
@@ -165,7 +166,7 @@ export default {
               // deleted add -> go to next iteration
               continue;
             } else {
-              break;
+              // break;
               //reached end of ad list
             }
           }

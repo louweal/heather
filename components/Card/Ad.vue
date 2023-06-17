@@ -4,11 +4,19 @@
     <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
       <h5 class="card-title">{{ data.title }}</h5>
 
-      <p>
-        To {{ data.type }}
+      <p>To {{ data.type }}</p>
 
-        <span v-if="data.type === 'rent' && data.rent" class="opacity-50">ħ{{ data.rent.start }}</span>
-      </p>
+      <div class="vstack lh-sm">
+        <span v-if="data.deposit > 0">
+          <span class="fw-bold">{{ data.deposit }} hbar</span> deposit
+        </span>
+        <span v-if="data.rent && data.rent.start > 0">
+          <span class="fw-bold">{{ data.rent.start }} hbar</span> first day
+        </span>
+        <span v-if="data.rent && data.rent.extra > 0">
+          <span class="fw-bold">{{ data.rent.extra }} hbar</span> each extra day
+        </span>
+      </div>
     </nuxt-link>
 
     <div class="card-footer" v-if="data.name">

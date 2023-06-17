@@ -1,11 +1,6 @@
 <template>
   <div class="roadmap">
-    <div
-      class="roadmap--item"
-      :class="item.i === stateI ? 'roadmap--item--active' : false"
-      v-for="(item, i) in $options.items.filter((item) => item.i <= stateI)"
-      :key="i"
-    >
+    <div class="roadmap--item" :class="item.i === stateI ? 'roadmap--item--active' : false" v-for="(item, i) in $options.items" :key="i">
       {{ item.version }}
 
       <!-- {{ item.i === stateI ? "(current)" : "" }} -->
@@ -15,7 +10,7 @@
 
 <script>
 export default {
-  states: ["Created", "Accepted", "Borrowed", "Returned", "Ended"],
+  states: ["Created", "Accepted", "Borrowed", "Returned", "Checked", "Reviewed"],
 
   items: [
     {

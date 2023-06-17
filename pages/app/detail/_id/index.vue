@@ -41,15 +41,16 @@
               <p class="text-muted fw-bold">To {{ item.rent.start > 0 || item.rent.extra > 0 ? "rent" : "borrow" }}</p>
 
               <div class="d-grid mt-2">
-                <!-- <div class="vstack"> -->
-                <div v-if="item.deposit > 0">
-                  <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
-                </div>
-                <div v-if="item.rent.start > 0">
-                  <span class="fw-bold">{{ item.rent.start }} hbar</span> first day
-                </div>
-                <div v-if="item.rent.extra > 0">
-                  <span class="fw-bold">{{ item.rent.extra }} hbar</span> each extra day
+                <div class="vstack lh-sm">
+                  <span v-if="item.deposit > 0">
+                    <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
+                  </span>
+                  <span v-if="item.rent.start > 0">
+                    <span class="fw-bold">{{ item.rent.start }} hbar</span> first day
+                  </span>
+                  <span v-if="item.rent.extra > 0">
+                    <span class="fw-bold">{{ item.rent.extra }} hbar</span> each extra day
+                  </span>
                 </div>
 
                 <button class="btn btn-primary mt-2" @click="$store.commit('modals/show', { name: 'request', data: item })">

@@ -8,7 +8,7 @@
             <borrow-state />
 
             <div class="d-grid mt-2">
-              <div class="btn btn-primary" @click="getState()">Get state</div>
+              <div class="btn btn-primary" @click="getState()">Sync state</div>
             </div>
 
             <card-user :user="owner" role="owner" v-if="isBorrower" />
@@ -17,13 +17,13 @@
 
           <div class="col-12 col-md-9">
             <div class="d-grid gap-3">
-              <card-request :item="item" />
+              <card-request :item="item" v-if="this.$store.state.data.ads.length > 0" />
 
               <template v-if="item && item.owner === $store.state.user.accountId">
                 owner
                 <!-- owner actions -->
                 <template v-if="$store.state.request.state == 'Created'">
-                  <div class="bg-light rounded p-2">
+                  <div class="bg-light rounded p-2" v-if="$store.state.request.message.length > 0">
                     <p>{{ $store.state.request.message }}</p>
                   </div>
                   <!-- Created -->
@@ -32,7 +32,7 @@
 
                 <template v-else-if="$store.state.request.state == 'Borrowed'">
                   <!-- Borrowed -->
-                  <button class="btn btn-primary" @click="confirmReturn()">Confirm item return</button>
+                  <button class="btn btn-primary" @click="confirmReturn()">Confirm return</button>
                 </template>
 
                 <template v-else-if="$store.state.request.state == 'Returned'">
@@ -50,14 +50,23 @@
                   <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'owner-review' })">Write review</button>
                 </template>
 
-                <div class="bg-light rounded p-2" v-else-if="$store.state.request.state == 'Reviewed'">
-                  <p v-if="borrowerReview">{{ borrowerReview }}</p>
-                  <p v-if="borrowerReview">
-                    <span class="opacity-75 text-primary">You have left following review: </span>
-                    <br />
-                    {{ ownerReview }}
-                  </p>
-                </div>
+                <template v-else-if="$store.state.request.state == 'Reviewed'">
+                  <div v-if="borrowerReview" class="bg-light rounded p-2">
+                    <p>{{ borrowerReview }}</p>
+                  </div>
+                  <div v-if="ownerReview">
+                    <p class="opacity-75 xxxtext-primary">You have left following review:</p>
+                    <div class="bg-light rounded p-2">
+                      {{ ownerReview }}
+                    </div>
+                  </div>
+                  <div v-if="borrowerReview">
+                    <p class="opacity-75 xxxtext-primary">{{ borrower.name }} has left following review:</p>
+                    <div class="bg-light rounded p-2">
+                      {{ borrowerReview }}
+                    </div>
+                  </div>
+                </template>
               </template>
 
               <template v-if="$store.state.request.borrower === $store.state.user.accountId">
@@ -71,6 +80,24 @@
                 <template v-else-if="$store.state.request.state == 'Borrowed'">
                   <!-- Borrowed -->
                   <button class="btn btn-primary" @click="returnBorrow()">Return item</button>
+                </template>
+
+                <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
+                  <!-- Checked -->
+                  <div v-if="problem">
+                    <p class="text-danger">
+                      Unfortunately, you've lost your deposit because the owner of the item detected a problem. Contact the owner for more
+                      details.
+                    </p>
+
+                    <div class="bg-light rounded p-2">
+                      <p class="mb-0 text-primary">
+                        <span class="fw-bold">Problem:</span> <i>{{ problem }}</i>
+                      </p>
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'borrower-review' })">Write review</button>
                 </template>
               </template>
 
@@ -118,11 +145,16 @@ export default {
       rid: undefined,
       error: undefined,
       borrowerReview: undefined,
+      ownerReview: undefined,
+      problem: undefined,
     };
   },
 
   watch: {
     "$store.state.request.state": async function (val) {
+      if (val === "Checked") {
+        this.problem = await getProblem(this.rid);
+      }
       if (val === "Reviewed") {
         this.borrowerReview = await getBorrowerReview(this.rid);
         this.ownerReview = await getOwnerReview(this.rid);
@@ -136,6 +168,10 @@ export default {
 
     if (!this.$store.state.user.signedIn) {
       this.$store.commit("modals/show", { name: "connect" });
+    }
+
+    if (this.$store.state.request.state === "Checked") {
+      this.problem = await getProblem(this.rid);
     }
 
     // run queries

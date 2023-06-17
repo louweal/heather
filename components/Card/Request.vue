@@ -1,34 +1,32 @@
 <template>
   <div class="bg-white rounded overflow-hidden" v-if="this.$store.state.data.ads.length > 0" :key="$store.state.user.signedIn">
     <div class="row g-2">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-5">
         <nuxt-link :to="`/app/detail/${item.id}`">
           <ratio-visual :data="{ visual: item.visuals ? item.visuals[0] : undefined, name: item.title }" ratio="1x1" />
         </nuxt-link>
       </div>
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-7">
         <div class="p-3 h-100 d-flex flex-column justify-content-between">
           <div>
+            <formatted-date :date="$store.state.request.startdate * 1000" /> —
+            <formatted-date :date="$store.state.request.enddate * 1000" />
+
+            <hr />
+
             <h3>{{ item.title }}</h3>
 
             <p>{{ item.description }}</p>
 
             <p class="text-muted fw-bold">To {{ item.rent.start > 0 || item.rent.extra > 0 ? "rent" : "borrow" }}</p>
-
+          </div>
+          <div>
             <div v-if="item.deposit > 0">
               <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
             </div>
-            <div v-if="item.rent.start > 0">
-              <span class="fw-bold">{{ item.rent.start }} hbar</span> first day
+            <div v-if="totalRent > 0">
+              <span class="fw-bold">{{ totalRent }} hbar</span> rent
             </div>
-            <div v-if="item.rent.extra > 0">
-              <span class="fw-bold">{{ item.rent.extra }} hbar</span> each extra day
-            </div>
-
-            <hr />
-
-            <formatted-date :date="$store.state.request.startdate * 1000" /> -
-            <formatted-date :date="$store.state.request.enddate * 1000" />
           </div>
         </div>
       </div>
@@ -37,7 +35,7 @@
 </template>
 
 <script>
-const { acceptRequest, getState } = require("@/utils/borrow.js");
+const { acceptRequest, getState, computeTotalRent } = require("@/utils/borrow.js");
 
 acceptRequest;
 export default {
@@ -51,6 +49,7 @@ export default {
   data() {
     return {
       rid: undefined,
+      totalRent: 0,
     };
   },
 
@@ -71,6 +70,8 @@ export default {
 
   created() {
     this.rid = this.$route.params.rid;
+
+    this.totalRent = computeTotalRent(this.item.rent, this.$store.state.request.startdate, this.$store.state.request.enddate);
   },
 
   methods: {

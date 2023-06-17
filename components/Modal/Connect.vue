@@ -47,7 +47,7 @@ export default {
       // get calls and or ads from hedera network
       let users = this.$store.state.data.owners;
 
-      let neighbors = users.filter((a) => a.distance <= 12);
+      let neighbors = users; //.filter((a) => a.distance <= 12); // tdodo
       console.log(neighbors.length);
 
       let ads = [];
@@ -63,6 +63,10 @@ export default {
             if (call) {
               let callData = { ...call, owner: user.id, i: j, type: "call" };
               calls.push(callData);
+            }
+            if (call === undefined) {
+              // deleted call -> go to next iteration
+              continue;
             } else {
               //reached end of ad list
               break;
@@ -77,6 +81,10 @@ export default {
             if (ad) {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
+            }
+            if (ad === undefined) {
+              // deleted call -> go to next iteration
+              continue;
             } else {
               //reached end of ad list
               break;

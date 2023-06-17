@@ -45,12 +45,12 @@
             <div class="row g-2">
               <template v-if="results.length > 0">
                 <template v-for="(a, i) in results">
-                  <div class="col-12 col-sm-6 col-xxl-3" :key="a.id">
+                  <div class="col-12 col-sm-6 col-xl-4" :key="a.id">
                     <card-call v-if="a.type === 'call'" :data="a" />
                     <card-ad v-else :data="a" />
                   </div>
                   <div
-                    class="col-12 col-sm-6 col-xxl-3"
+                    class="col-12 col-sm-6 col-xl-4"
                     :key="'banner_' + a.id"
                     v-if="i === 2 || (results.length < 2 && i === results.length - 1)"
                   >
@@ -59,7 +59,7 @@
                 </template>
               </template>
               <template v-else>
-                <div class="col-12 col-sm-6 col-xxl-3" key="banner">
+                <div class="col-12 col-sm-6 col-xl-4" key="banner">
                   <card-new-call title="Not found what you're looking for?" :query="$store.state.search.query" />
                 </div>
               </template>

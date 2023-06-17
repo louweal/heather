@@ -80,7 +80,7 @@ export default {
   },
 
   async mounted() {
-    // this.validateAccess();
+    this.validateAccess();
   },
 
   computed: {
