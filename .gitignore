@@ -92,3 +92,5 @@ sw.*
 *.swp
 
 /utils/dummy-creds.txt
+
+/dist

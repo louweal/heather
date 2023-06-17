@@ -23,7 +23,7 @@
     "@hashgraph/sdk": "2.24.1",
     "@nuxtjs/dotenv": "^1.4.1",
     "aos": "^2.3.4",
-    "bootstrap": "^5.2.1",
+    "bootstrap": "5.2.1",
     "core-js": "^3.25.2",
     "hashconnect": "^0.2.4",
     "nuxt": "^2.15.8",
