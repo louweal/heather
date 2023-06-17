@@ -24,7 +24,7 @@ export default {
   watch: {
     "$store.state.user.signedIn": function () {
       if (this.$store.state.user.signedIn && this.error.statusCode === 403) {
-        this.$router.push({ path: this.$route.path, hash: "#signedIn" });
+        this.$router.push({ path: this.$route.path, hash: "#" + new Date().getTime() });
       }
     },
   },

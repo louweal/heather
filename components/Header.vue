@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
-        <div class="d-none d-md-block g-5 me-2" v-if="$store.state.user.signedIn">
+        <div class="d-none d-lg-block g-5 me-2" v-if="$store.state.user.signedIn">
           <nuxt-link to="/account">Account</nuxt-link>
         </div>
 
@@ -157,7 +157,7 @@ export default {
           center = this.$store.state.origin;
         }
 
-        this.$store.commit("data/updateDistance", center);
+        // this.$store.commit("data/updateDistance", center);
       }
 
       this.$router.push({
@@ -231,6 +231,8 @@ export default {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
   @include media-breakpoint-up(lg) {
+    opacity: 1;
+    visibility: visible;
     width: auto;
     box-shadow: none;
   }

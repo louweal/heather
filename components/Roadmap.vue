@@ -9,7 +9,7 @@
     >
       {{ item.version }}
 
-      {{ item.current ? "(current)" : "" }}
+      <!-- {{ item.current ? "(current)" : "" }} -->
 
       <!-- <span xxxv-if="isActive(item.id)">{{ item.year }}</span> -->
     </nuxt-link>
@@ -20,11 +20,7 @@
 export default {
   items: [
     {
-      id: "0",
-      version: "19 May - 26 May",
-    },
-    {
-      id: "02",
+      id: "01",
       version: "26 May - 2 June",
     },
     {
@@ -41,8 +37,12 @@ export default {
     },
     {
       id: "06",
-      version: "8 July onwards",
+      version: "Judging phase",
       current: true,
+    },
+    {
+      id: "07",
+      version: "8 July onwards",
     },
   ],
 
