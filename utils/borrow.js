@@ -24,12 +24,19 @@ export async function getRequestDetails(contractId) {
   return decodeData(encodedDetails);
 }
 
+export async function getProblem(contractId) {
+  return await contractCallQuery(contractId, "getProblem", undefined, "string");
+}
+
 export async function getState(contractId) {
   return await contractCallQuery(contractId, "getState", undefined, "string");
 }
+export async function getOwnerReview(contractId) {
+  return await contractCallQuery(contractId, "ownerReview", undefined, "string");
+}
 
-export async function getDeposit(contractId) {
-  return await contractCallQuery(contractId, "deposit", undefined, "uint32");
+export async function getBorrowerReview(contractId) {
+  return await contractCallQuery(contractId, "borrowerReview", undefined, "string");
 }
 
 export async function getOwner(contractId) {
@@ -45,12 +52,10 @@ export async function getTotalRent(contractId) {
 }
 
 export async function acceptRequest(contractId) {
-  // works
   return await contractExecuteTransaction(contractId, "acceptRequest");
 }
 
 export async function startBorrow(contractId, value) {
-  // error
   return await contractExecuteTransaction(contractId, "startBorrow", undefined, undefined, value * 1e8);
 }
 
@@ -64,13 +69,11 @@ export async function acceptExtend(contractId) {
 }
 
 export async function returnBorrow(contractId, returndate) {
-  // error
   let params = [{ type: "uint32", value: returndate }];
   return await contractExecuteTransaction(contractId, "returnBorrow", params);
 }
 
 export async function confirmReturn(contractId) {
-  // works
   return await contractExecuteTransaction(contractId, "confirmReturn");
 }
 
@@ -79,7 +82,6 @@ export async function reportMissing(contractId) {
 }
 
 export async function acceptReturn(contractId) {
-  // error
   return await contractExecuteTransaction(contractId, "acceptReturn");
 }
 
@@ -96,8 +98,4 @@ export async function writeOwnerReview(contractId, review) {
 export async function writeBorrowerReview(contractId, review) {
   let params = [{ type: "string", value: review }];
   return await contractExecuteTransaction(contractId, "writeBorrowerReview", params);
-}
-
-export async function settleDeposit(contractId, value) {
-  return await contractExecuteTransaction(contractId, "settleDeposit", undefined, undefined, value);
 }

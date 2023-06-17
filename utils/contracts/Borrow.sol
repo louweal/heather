@@ -20,7 +20,8 @@ contract Borrow {
         Accepted,
         Borrowed,
         Returned,
-        Ended
+        Checked,
+        Reviewed
     }
     State public state; // getter: state
 
@@ -53,8 +54,11 @@ contract Borrow {
         if(state == State.Returned) {
             return "Returned";
         }
-        if(state == State.Ended) {
-            return "Ended";
+        if(state == State.Checked) {
+            return "Checked";
+        }
+        if(state == State.Reviewed) {
+            return "Reviewed";
         }
         return "Created";
     }
@@ -96,7 +100,7 @@ contract Borrow {
     }
 
     function acceptReturn() external inState(State.Returned) onlyOwner {
-        state = State.Ended;
+        state = State.Checked;
         if(deposit > 0) {
             borrower.transfer(uint256(deposit));
         }
@@ -104,7 +108,7 @@ contract Borrow {
 
     // report a problem (e.g. broken or incomplete) -> get deposit
     function reportProblem(string memory problem_) external inState(State.Returned) onlyOwner {
-        state = State.Ended;
+        state = State.Checked;
         problem = problem_;
         if(deposit > 0) {
             owner.transfer(deposit);
@@ -112,27 +116,23 @@ contract Borrow {
     }
 
     function reportMissing() external inState(State.Borrowed) onlyOwner {
-        require(block.timestamp > (enddate + (7 * 86400)), 
+        require(block.timestamp >= (enddate + (7 * 86400)), 
         "Report the item as missing when it is at least 7 days after the end of the borrow end date");
-        state = State.Ended;
+        state = State.Checked;
         if(deposit > 0) {        
             owner.transfer(deposit);
         }
     } 
 
-    function writeOwnerReview(string memory review_) external inState(State.Ended) onlyOwner {
+    function writeOwnerReview(string memory review_) external inState(State.Checked) onlyOwner {
+        state = State.Reviewed;
         ownerReview = review_;
     } 
 
-    function writeBorrowerReview(string memory review_) external inState(State.Ended) onlyBorrower {
+    function writeBorrowerReview(string memory review_) external inState(State.Checked) onlyBorrower {
+        state = State.Reviewed;
         borrowerReview = review_;
     } 
-
-    // optional: return the deposit (partially) to the borrower after a misunderstanding is resolved
-    function settleDeposit() external payable inState(State.Ended) onlyOwner {
-        require((msg.value <= deposit), "You can't send more than the initial deposit");
-        borrower.transfer(msg.value);
-    }
 
     // modifiers
 
