@@ -39,10 +39,16 @@ $display-line-height: 1.11;
 
 // button
 
+$btn-border-width: 0;
 $btn-border-radius: 25px;
 $btn-padding-y: 0.7rem;
 $btn-padding-x: 1.4rem;
 $btn-font-weight: 500;
+
+// badge
+$badge-color: #9c8881;
+$badge-font-size: 12px; //!default;
+$badge-padding-x: 0;
 
 // forms
 // $input-btn-focus-box-shadow: none;

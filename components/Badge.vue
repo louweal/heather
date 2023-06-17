@@ -1,7 +1,12 @@
 <template>
-  <span class="badge bg-secondary rounded-pill px-1 text-white font-sm ms-1">
+  <div
+    class="badge text-uppercase pb-1"
+    data-aos="space"
+    data-aos-duration="1000"
+    data-aos-easing="ease"
+  >
     <slot />
-  </span>
+  </div>
 </template>
 
 <script>
