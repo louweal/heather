@@ -3,7 +3,7 @@
     <div class="d-grid gap-2">
       <div class="btn btn-primary" @click="connectHashpack()">Connect using HashPack</div>
 
-      <button class="btn text-center" @click="connect()">or connect using a demo wallet</button>
+      <p class="text-center cp" @click="connect()">or connect using a demo wallet</p>
     </div>
   </div>
 </template>
@@ -16,14 +16,13 @@ const { getCall } = require("@/utils/storage/calls.js");
 export default {
   methods: {
     async connect() {
-      let userdata = await getUserData(process.env.MY_ACCOUNT_ID); // todo hashpack option
+      let accountId = process.env.MY_ACCOUNT_ID; //// todo hashpack option
+      let userdata = await getUserData(accountId);
       if (userdata) {
         this.$store.commit("user/setUserData", userdata);
+        this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
         this.$store.commit("user/signIn");
-
-        await this.getter(true, true);
-        console.log("DONE!");
-
+        await this.getter(false, true);
         this.$store.commit("modals/hide");
       } else {
         // show register modal
@@ -35,19 +34,11 @@ export default {
       console.log("todo connect hashpack");
     },
 
-    // async setter(setCalls, setAds) {
-    //   if (this.$store.state.user.signedIn) {
-    //     this.getter(setCalls, setAds);
-    //   } else {
-    //     console.log("Please sign in first to get local results");
-    //   }
-    // },
-
     async getter(getCalls, getAds) {
       // get calls and or ads from hedera network
       let users = this.$store.state.data.owners;
 
-      let neighbors = users; //.filter((a) => a.distance <= 12); // tdodo
+      let neighbors = users.filter((a) => a.distance <= 12); // todo
       console.log(neighbors.length);
 
       let ads = [];
@@ -60,11 +51,12 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let call = await getCall(user.id, j);
 
-            if (call) {
+            if (typeof call === "object") {
               let callData = { ...call, owner: user.id, i: j, type: "call" };
               calls.push(callData);
             }
             if (call === undefined) {
+              console.log("removed call");
               // deleted call -> go to next iteration
               continue;
             } else {
@@ -78,14 +70,20 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let ad = await getAd(user.id, j);
 
-            if (ad) {
+            if (!ad) {
+              // deleted call -> go to next iteration
+              continue;
+            }
+            if (typeof ad === "object" && ad.title) {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
             }
             if (ad === undefined) {
+              console.log("removed ad");
               // deleted call -> go to next iteration
               continue;
             } else {
+              console.log(ad);
               //reached end of ad list
               break;
             }
@@ -93,8 +91,14 @@ export default {
         }
       }
 
-      this.$store.commit("data/SET_CALLS", calls);
-      this.$store.commit("data/SET_ADS", ads);
+      console.log("calls.length :>> ", calls.length);
+      console.log("ads.length :>> ", ads.length);
+      if (calls.length > 0) {
+        this.$store.commit("data/SET_CALLS", calls);
+      }
+      if (ads.length > 0) {
+        this.$store.commit("data/SET_ADS", ads);
+      }
       this.$store.commit("data/updateDistance", this.$store.state.user.location);
     },
   },

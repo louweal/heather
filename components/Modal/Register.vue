@@ -28,8 +28,6 @@
       <input type="tel" class="form-control" placeholder="Your phone number" @input="(e) => (phone = e.target.value)" />
 
       <div class="btn btn-primary" @click="createAccount()">Create account</div>
-
-      <p class="text-center">Creating an account on Heather may involve Hedera network fees.</p>
     </div>
   </div>
 </template>
@@ -55,10 +53,12 @@ export default {
       //todo validate form
 
       let data = {
+        accountId: process.env.MY_ACCOUNT_ID,
         name: this.name,
         neighborhood: this.neighborhood,
         email: this.email,
         phone: this.phone,
+        location: { lat: this.googleLoc.geometry.location.lat(), lng: this.googleLoc.geometry.location.lng() },
       };
 
       // add user data to store
@@ -68,23 +68,13 @@ export default {
       let status = await addUser(data);
 
       if (status === "SUCCESS") {
-        this.$store.commit("search/setPlace", this.googleLoc);
-
         this.$store.commit("modals/show", { name: "welcome" });
-
-        this.$store.commit("user/signIn");
-        this.updateDistance();
+        // this.$store.commit("user/signIn");
+        // this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
       } else {
         // todo
         console.log("Something went wrong");
       }
-    },
-
-    updateDistance() {
-      let lat = this.$store.state.user.location.lat;
-      let lng = this.$store.state.user.location.lng;
-      let userLocation = new google.maps.LatLng(lat, lng);
-      this.$store.commit("data/updateOwnerDistance", userLocation);
     },
   },
 

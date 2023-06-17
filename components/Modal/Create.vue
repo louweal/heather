@@ -1,65 +1,80 @@
 <template>
   <div v-if="$store.state.modals.show === 'create'">
-    <div class="d-grid gap-2">
-      <div v-if="photos.length > 0" class="row row-cols-3 g-2">
-        <div class="col align-self-center" v-for="(p, i) in photos" :key="i">
-          <img :src="photos[i]" width="100%" />
+    <template v-if="!success">
+      <div class="d-grid gap-2">
+        <div v-if="photos.length > 0" class="row row-cols-3 g-2">
+          <div class="col align-self-center" v-for="(p, i) in photos" :key="i">
+            <img :src="photos[i]" width="100%" />
+          </div>
         </div>
-      </div>
 
-      <div>
-        <label for="files" class="btn btn-light">Upload images</label>
-        <input type="file" id="files" name="files" multiple class="form-control" style="display: none" ref="files" @change="setPhotos()" />
-      </div>
+        <div>
+          <label for="files" class="btn btn-light">Upload images</label>
+          <input
+            type="file"
+            id="files"
+            name="files"
+            multiple
+            class="form-control"
+            style="display: none"
+            ref="files"
+            @change="setPhotos()"
+          />
+        </div>
 
-      <input
-        type="text"
-        class="form-control"
-        :class="!submitted || (submitted && isValue(newData.title)) ? false : 'border-danger'"
-        placeholder="Title"
-        :value="data ? data.title : newData.title"
-        @input="(e) => setTitle(e.target.value)"
-      />
-
-      <textarea class="form-control" placeholder="Description" @input="(e) => setDescription(e.target.value)" />
-
-      <div class="input-group">
         <input
           type="text"
           class="form-control"
-          :class="isInteger(newData.deposit) ? false : 'border-danger'"
-          placeholder="Deposit (optional)"
-          @input="(e) => setDeposit(e.target.value)"
+          :class="!submitted || (submitted && isValue(newData.title)) ? false : 'border-danger'"
+          placeholder="Title"
+          :value="data ? data.title : newData.title"
+          @input="(e) => setTitle(e.target.value)"
         />
-        <span class="input-group-text">hbar</span>
+
+        <textarea class="form-control" placeholder="Description" @input="(e) => setDescription(e.target.value)" />
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            :class="isInteger(newData.deposit) ? false : 'border-danger'"
+            placeholder="Deposit (optional)"
+            @input="(e) => setDeposit(e.target.value)"
+          />
+          <span class="input-group-text">hbar</span>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            :class="isInteger(newData.rent.start) ? false : 'border-danger'"
+            placeholder="Rent first day (optional)"
+            @input="(e) => (newData['rent']['start'] = +e.target.value)"
+          />
+          <span class="input-group-text">hbar</span>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            :class="isInteger(newData.rent.extra) ? false : 'border-danger'"
+            placeholder="Rent for each additional day (optional)"
+            @input="(e) => (newData['rent']['extra'] = +e.target.value)"
+          />
+          <span class="input-group-text">hbar</span>
+        </div>
+
+        <div class="btn btn-primary" @click="createListing()">Create</div>
+
+        <p v-if="errors" class="text-center">Incorrect input</p>
       </div>
+    </template>
 
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          :class="isInteger(newData.rent.start) ? false : 'border-danger'"
-          placeholder="Rent first day (optional)"
-          @input="(e) => (newData['rent']['start'] = +e.target.value)"
-        />
-        <span class="input-group-text">hbar</span>
-      </div>
-
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          :class="isInteger(newData.rent.extra) ? false : 'border-danger'"
-          placeholder="Rent for each additional day (optional)"
-          @input="(e) => (newData['rent']['extra'] = +e.target.value)"
-        />
-        <span class="input-group-text">hbar</span>
-      </div>
-
-      <div class="btn btn-primary" @click="createListing()">Create</div>
-
-      <p v-if="errors" class="text-center">Incorrect input</p>
-    </div>
+    <template v-if="success">
+      <p>You've successfully shared your {{ newData["title"] }}!</p>
+    </template>
   </div>
 </template>
 
@@ -76,8 +91,17 @@ export default {
       visuals: [],
       submitted: false,
       errors: false,
+      success: false,
     };
   },
+
+  mounted() {
+    // reset data
+    this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
+    this.photos = [];
+    this.visuals = [];
+  },
+
   computed: {
     data() {
       return this.$store.state.modals.data;
@@ -162,18 +186,17 @@ export default {
 
         // add new ad to hedera storage
         let userId = this.$store.state.user.accountId; // todo
+
+        console.log(userId);
         let status = await addAd(userId, data);
 
         if (status === "SUCCESS") {
           // add to vuex store
           this.$store.commit("data/addAd", { ...data, owner: userId });
 
-          this.$store.commit("modals/hide");
+          this.success = true;
 
-          // reset data
-          this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
-          this.photos = [];
-          this.visuals = [];
+          // this.$store.commit("modals/hide");
         }
 
         // return;

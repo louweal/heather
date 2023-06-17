@@ -27,7 +27,7 @@
         <div>
           <nuxt-link class="lh-1" :to="`/app/user/${data.owner}`">{{ data.name }}</nuxt-link>
           <div class="lh-sm">
-            {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance && place"> {{ data.distance }} km</span>
+            {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance"> {{ data.distance }} km</span>
           </div>
         </div>
       </div>

@@ -7,6 +7,11 @@
         <div class="row gy-3">
           <div class="col-md-6 mr-md-2">
             <div class="row g-2">
+              <template v-if="$store.state.data.calls.length === 0 && $store.state.data.ads.length === 0">
+                <p>No results found in your neighborhood.</p>
+                <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
+              </template>
+
               <template v-for="(a, i) in $store.state.data.calls">
                 <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 3">
                   <card-new-call />
@@ -50,7 +55,7 @@ export default {
   methods: {
     filterOwners() {
       // todo: move to default created() ?
-      let defaultCenter = this.$store.state.origin;
+      let defaultCenter = this.$store.state.user.location;
       this.$store.commit("data/updateOwnerDistance", defaultCenter);
       let results = this.$store.state.data.owners.filter((a) => a.distance <= this.maxDistance);
 

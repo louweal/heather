@@ -2,12 +2,12 @@ import { encodeData, decodeData } from "../utils/encodeHelper";
 
 export const state = () => ({
   signedIn: false,
-  accountId: "0.0.3477311",
+  accountId: "0.0.000000",
   userData: undefined, // encoded
   // new user input:
   name: "Jane Doe",
   neighborhood: undefined,
-  location: { lat: 52.168732, lng: 4.47334 },
+  location: { lat: 52.1589443082694, lng: 4.492449882264405 },
   phone: undefined,
   email: undefined,
 });
@@ -22,28 +22,18 @@ export const mutations = {
   },
 
   setUserData(state, payload) {
-    state.name = payload.name ? payload.name : state.name;
-    state.neighborhood = payload.neighborhood ? payload.neighborhood : state.neighborhood;
-    state.email = payload.email ? payload.email : state.email;
-    state.phone = payload.phone ? payload.phone : state.phone;
+    console.log(payload);
 
-    // add gmaps location
-    let data = { ...payload, location: state.location };
+    state.accountId = payload.accountId;
+    state.name = payload.name;
+    state.neighborhood = payload.neighborhood;
+    state.email = payload.email;
+    state.phone = payload.phone;
+    state.location = payload.location;
+
     // encode data
-    state.userData = encodeData(data);
+    state.userData = encodeData(payload);
   },
-
-  // decodeAndSetUserData(state, payload) {
-  //   // set userdata
-  //   state.userData = payload;
-
-  //   let dd = decodeData(payload);
-  //   state.name = dd.name;
-  //   state.neighborhood = dd.neighborhood;
-  //   state.location = dd.location;
-  //   state.email = dd.email;
-  //   state.phone = dd.phone;
-  // },
 
   signIn(state) {
     state.signedIn = true;

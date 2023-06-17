@@ -68,7 +68,7 @@ export default {
           return { lat: this.$store.state.user.location.lat, lng: this.$store.state.user.location.lng };
         }
       }
-      return this.$store.state.origin;
+      return this.$store.state.user.location; //origin;
     },
 
     async initMap() {

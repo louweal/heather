@@ -2,7 +2,9 @@
   <div v-if="$store.state.modals.show === 'welcome'" class="text-center">
     <p>Your account was succesfully created.</p>
 
-    <button class="btn btn-primary" @click="discover()">Discover your neighborhood</button>
+    <div class="d-grid">
+      <button class="btn btn-primary" @click="discover()">Sign in</button>
+    </div>
   </div>
 </template>
 

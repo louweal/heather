@@ -26,8 +26,6 @@
       <input type="tel" class="form-control" :value="$store.state.user.phone" @input="(e) => (phone = e.target.value)" />
 
       <div class="btn btn-primary" @click="updateUser()">Update account</div>
-
-      <p class="text-center">Updating your account on Heather may involve Hedera network fees.</p>
     </div>
   </div>
 </template>
@@ -52,6 +50,7 @@ export default {
       //todo validate form
 
       let data = {
+        accountId: this.$store.state.user.accountId,
         name: this.name || this.$store.state.user.name,
         neighborhood: this.neighborhood || this.$store.state.user.neighborhood,
         email: this.email || this.$store.state.user.email,

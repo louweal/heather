@@ -56,19 +56,9 @@ export const mutations = {
   },
 
   updateOwnerDistance(state, origin) {
-    // console.log("origin :>> ", origin);
-
-    state.owners.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
-  },
-
-  setUserDistance(state, origin) {
     state.owners.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
   },
 };
-
-function setNumItems(items) {
-  return items ? items.length : 0;
-}
 
 function setOwnerName(owner) {
   return owner ? owner.name : "";
@@ -79,18 +69,22 @@ function setOwnerLocation(owner) {
 }
 
 function getDistance(origin, destination) {
-  try {
-    origin = new google.maps.LatLng(origin.lat(), origin.lng());
-  } catch (err) {}
-  try {
-    destination = new google.maps.LatLng(destination.lat(), destination.lng());
-  } catch (err) {}
+  if (origin && destination) {
+    try {
+      origin = new google.maps.LatLng(origin.lat(), origin.lng());
+    } catch (err) {}
+    try {
+      destination = new google.maps.LatLng(destination.lat(), destination.lng());
+    } catch (err) {}
 
-  console.log(origin);
+    let distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
+    distance = isNaN(distance) ? 0 : distance;
+
+    console.log(distance + " in meter");
+
+    return parseFloat(distance / 1000).toFixed(1);
+  }
+  console.log("origin :>> ", origin);
   console.log("destination :>> ", destination);
-  let distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
-  distance = isNaN(distance) ? 0 : distance;
-
-  let distanceInKm = parseFloat(distance / 1000).toFixed(1);
-  return distanceInKm;
+  return -1;
 }

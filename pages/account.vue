@@ -5,7 +5,7 @@
         <div class="col-12 col-md-9 order-1 order-md-0">
           <ul class="nav nav-tabs">
             <tab name="Your items" :num="numAds" />
-            <tab name="Your wishlist" :num="numCalls" />
+            <tab name="Your calls" :num="numCalls" />
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" :class="curTab === 'Your items' ? 'show active' : false">
@@ -15,7 +15,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" :class="curTab === 'Your wishlist' ? 'show active' : false">
+            <div class="tab-pane fade" :class="curTab === 'Your calls' ? 'show active' : false">
               <div class="row my-3 g-3">
                 <div class="col-12 col-md-6 col-lg-4" v-for="(c, i) in calls" :key="i">
                   <card-call :data="c" />
