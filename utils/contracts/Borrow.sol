@@ -11,8 +11,8 @@ contract Borrow {
     uint32 public deposit;
     uint32 public totalRent;
     string public problem;
-    string public ownerReview;
-    string public borrowerReview;
+    string public ownerReview = '';
+    string public borrowerReview = '';
     uint8 public extraDays; // max 255
 
     enum State {
@@ -125,12 +125,21 @@ contract Borrow {
     } 
 
     function writeOwnerReview(string memory review_) external inState(State.Checked) onlyOwner {
-        state = State.Reviewed;
+        bytes memory reviewBytes = bytes(review_);
+        require((reviewBytes.length > 3), "Review is too short.");
+        if(bytes(borrowerReview).length > 0) {
+            state = State.Reviewed; // both parties have reviewed now
+        }
         ownerReview = review_;
+
     } 
 
     function writeBorrowerReview(string memory review_) external inState(State.Checked) onlyBorrower {
-        state = State.Reviewed;
+        bytes memory reviewBytes = bytes(review_);
+        require((reviewBytes.length > 3), "Review is too short.");
+        if(bytes(ownerReview).length > 0) {
+            state = State.Reviewed; // both parties have reviewed now
+        }
         borrowerReview = review_;
     } 
 

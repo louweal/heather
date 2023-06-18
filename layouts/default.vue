@@ -74,6 +74,10 @@ export default {
     mode: "out-in",
   },
 
+  created() {
+    this.hashconnectInit();
+  },
+
   async fetch() {
     this.$store.commit("notice/show");
     await this.setUsers();
@@ -103,6 +107,44 @@ export default {
         }
       }
       return users;
+    },
+
+    hashconnectInit() {
+      let appMetadata = {
+        name: "Heather",
+        description: "Minimize your environmental impact by sharing resources",
+        icon: "https://heather.codesparks.nl/ogImage.png",
+      };
+
+      this.$hashconnect.foundExtensionEvent.on((data) => {
+        console.log("foundExtensionEvent", data);
+        this.$store.commit("foundHashpack", data);
+      });
+
+      this.$hashconnect.pairingEvent.once((data) => {
+        console.log("pairingEvent", data);
+
+        this.$store.commit("user/setId", data.accountIds[0]);
+      });
+
+      //This is fired when HashConnect loses connection, pairs successfully, or is starting connection
+      this.$hashconnect.connectionStatusChangeEvent.on((status) => {
+        console.log("hashconnect state change event", status);
+      });
+
+      this.$hashconnect.acknowledgeMessageEvent.once((acknowledgeData) => {
+        //do something with acknowledge response data
+        console.log("acknowledgeMessageEvent:");
+        console.log(acknowledgeData);
+      });
+
+      this.$hashconnect.connectionStatusChangeEvent.once((connectionStatus) => {
+        //do something with connection status
+        console.log("connectionStatusChangeEvent");
+        console.log(connectionStatus);
+      });
+
+      this.$hashconnect.init(appMetadata, this.$network, false);
     },
   },
 };

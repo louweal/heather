@@ -3,6 +3,8 @@ import { contractCallQuery, contractExecuteTransaction } from "~/utils/hederaSer
 
 let factoryContractId = process.env.BORROW_CONTRACT;
 
+// borrowFactory functions
+
 export async function deployBorrow(owner, details, startdate, enddate, deposit, totalRent) {
   // works
   let params = [
@@ -14,15 +16,16 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
     { type: "uint32", value: totalRent * 1e8 },
   ];
 
-  console.log("THE params");
-  console.log(params);
-  return await contractExecuteTransaction(factoryContractId, "deployBorrow", params, "address");
+  return await contractExecuteTransaction(factoryContractId, "deployBorrow", params);
 }
 
-export function computeTotalRent(rent, startdate, enddate) {
-  let numDays = (enddate - startdate) / 86400;
-  return rent.start + (numDays - 1) * rent.extra;
+export async function getBorrowContract(borrowerId) {
+  console.log(borrowerId);
+  let params = [{ type: "address", value: borrowerId }];
+  return await contractCallQuery(factoryContractId, "borrowContract", params, "address");
 }
+
+// borrow contract functions
 
 export async function getRequestDetails(contractId) {
   let encodedDetails = await contractCallQuery(contractId, "details", undefined, "string");
@@ -103,4 +106,11 @@ export async function writeOwnerReview(contractId, review) {
 export async function writeBorrowerReview(contractId, review) {
   let params = [{ type: "string", value: review }];
   return await contractExecuteTransaction(contractId, "writeBorrowerReview", params);
+}
+
+//helper functions
+
+export function computeTotalRent(rent, startdate, enddate) {
+  let numDays = (enddate - startdate) / 86400;
+  return rent.start + (numDays - 1) * rent.extra;
 }

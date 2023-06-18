@@ -5,6 +5,7 @@ export const state = () => ({
   enddate: undefined,
   borrower: undefined,
   state: "Created",
+  progress: 0,
 });
 
 export const mutations = {
@@ -18,5 +19,9 @@ export const mutations = {
 
   setState(state, payload) {
     state.state = payload;
+  },
+
+  updateProgress(state) {
+    state.progress += 1;
   },
 };

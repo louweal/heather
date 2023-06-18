@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded overflow-hidden" v-if="this.$store.state.data.ads.length > 0" :key="$store.state.user.signedIn">
+  <div class="bg-white rounded overflow-hidden">
     <div class="row g-2">
       <div class="col-12 col-md-5">
         <nuxt-link :to="`/app/detail/${item.id}`">
@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       rid: undefined,
-      // totalRent: 0,
     };
   },
 
@@ -70,8 +69,6 @@ export default {
 
   created() {
     this.rid = this.$route.params.rid;
-
-    // this.totalRent = ;
   },
 
   methods: {
