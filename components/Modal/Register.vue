@@ -18,7 +18,7 @@
 
       <div class="input-group">
         <span class="input-group-text">Account Id</span>
-        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.id" disabled="true" />
+        <input type="text" class="form-control" placeholder="Wallet address*" :value="accountId" disabled="true" />
       </div>
 
       <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" id="accountLoc" />
@@ -45,7 +45,15 @@ export default {
       phone: undefined,
     };
   },
-  computed: {},
+  computed: {
+    accountId() {
+      if (process.env.HASHPACK_ENABLED) {
+        return "0.0.012345";
+      } else {
+        return process.env.MY_ACCOUNT_ID;
+      }
+    },
+  },
 
   methods: {
     async createAccount() {
