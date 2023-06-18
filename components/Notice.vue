@@ -17,6 +17,6 @@ export default {};
 .notice {
   z-index: 4000 !important;
   background-color: rgba(#ddd, 0.5);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(1px);
 }
 </style>
