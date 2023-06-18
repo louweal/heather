@@ -130,7 +130,7 @@ export default {
         results = results.filter((a) => a.title.toLowerCase().includes(query));
       }
 
-      return results;
+      return results.sort((a, b) => (a.distance > b.distance ? 1 : -1));
     },
   },
 };

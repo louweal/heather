@@ -12,7 +12,7 @@
 
           <form
             data-aos="fade-up-scale"
-            name="contact-form"
+            name="contact-form-2"
             method="POST"
             action="/contact/success"
             data-netlify="true"

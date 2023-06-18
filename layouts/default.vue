@@ -79,6 +79,10 @@ export default {
   },
 
   async fetch() {
+    if (this.$route.path.startsWith("/contact/success")) {
+      return; // do not load data on this page
+    }
+
     this.$store.commit("notice/show");
     await this.setUsers();
     this.$store.commit("notice/hide");

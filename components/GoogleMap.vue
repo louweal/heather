@@ -182,26 +182,26 @@ export default {
 
     setAdMarkerInfo(m) {
       // sets data in info box
-      this.markerInfo = { show: false };
-      this.markerInfo["title"] = m.title;
-      this.markerInfo["type"] = m.type;
+      this.markerInfo = { show: true, ...m };
+      // this.markerInfo["title"] = m.title;
+      // this.markerInfo["type"] = m.type;
       if (m.type === "rent") {
         this.markerInfo["rent"] = m.rent;
       }
-      this.markerInfo["name"] = m.name;
-      this.markerInfo["id"] = m.id;
-      this.markerInfo.show = true;
+      // this.markerInfo["name"] = m.name;
+      // this.markerInfo["id"] = m.id;
+      // this.markerInfo.show = true;
     },
 
     setCallMarkerInfo(m) {
       // sets data in info box
-      this.markerInfo = { show: false };
-      this.markerInfo["title"] = m.title;
-      this.markerInfo["name"] = m.name;
+      this.markerInfo = { show: true, ...m };
+      // this.markerInfo["title"] = m.title;
+      // this.markerInfo["name"] = m.name;
       this.markerInfo["type"] = "call";
-      this.markerInfo["description"] = m.description;
-      this.markerInfo["id"] = m.id;
-      this.markerInfo.show = true;
+      // this.markerInfo["description"] = m.description;
+      // this.markerInfo["id"] = m.id;
+      // this.markerInfo.show = true;
     },
 
     setUserMarkerInfo(m) {
@@ -209,7 +209,7 @@ export default {
       // this.markerInfo["show"] = true;
       // return;
       // sets data in info box
-      this.markerInfo = { show: false };
+      this.markerInfo = { show: true, ...m };
       this.markerInfo["type"] = "user";
       this.markerInfo["name"] = m.name;
       this.markerInfo["numItems"] = m.numItems;

@@ -1,21 +1,24 @@
 <template>
   <div class="card overflow-hidden" v-if="data">
-    <ratio-visual :data="{ visual: data.visuals ? data.visuals[0] : undefined, name: data.title }" />
-    <nuxt-link :to="`/app/detail/${data.id}`" class="card-body">
-      <h5 class="card-title">{{ data.title }}</h5>
+    <nuxt-link :to="`/app/detail/${data.id}`" class="h-100">
+      <ratio-visual :data="{ visual: data.visuals ? data.visuals[0] : undefined, name: data.title }" />
 
-      <p>To {{ data.type }}</p>
+      <div class="card-body">
+        <h5 class="card-title">{{ data.title }}</h5>
 
-      <div class="vstack lh-sm">
-        <span v-if="data.deposit > 0">
-          <span class="fw-bold">{{ data.deposit }} hbar</span> deposit
-        </span>
-        <span v-if="data.rent && data.rent.start > 0">
-          <span class="fw-bold">{{ data.rent.start }} hbar</span> rent, first day
-        </span>
-        <span v-if="data.rent && data.rent.start > 0">
-          <span class="fw-bold">{{ data.rent.extra }} hbar</span> rent, each extra day
-        </span>
+        <p>To {{ data.type }}</p>
+
+        <div class="vstack lh-sm">
+          <span v-if="data.deposit > 0">
+            <span class="fw-bold">{{ data.deposit }} hbar</span> deposit
+          </span>
+          <span v-if="data.rent && data.rent.start > 0">
+            <span class="fw-bold">{{ data.rent.start }} hbar</span> rent, first day
+          </span>
+          <span v-if="data.rent && data.rent.start > 0">
+            <span class="fw-bold">{{ data.rent.extra }} hbar</span> rent, each extra day
+          </span>
+        </div>
       </div>
     </nuxt-link>
 
