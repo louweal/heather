@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/" aria-label="to homepage">
+  <nuxt-link :to="$store.state.user.signedIn ? '/app' : '/'" aria-label="to homepage">
     <div class="logo"></div>
   </nuxt-link>
 </template>

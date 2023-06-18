@@ -1,7 +1,12 @@
 <template>
-  <div class="roadmap">
-    <div class="roadmap--item" :class="item.i === stateI ? 'roadmap--item--active' : false" v-for="(item, i) in $options.items" :key="i">
-      {{ item.version }}
+  <div class="borrow-state">
+    <div
+      class="borrow-state--item"
+      :class="item.i === stateI ? 'borrow-state--item--active' : false"
+      v-for="(item, i) in $options.items"
+      :key="i"
+    >
+      {{ item.state === "Borrowed" ? type : item.state }}
     </div>
   </div>
 </template>
@@ -13,29 +18,36 @@ export default {
   items: [
     {
       i: 0,
-      version: "Requested",
+      state: "Requested",
     },
     {
       i: 1,
-      version: "Accepted",
+      state: "Accepted",
     },
     {
       i: 2,
-      version: "Borrowed",
+      state: "Borrowed",
     },
     {
       i: 3,
-      version: "Returned",
+      state: "Returned",
     },
     {
       i: 4,
-      version: "Checked",
+      state: "Checked",
     },
     {
       i: 5,
-      version: "Reviewed",
+      state: "Reviewed",
     },
   ],
+
+  props: {
+    type: {
+      type: String,
+      default: "Borrow",
+    },
+  },
 
   computed: {
     stateI() {
@@ -46,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.roadmap {
+.borrow-state {
   &--item {
     display: block;
     position: relative;
