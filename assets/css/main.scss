@@ -42,10 +42,10 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  &.disable-scroll {
-    overflow-y: hidden;
-    position: fixed;
-  }
+  // &.disable-scroll {
+  //   overflow-y: hidden;
+  //   position: fixed;
+  // }
 }
 
 ::-webkit-scrollbar {
