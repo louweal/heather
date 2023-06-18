@@ -86,10 +86,10 @@ export default {
   mounted() {
     this.from = new Date();
 
-    if (this.data) {
-      this.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
-    }
-    this.request["message"] = this.message;
+    // if (this.data) {
+    //   this.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
+    // }
+    // this.request["message"] = this.message;
   },
 
   computed: {
@@ -121,6 +121,10 @@ export default {
 
       this.request["from"] = parseInt(this.from.getTime() / 1000);
       this.request["to"] = parseInt(this.to.getTime() / 1000);
+
+      if (this.request.message === "") {
+        this.request.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
+      }
 
       let owner = this.data.owner;
       let details = { ...this.request, borrower: this.$store.state.user.id };

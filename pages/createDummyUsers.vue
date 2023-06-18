@@ -74,7 +74,6 @@ export default {
         if (status === "SUCCESS") {
           //
         } else {
-          // todo
           console.log("Something went wrong");
         }
       }

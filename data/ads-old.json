@@ -6,7 +6,7 @@
     "visuals": ["drill.avif", "dummy-drill.png"],
     "type": "borrow",
     "deposit": false,
-    "available": true,
+
     "owner": 3000,
     "date": 1685366941
   },
@@ -21,7 +21,7 @@
       "start": "0.20",
       "extra": "0.07"
     },
-    "available": true,
+
     "owner": 4000,
     "date": 1685366941
   },
@@ -32,7 +32,7 @@
     "visuals": ["dummy-drill.png", "dummy-drill.png"],
     "type": "borrow",
     "deposit": false,
-    "available": true,
+
     "owner": 20,
     "date": 1685366941
   }

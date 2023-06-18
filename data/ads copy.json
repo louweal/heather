@@ -8,7 +8,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 13,
     "date": 1663174231000
   },
@@ -21,7 +21,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 28,
     "date": 1681485220000
   },
@@ -34,7 +34,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 18,
     "date": 1669458938000
   },
@@ -47,7 +47,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 21,
     "date": 1672975765000
   },
@@ -60,7 +60,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 26,
     "date": 1669764070000
   },
@@ -73,7 +73,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 3,
     "date": 1680168396000
   },
@@ -86,7 +86,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 27,
     "date": 1681854976000
   },
@@ -99,7 +99,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 13,
     "date": 1667623474000
   },
@@ -112,7 +112,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 27,
     "date": 1668888168000
   },
@@ -125,7 +125,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 28,
     "date": 1663834606000
   },
@@ -138,7 +138,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 2,
     "date": 1662011105000
   },
@@ -151,7 +151,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 10,
     "date": 1664933799000
   },
@@ -164,7 +164,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 22,
     "date": 1658544459000
   },
@@ -177,7 +177,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 9,
     "date": 1672458470000
   },
@@ -190,7 +190,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 5,
     "date": 1668646910000
   },
@@ -203,7 +203,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 10,
     "date": 1682283432000
   },
@@ -216,7 +216,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 19,
     "date": 1662469851000
   },
@@ -229,7 +229,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 19,
     "date": 1684352636000
   },
@@ -242,7 +242,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 0,
     "date": 1684052151000
   },
@@ -255,7 +255,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 22,
     "date": 1667200008000
   },
@@ -268,7 +268,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 5,
     "date": 1681632024000
   },
@@ -281,7 +281,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 6,
     "date": 1684402151000
   },
@@ -294,7 +294,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 24,
     "date": 1658101186000
   },
@@ -307,7 +307,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 10,
     "date": 1665245196000
   },
@@ -320,7 +320,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 14,
     "date": 1658570873000
   },
@@ -333,7 +333,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 11,
     "date": 1662178721000
   },
@@ -346,7 +346,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 15,
     "date": 1672083649000
   },
@@ -359,7 +359,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 25,
     "date": 1681560842000
   },
@@ -372,7 +372,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 10,
     "date": 1657559222000
   },
@@ -385,7 +385,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 7,
     "date": 1661522374000
   },
@@ -398,7 +398,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 21,
     "date": 1665918909000
   },
@@ -411,7 +411,7 @@
     "type": "rent",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 19,
     "date": 1663284051000
   },
@@ -424,7 +424,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 1,
     "date": 1673717425000
   },
@@ -437,7 +437,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 27,
     "date": 1676817385000
   },
@@ -450,7 +450,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 17,
     "date": 1678192713000
   },
@@ -463,7 +463,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 0,
     "date": 1678930059000
   },
@@ -476,7 +476,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 25,
     "date": 1668001465000
   },
@@ -489,7 +489,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 24,
     "date": 1669575324000
   },
@@ -502,7 +502,7 @@
     "type": "borrow",
     "deposit": 0,
     "rent": { "start": 0, "extra": 0 },
-    "available": true,
+
     "owner": 3,
     "date": 1658095604000
   }

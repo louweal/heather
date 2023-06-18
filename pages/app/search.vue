@@ -24,23 +24,15 @@
               </div>
             </div>
 
-            <template xxxv-if="this.$store.state.search.placeValue">
-              <p>
-                {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
-                <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
-                ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
-                <span class="opacity-75">your neighborhood</span> (+{{ maxDistance }} km).
-                <span v-if="results.length === 0"> Try to increase your search area.</span>
-              </p>
+            <p>
+              {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
+              <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
+              ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
+              <span class="opacity-75">your neighborhood</span> (+{{ maxDistance }} km).
+              <span v-if="results.length === 0"> Try to increase your search area.</span>
+            </p>
 
-              <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
-            </template>
-
-            <!-- <template xxxv-else>
-              <p>Please use the search bar above to find items in your neighborhood.</p>
-
-              <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
-            </template> -->
+            <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
 
             <div class="row g-2">
               <template v-if="results.length > 0">
@@ -52,7 +44,7 @@
                   <div
                     class="col-12 col-sm-6 col-xl-4"
                     :key="'banner_' + a.id"
-                    v-if="i === 2 || (results.length < 2 && i === results.length - 1)"
+                    v-if="i === 1 || (results.length < 1 && i === results.length - 1)"
                   >
                     <card-new-call title="Not found what you're looking for?" :query="$store.state.search.query" />
                   </div>

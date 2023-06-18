@@ -5,9 +5,6 @@
       <nuxt-link :to="`/app/user/${user.id}`">{{ user.name }}</nuxt-link>
     </h3>
 
-    <!-- <div><i class="bi bi-houses-fill"></i> {{ user.neighborhood }}</div>
-    <br /> -->
-
     <i class="bi bi-houses-fill"></i> {{ user.neighborhood }}
 
     <div v-if="user.location" class="mt-3">

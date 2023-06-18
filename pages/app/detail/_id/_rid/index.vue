@@ -55,13 +55,13 @@
                     <p>{{ borrowerReview }}</p>
                   </div>
                   <div v-if="ownerReview">
-                    <p class="opacity-75 xxxtext-primary">You have left following review:</p>
+                    <p class="opacity-75">You have left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ ownerReview }}
                     </div>
                   </div>
                   <div v-if="borrowerReview">
-                    <p class="opacity-75 xxxtext-primary">{{ borrower.name }} has left following review:</p>
+                    <p class="opacity-75">{{ borrower.name }} has left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ borrowerReview }}
                     </div>

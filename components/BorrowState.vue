@@ -2,8 +2,6 @@
   <div class="roadmap">
     <div class="roadmap--item" :class="item.i === stateI ? 'roadmap--item--active' : false" v-for="(item, i) in $options.items" :key="i">
       {{ item.version }}
-
-      <!-- {{ item.i === stateI ? "(current)" : "" }} -->
     </div>
   </div>
 </template>

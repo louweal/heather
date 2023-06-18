@@ -22,8 +22,11 @@ export default {
         this.$store.commit("user/setUserData", userdata);
         this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
         this.$store.commit("user/signIn");
-        await this.getter(false, true);
         this.$store.commit("modals/hide");
+
+        this.$store.commit("notice/show");
+        await this.getter(false, true);
+        this.$store.commit("notice/hide");
       } else {
         // show register modal
         this.$store.commit("modals/show", { name: "register" });
@@ -38,7 +41,7 @@ export default {
       // get calls and or ads from hedera network
       let users = this.$store.state.data.owners;
 
-      let neighbors = users.filter((a) => a.distance <= 12); // todo
+      let neighbors = users.filter((a) => a.distance <= 1); // todo
       console.log(neighbors.length);
 
       let ads = [];
@@ -51,11 +54,10 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let call = await getCall(user.id, j);
 
-            if (typeof call === "object") {
+            if (typeof call === "object" && call.title) {
               let callData = { ...call, owner: user.id, i: j, type: "call" };
               calls.push(callData);
-            }
-            if (call === undefined) {
+            } else if (call === undefined) {
               console.log("removed call");
               // deleted call -> go to next iteration
               continue;
@@ -70,15 +72,13 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let ad = await getAd(user.id, j);
 
-            if (!ad) {
-              // deleted call -> go to next iteration
-              continue;
-            }
+            console.log("where are my ads?");
+            console.log(ad);
+
             if (typeof ad === "object" && ad.title) {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
-            }
-            if (ad === undefined) {
+            } else if (ad === undefined) {
               console.log("removed ad");
               // deleted call -> go to next iteration
               continue;

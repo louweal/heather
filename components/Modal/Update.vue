@@ -1,5 +1,5 @@
 <template>
-  <div xxxv-if="$store.state.modals.show === 'update'">
+  <div>
     <div class="d-grid gap-2">
       <span class="fw-bold">Your public profile</span>
       <input

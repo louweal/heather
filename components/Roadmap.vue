@@ -8,10 +8,6 @@
       :key="i"
     >
       {{ item.version }}
-
-      <!-- {{ item.current ? "(current)" : "" }} -->
-
-      <!-- <span xxxv-if="isActive(item.id)">{{ item.year }}</span> -->
     </nuxt-link>
   </div>
 </template>

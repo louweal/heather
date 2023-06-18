@@ -1,5 +1,5 @@
 <template>
-  <div xxxv-if="$store.state.modals.show === 'register'">
+  <div>
     <p>Fill in the form below and you're ready to start sharing!</p>
 
     <div class="d-grid gap-2">

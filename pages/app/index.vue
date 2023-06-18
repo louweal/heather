@@ -13,20 +13,16 @@
               </template>
 
               <template v-for="(a, i) in $store.state.data.calls">
-                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 3">
-                  <card-new-call />
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-4" xxxclass="`order-${i}`" :id="i" :key="a.id">
+                <div class="col-12 col-sm-6 col-xl-4" :id="i" :key="a.id">
                   <card-call :data="a" />
                 </div>
               </template>
               <template v-for="(a, i) in $store.state.data.ads">
-                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 3">
+                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 2">
                   <card-new-call />
                 </div>
 
-                <div class="col-12 col-sm-6 col-xl-4" xxxclass="`order-${i}`" :id="i" :key="a.id">
+                <div class="col-12 col-sm-6 col-xl-4" :id="i" :key="a.id">
                   <card-ad :data="a" />
                 </div>
               </template>

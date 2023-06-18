@@ -57,7 +57,7 @@
                 </p>
               </div>
 
-              <p xxxdata-aos="fade">
+              <p>
                 <nuxt-link :to="{ hash: '#contact' }" class="fw-bold text-primary"
                   >Contact us to join our mission<i class="ps-1 bi bi-arrow-right"></i
                 ></nuxt-link>

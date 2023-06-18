@@ -57,7 +57,6 @@
                   Request to {{ item.type }}
                 </button>
               </div>
-              <!-- </div> -->
             </div>
 
             <div class="bg-white rounded p-3 mt-2">

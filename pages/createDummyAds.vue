@@ -8,6 +8,7 @@
 
 <script>
 import ads from "@/data/ads";
+const { addAd } = require("@/utils/storage/ads.js");
 
 export default {
   ads,
@@ -21,6 +22,7 @@ export default {
   methods: {
     async createAds() {
       let ads = this.$options.ads;
+      console.log("ads.length :>> ", ads.length);
 
       let dummies = [
         "0.0.14171302",
@@ -55,14 +57,14 @@ export default {
         "0.0.14171335",
       ];
 
-      let l = ads.length;
-
-      for (let i = 0; i < l; i++) {
+      for (let i = 0; i < ads.length; i++) {
         let ad = ads[i];
-
         let owner = dummies[ad.owner];
 
-        let metadata = {
+        console.log(ad.title);
+
+        let data = {
+          id: self.crypto.randomUUID(),
           title: ad.title,
           description: ad.description,
           visuals: ad.visuals,
@@ -71,19 +73,19 @@ export default {
           owner: owner,
           deposit: ad.deposit,
           rent: ad.rent,
-          date: ad.date,
+          date: ad.date / 1000,
         };
 
-        // let payload = {
-        //   metadata,
-        //   deposit: ad.deposit,
-        //   rent: ad.rent,
-        //   dummyOwner: owner,
-        //   lookupContractId: process.env.USER_LOOKUP_CONTRACT,
-        //   factoryContractId: process.env.AD_FACTORY,
-        // };
+        // console.log(data);
 
-        // let res = await this.$store.dispatch("data/deployDummyAd", payload);
+        // add new ad to hedera storage
+        let status = await addAd(owner, data);
+
+        if (status === "SUCCESS") {
+          //
+        } else {
+          console.log("Something went wrong");
+        }
       }
     },
   },

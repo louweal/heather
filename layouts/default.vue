@@ -46,24 +46,24 @@
       <modal-call />
     </modal>
     <pushmenu />
-    <notice v-if="$store.state.notice.active === true">Fetching data from Hedera ...</notice>
+    <notice v-if="$store.state.notice.active === true" />
 
-    {{ $store.state.user.location }}
+    <!-- {{ $store.state.user.location }}
 
     <div class="btn btn-primary" @click="setUsers()">set users</div>
     <div class="btn btn-primary" @click="setter(true, true)">set ads & calls</div>
 
     <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>
 
-    <nuxt-link class="btn btn-secondary" to="/createDummyAds">create dummy ads</nuxt-link>
+    <nuxt-link class="btn btn-secondary" to="/createDummyAds">create dummy ads</nuxt-link> -->
 
-    <br />
+    <!-- <br />
     Users: <br />
     {{ $store.state.data.owners }}
 
     <br />
     Ads: <br />
-    {{ $store.state.data.ads }}
+    {{ $store.state.data.ads }} -->
   </div>
 </template>
 

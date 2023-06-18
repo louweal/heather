@@ -31,36 +31,11 @@
 
         <div class="btn btn-primary d-none d-lg-block" v-else @click="$store.commit('modals/show', { name: 'create' })">Share</div>
 
-        <!-- <div class="btn btn-primary d-none d-lg-block" v-else @click="$store.commit('user/signOut')">Sign out</div> -->
-
         <div class="d-lg-none" @click="$store.commit('pushmenu/toggle')">
           <i class="bi lh-1 text-primary" style="font-size: 44px" :class="$store.state.pushmenu.open ? 'bi-x-lg' : 'bi-list'"></i>
         </div>
       </div>
     </div>
-
-    <!-- <div class=" searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
-      <div class="row g-2">
-        <div class="col-12 col-sm">
-          <input type="text" class="form-control" placeholder="Find something..." ref="query" @input="(e) => (query = e.target.value)" />
-        </div>
-        <div class="col-9 col-sm">
-           <input
-            type="text"
-            class="form-control"
-            :class="missingInput && !this.placeValue ? 'border-danger' : false"
-            placeholder="Address"
-            ref="searchLoc"
-            @input="(e) => (placeValue = e.target.value)"
-          /> 
-        </div>
-        <div class="col-3 col-sm-2">
-          <div class="btn btn-primary rounded w-100" @click="goSearch()">
-            <i class="bi bi-search"></i>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </nav>
 </template>
 
