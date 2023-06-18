@@ -183,7 +183,7 @@ export async function contractExecuteTransaction(id, name, params, returnType, v
 }
 
 export async function contractCallQuery(id, name, params, returnType) {
-  let tx = new ContractCallQuery().setContractId(id).setGas(50000);
+  let tx = new ContractCallQuery().setContractId(id).setGas(90000);
 
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));

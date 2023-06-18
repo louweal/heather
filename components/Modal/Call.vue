@@ -67,7 +67,7 @@ export default {
         console.log(data);
 
         // add new ad to hedera storage
-        let userId = this.$store.state.user.accountId; // todo
+        let userId = this.$store.state.user.id; // todo
 
         let status = await addCall(userId, data); // return i?
 

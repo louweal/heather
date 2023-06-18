@@ -7,13 +7,15 @@
         <div class="row justify-content-center text-center" data-aos="fade-up-scale">
           <div class="col-12 col-md-8">
             <h2 class="lh-sm">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque veritatis, hic ullam eum temporibus rem ducimus officiis.
+              Heather is the first fully decentralized peer-to-peer sharing platform and functions without any mandatory subscriptions or
+              commissions.
             </h2>
           </div>
           <div class="col-12 col-md-10 fs-md">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem expedita velit consectetur quaerat quam non iste fugit culpa
-              eveniet voluptatum. Hic deleniti itaque temporibus unde quaerat sunt consequatur laborum animi.
+              Instead, people can ask a deposit when lending an item. The deposits are stored safely on the Hedera network and are returned
+              automatically when the item is returned to its owner. We also encourage reviewing and we make sure the reviews are reliable
+              using smart contracts.
             </p>
           </div>
         </div>
@@ -27,7 +29,7 @@
             <div data-aos="fade-up-scale" class="h-100">
               <sticky>
                 <div>
-                  <badge> Versions </badge>
+                  <badge> Roadmap </badge>
 
                   <roadmap />
                 </div>
@@ -55,15 +57,15 @@
                 </p>
               </div>
 
-              <p xxxdata-aos="fade">
+              <p>
                 <nuxt-link :to="{ hash: '#contact' }" class="fw-bold text-primary"
                   >Contact us to join our mission<i class="ps-1 bi bi-arrow-right"></i
                 ></nuxt-link>
               </p>
             </div>
 
-            <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
-              <span class="font-small fw-light">v0.1</span>
+            <!-- <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
+              <span class="font-sm fw-light">v0.1</span>
 
               <p>The pre-hackathon phase</p>
 
@@ -71,8 +73,7 @@
                 <h4>Ideating</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, animi in beatae hic cumque aspernatur temporibus pariatur
-                  alias veniam dolore optio, ratione provident sapiente voluptatibus reprehenderit necessitatibus quis error totam!
+                  The idea behind Heather came from our drive to build a dApp that encourages sustainable behavior. We sought for an idea
                 </p>
               </div>
 
@@ -84,40 +85,45 @@
                   expedita possimus dolor tempore quod quasi ea aspernatur. Dolorem deleniti temporibus in!
                 </p>
               </div>
-            </div>
-            <div class="row gy-2 mt-2 border-top" id="v02" data-aos="fade-up-scale">
-              <span class="font-small fw-light">v0.2</span>
+            </div> -->
+            <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
+              <span class="font-sm fw-light">26 May — 2 June</span>
 
-              <p>The first week of the hackathon</p>
+              <p>And off we go!</p>
 
               <div class="col-12 col-lg-6">
                 <h4>Front-end development</h4>
 
-                <p>Designed and developed front-end from scratch, using bootstrap, Vue and nuxt.</p>
+                <p>We designed and developed a front-end from scratch, using bootstrap, vue and nuxt.</p>
               </div>
 
               <div class="col-12 col-lg-6">
                 <h4>Survey</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, quibusdam quaerat? Rerum distinctio cum est officiis
-                  consectetur, error harum mollitia ratione doloribus, ipsa perspiciatis, repudiandae culpa sint non qui quis.
+                  We created and distributed <a href="https://leidenuniv.eu.qualtrics.com/jfe/form/SV_afc0LOwmULSfa0m">a survey</a> to
+                  investigate how interested people are to borrow, lend or rent things.
                 </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>Google maps</h4>
+
+                <p>We integrated Google Maps to make it easier for users to find items in their own neighborhood.</p>
               </div>
             </div>
             <div data-aos="fade-up-scale">
               <div class="row gy-2 mt-2 border-top" id="v03">
-                <span class="font-small fw-light">v0.3</span>
+                <span class="font-sm fw-light">2 June — 9 June</span>
 
-                <p>...</p>
+                <p>Still going strong in the second week!</p>
 
                 <div class="col-12 col-lg-6">
                   <h4>Dummy dataset</h4>
 
                   <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores sapiente quo architecto corrupti ipsum iste harum
-                    distinctio deserunt voluptatem vel reiciendis incidunt, ratione blanditiis porro obcaecati necessitatibus, rerum magni
-                    libero?
+                    We created a dataset with dummy data. We took pictures of items in our own (and our friends) households. And we created
+                    dummy user accounts including testnet wallets.
                   </p>
                 </div>
 
@@ -125,43 +131,43 @@
                   <h4>Data storage</h4>
 
                   <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis provident, mollitia ullam ex consectetur reiciendis,
-                    aspernatur alias voluptatum sapiente veniam adipisci numquam totam similique? Voluptatem, inventore et! Sint, eaque
-                    aliquid.
+                    We decided to store all data on the Hedera testnet, using a seperate smart contract for storage (Storage.sol). While
+                    this is unconventional, it saved us lot of time and resources because now we could build the dApp as a front-end only
+                    (static) website. And it also gave us the opportunity to get more experience with writing smart contracts on Hedera.
                   </p>
                 </div>
               </div>
             </div>
             <div data-aos="fade-up-scale">
-              <div class="row gy-2 mt-2 border-top" id="v04">
-                <span class="font-small fw-light">v0.4</span>
+              <div class="row gy-2 mt-2 border-top" id="v03">
+                <span class="font-sm fw-light">9 June — 19 June</span>
 
-                <p>...</p>
+                <p>The deadline is getting closer and closer...</p>
 
                 <div class="col-12 col-lg-6">
                   <h4>Borrow contract</h4>
 
                   <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quibusdam nesciunt odit distinctio, assumenda facere
-                    sint deleniti omnis obcaecati perspiciatis. Reprehenderit totam magni ipsam aperiam nostrum amet saepe in id?
+                    Finally, we created all borrow functionality. We wrote smart contract in Solidity and interacted with it using the
+                    Hedera Javascript SDK.
                   </p>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                  <h4>HashPack intergration</h4>
+                  <h4>HashPack integration</h4>
 
-                  <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quibusdam nesciunt odit distinctio, assumenda facere
-                    sint deleniti omnis obcaecati perspiciatis. Reprehenderit totam magni ipsam aperiam nostrum amet saepe in id?
-                  </p>
+                  <p>We integrated Hashpack to make it easy to connect Hedera wallets to our dApp.</p>
                 </div>
               </div>
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v05" data-aos="fade-up-scale">
-              <span class="font-small fw-light">v0.5</span>
+              <span class="font-sm fw-light">19 June — 26 June</span>
 
-              <p>Break</p>
+              <p>
+                Although I spend most of this week on a well-deserved holiday in my own country, I also managed to finish some crucial
+                deliverables!
+              </p>
 
               <div class="col-12 col-lg-6">
                 <h4>Pitch video</h4>
@@ -181,8 +187,18 @@
                 </p>
               </div>
             </div>
+
             <div class="row gy-2 mt-2 border-top" id="v06" data-aos="fade-up-scale">
-              <span class="font-small fw-light">v0.6+</span>
+              <span class="font-sm fw-light">Judging phase</span>
+
+              <p>
+                Just biting my nails and hoping for some luck! ☘︎ And ofcourse, waiting until I can continue with the development of
+                Heather!^^
+              </p>
+            </div>
+
+            <div class="row gy-2 mt-2 border-top" id="v07" data-aos="fade-up-scale">
+              <span class="font-sm fw-light">8 July — the near future</span>
 
               <p>We have exiting plans for the (near) future!</p>
 

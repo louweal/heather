@@ -1,5 +1,5 @@
 <template>
-  <div xxxv-if="$store.state.modals.show === 'register'">
+  <div>
     <p>Fill in the form below and you're ready to start sharing!</p>
 
     <div class="d-grid gap-2">
@@ -18,7 +18,7 @@
 
       <div class="input-group">
         <span class="input-group-text">Account Id</span>
-        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.accountId" disabled="true" />
+        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.id" disabled="true" />
       </div>
 
       <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" id="accountLoc" />
@@ -28,8 +28,6 @@
       <input type="tel" class="form-control" placeholder="Your phone number" @input="(e) => (phone = e.target.value)" />
 
       <div class="btn btn-primary" @click="createAccount()">Create account</div>
-
-      <p class="text-center">Creating an account on Heather may involve Hedera network fees.</p>
     </div>
   </div>
 </template>
@@ -45,7 +43,6 @@ export default {
       location: undefined,
       email: undefined,
       phone: undefined,
-      googleLoc: undefined,
     };
   },
   computed: {},
@@ -55,36 +52,28 @@ export default {
       //todo validate form
 
       let data = {
+        id: process.env.MY_ACCOUNT_ID,
         name: this.name,
         neighborhood: this.neighborhood,
         email: this.email,
         phone: this.phone,
+        location: this.location,
       };
 
-      // add user data to store
+      // add user data to store ( current user details)
       this.$store.commit("user/setUserData", data);
+      // add user to user list in data store
+      this.$store.commit("data/addUser", data);
 
       // add user to hedera storage
       let status = await addUser(data);
 
       if (status === "SUCCESS") {
-        this.$store.commit("search/setPlace", this.googleLoc);
-
         this.$store.commit("modals/show", { name: "welcome" });
-
-        this.$store.commit("user/signIn");
-        this.updateDistance();
       } else {
         // todo
         console.log("Something went wrong");
       }
-    },
-
-    updateDistance() {
-      let lat = this.$store.state.user.location.lat;
-      let lng = this.$store.state.user.location.lng;
-      let userLocation = new google.maps.LatLng(lat, lng);
-      this.$store.commit("data/updateOwnerDistance", userLocation);
     },
   },
 
@@ -100,11 +89,9 @@ export default {
     autocomplete.addListener("place_changed", () => {
       let place = autocomplete.getPlace();
       if (place) {
-        this.googleLoc = place;
         let lat = place.geometry.location.lat();
         let lng = place.geometry.location.lng();
-
-        this.$store.commit("user/setLocation", { lat: lat, lng: lng });
+        this.location = { lat: lat, lng: lng };
       }
     });
     autocomplete.setFields(["address_components", "geometry", "name"]); // to do

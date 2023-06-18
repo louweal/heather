@@ -1,5 +1,5 @@
 <template>
-  <main :key="$store.state.search.placeValue">
+  <main>
     <google-map :class="$store.state.map.show ? 'd-block' : 'd-none d-md-block'" :zoom="zoom" :results="results" />
     <section>
       <div class="container-fluid">
@@ -24,23 +24,15 @@
               </div>
             </div>
 
-            <template v-if="this.$store.state.search.placeValue">
-              <p>
-                {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
-                <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
-                ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
-                <span class="opacity-75">{{ this.$store.state.search.placeValue }}</span> (+{{ maxDistance }} km).
-                <span v-if="results.length === 0"> Try to increase your search area.</span>
-              </p>
+            <p>
+              {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
+              <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
+              ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
+              <span class="opacity-75">your neighborhood</span> (+{{ maxDistance }} km).
+              <span v-if="results.length === 0"> Try to increase your search area.</span>
+            </p>
 
-              <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
-            </template>
-
-            <template v-else>
-              <p>Please use the search bar above to find items in your neighborhood.</p>
-
-              <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
-            </template>
+            <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
 
             <div class="row g-2">
               <template v-if="results.length > 0">
@@ -52,7 +44,7 @@
                   <div
                     class="col-12 col-sm-6 col-xl-4"
                     :key="'banner_' + a.id"
-                    v-if="i === 2 || (results.length < 2 && i === results.length - 1)"
+                    v-if="i === 1 || (results.length < 1 && i === results.length - 1)"
                   >
                     <card-new-call title="Not found what you're looking for?" :query="$store.state.search.query" />
                   </div>
@@ -91,6 +83,10 @@ export default {
     this.results = this.filterData(this.maxDistance);
   },
 
+  mounted() {
+    this.validateAccess();
+  },
+
   watch: {
     maxDistance: function (newDistance) {
       this.results = this.filterData(); // uses new maxDistance value to refilter
@@ -100,32 +96,26 @@ export default {
     "$store.state.search.query": function () {
       this.results = this.filterData();
     },
-    "$store.state.search.placeValue": function () {
-      this.results = this.filterData();
-    },
   },
 
   methods: {
-    explore() {
-      this.$store.commit("search/setPlace");
-
-      this.$router.push({
-        path: newPath,
-        force: true,
-      });
-
-      this.$forceUpdate();
+    validateAccess() {
+      if (this.$store.state.user.signedIn === false) {
+        return this.$nuxt.error({
+          statusCode: 403,
+          message: "Access denied",
+        });
+      }
     },
+
     filterData() {
       let query = this.$store.state.search.query;
-      let place = this.$store.state.search.place;
-
-      let results;
-      let ads;
-      let calls;
+      let calls = this.$store.state.data.calls;
+      let ads = this.$store.state.data.ads;
+      let results = calls.concat(ads);
 
       // filter to local results only
-      if (place) {
+      if (this.$store.state.user.location) {
         calls = this.$store.state.data.calls.filter((a) => a.distance <= this.maxDistance);
         ads = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
         results = calls.concat(ads);

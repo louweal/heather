@@ -48,14 +48,8 @@ export default {
 .map-container {
   z-index: 3;
   position: relative;
-  min-height: 250px; //100vh;
+  min-height: 250px;
   width: 100%;
-
-  // @include media-breakpoint-up(md) {
-
-  //   min-height: 100vh;
-  //   width: 50vw;
-  // }
 }
 
 .map {

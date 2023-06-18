@@ -59,18 +59,6 @@ export default {
   computed: {},
 
   methods: {
-    getCenter() {
-      if (this.$store.state.search.place) {
-        let place = this.$store.state.search.place;
-        if (place.geometry) {
-          return { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
-        } else if (this.$store.state.user.location) {
-          return { lat: this.$store.state.user.location.lat, lng: this.$store.state.user.location.lng };
-        }
-      }
-      return this.$store.state.origin;
-    },
-
     async initMap() {
       if (!google) {
         this.error = "Google map didn't load correctly, please reload page.";
@@ -82,7 +70,7 @@ export default {
 
       this.$map = new Map(this.$refs["map"], {
         zoom: this.zoom,
-        center: this.getCenter(),
+        center: this.$store.state.user.location,
         mapId: "f7886dcdb440711",
         disableDefaultUI: true,
       });
@@ -96,7 +84,7 @@ export default {
 
     setMarkers(data) {
       if (data.length > 0) {
-        if ("id" in data[0]) {
+        if ("neighborhood" in data[0]) {
           // user data provided
           this.setUserMarkers(data);
         } else {

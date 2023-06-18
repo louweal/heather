@@ -57,7 +57,6 @@
                   Request to {{ item.type }}
                 </button>
               </div>
-              <!-- </div> -->
             </div>
 
             <div class="bg-white rounded p-3 mt-2">
@@ -69,14 +68,14 @@
                   <div class="lh-sm">{{ item.name }}</div>
                   <div class="lh-sm">
                     {{ item.neighborhood }}
-                    <span class="opacity-75" v-if="item.distance && $store.state.search.place"> {{ item.distance }} km</span>
+                    <span class="opacity-75" v-if="item.distance"> {{ item.distance }} km</span>
                   </div>
                 </div>
               </nuxt-link>
             </div>
 
             <quick-map class="my-3" :marker="item" />
-            <template v-if="$store.state.user.accountId === item.owner">
+            <template v-if="$store.state.user.id === item.owner">
               <!-- <button class="btn" @click="$store.commit('modals/show', { name: 'updateAd' })">
                 <i class="bi bi-pencil-square"></i> Edit item
               </button> -->

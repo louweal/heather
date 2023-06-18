@@ -5,7 +5,7 @@
         <div class="col-12 col-md-9 order-1 order-md-0">
           <ul class="nav nav-tabs">
             <tab name="Your items" :num="numAds" />
-            <tab name="Your wishlist" :num="numCalls" />
+            <tab name="Your calls" :num="numCalls" />
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" :class="curTab === 'Your items' ? 'show active' : false">
@@ -15,7 +15,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" :class="curTab === 'Your wishlist' ? 'show active' : false">
+            <div class="tab-pane fade" :class="curTab === 'Your calls' ? 'show active' : false">
               <div class="row my-3 g-3">
                 <div class="col-12 col-md-6 col-lg-4" v-for="(c, i) in calls" :key="i">
                   <card-call :data="c" />
@@ -36,7 +36,7 @@
                 <h4 class="font-family-base fs-6">Personal details</h4>
                 <div>
                   <i class="bi bi-wallet-fill"></i>
-                  <a :href="accountUrl" target="_blank">{{ accountId }} <i class="bi bi-box-arrow-up-right"></i></a>
+                  <a :href="accountUrl" target="_blank">{{ id }} <i class="bi bi-box-arrow-up-right"></i></a>
                 </div>
                 <div v-if="location">
                   <i class="bi bi-geo-alt-fill"></i>
@@ -87,11 +87,11 @@ export default {
     curTab() {
       return this.$store.state.tabs.name;
     },
-    accountId() {
-      return this.$store.state.user.accountId;
+    id() {
+      return this.$store.state.user.id;
     },
     accountUrl() {
-      return `https://testnet.dragonglass.me/hedera/accounts/${this.accountId}`;
+      return `https://testnet.dragonglass.me/hedera/accounts/${this.id}`;
     },
     name() {
       return this.$store.state.user.name;
@@ -117,22 +117,12 @@ export default {
     email() {
       return this.$store.state.user.email;
     },
-    numRequests() {
-      return 0;
-    },
-
-    numRent() {
-      return 0;
-    },
-    numBorrow() {
-      return 0;
-    },
 
     ads() {
-      return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.accountId);
+      return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.id);
     },
     calls() {
-      return this.$store.state.data.calls.filter((a) => a.owner === this.$store.state.user.accountId);
+      return this.$store.state.data.calls.filter((a) => a.owner === this.$store.state.user.id);
     },
 
     numAds() {
@@ -162,7 +152,7 @@ export default {
     },
 
     async removeCall(id, i) {
-      await removeCall(this.$store.state.user.accountId, i);
+      await removeCall(this.$store.state.user.id, i);
       this.$store.commit("data/removeCall", id);
       this.$router.push("/account?removed=" + id);
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-primary text-white">
+  <div class="card bg-primary text-white h-100">
     <div class="card-body">
       <h5 class="card-title text-white">{{ data.title }}</h5>
 
@@ -16,7 +16,7 @@
         <div>
           <div class="lh-1">{{ data.name }}</div>
           <div class="lh-sm">
-            {{ data.neighborhood }} <span class="opacity-75 fw-medium" v-if="data.distance && place"> {{ data.distance }} km</span>
+            {{ data.neighborhood }} <span class="opacity-75 fw-medium" v-if="data.distance"> {{ data.distance }} km</span>
           </div>
         </div>
       </div>
@@ -32,17 +32,5 @@ export default {
       default: () => {},
     },
   },
-
-  computed: {
-    place() {
-      return this.$store.state.search.place;
-    },
-  },
 };
 </script>
-
-<style lang="scss" scoped>
-.card {
-  height: 100%;
-}
-</style>

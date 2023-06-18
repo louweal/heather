@@ -7,21 +7,22 @@
         <div class="row gy-3">
           <div class="col-md-6 mr-md-2">
             <div class="row g-2">
-              <template v-for="(a, i) in $store.state.data.calls">
-                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 3">
-                  <card-new-call />
-                </div>
+              <template v-if="$store.state.data.calls.length === 0 && $store.state.data.ads.length === 0">
+                <p>No results found in your neighborhood.</p>
+                <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
+              </template>
 
-                <div class="col-12 col-sm-6 col-xl-4" xxxclass="`order-${i}`" :id="i" :key="a.id">
+              <template v-for="(a, i) in $store.state.data.calls">
+                <div class="col-12 col-sm-6 col-xl-4" :id="i" :key="a.id">
                   <card-call :data="a" />
                 </div>
               </template>
               <template v-for="(a, i) in $store.state.data.ads">
-                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 3">
+                <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 2">
                   <card-new-call />
                 </div>
 
-                <div class="col-12 col-sm-6 col-xl-4" xxxclass="`order-${i}`" :id="i" :key="a.id">
+                <div class="col-12 col-sm-6 col-xl-4" :id="i" :key="a.id">
                   <card-ad :data="a" />
                 </div>
               </template>
@@ -47,10 +48,22 @@ export default {
     this.results = this.filterOwners(this.maxDistance);
   },
 
+  mounted() {
+    this.validateAccess();
+  },
+
   methods: {
+    validateAccess() {
+      if (this.$store.state.user.signedIn === false) {
+        return this.$nuxt.error({
+          statusCode: 403,
+          message: "Access denied",
+        });
+      }
+    },
     filterOwners() {
       // todo: move to default created() ?
-      let defaultCenter = this.$store.state.origin;
+      let defaultCenter = this.$store.state.user.location;
       this.$store.commit("data/updateOwnerDistance", defaultCenter);
       let results = this.$store.state.data.owners.filter((a) => a.distance <= this.maxDistance);
 
