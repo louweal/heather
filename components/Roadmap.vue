@@ -41,12 +41,6 @@ export default {
       version: "8 July onwards",
     },
   ],
-
-  methods: {
-    // isActive(id) {
-    //   return this.$store.state.roadmap.active === id;
-    // },
-  },
 };
 </script>
 
@@ -96,8 +90,6 @@ export default {
 
     &--active {
       font-weight: bold;
-      //   background-color: yellow;
-
       &::after {
         background-color: #000;
       }
@@ -107,7 +99,6 @@ export default {
 
 .line {
   content: "";
-
   position: absolute;
   left: 6px;
   width: 2px;

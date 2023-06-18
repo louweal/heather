@@ -85,11 +85,6 @@ export default {
   created() {},
   mounted() {
     this.from = new Date();
-
-    // if (this.data) {
-    //   this.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
-    // }
-    // this.request["message"] = this.message;
   },
 
   computed: {
@@ -100,10 +95,6 @@ export default {
     link() {
       return `/app/detail/${this.data.id}/${this.rid}`;
     },
-
-    // message() {
-
-    // },
 
     today() {
       let locale = "us-EN";

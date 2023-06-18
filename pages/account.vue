@@ -117,16 +117,6 @@ export default {
     email() {
       return this.$store.state.user.email;
     },
-    numRequests() {
-      return 0;
-    },
-
-    numRent() {
-      return 0;
-    },
-    numBorrow() {
-      return 0;
-    },
 
     ads() {
       return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.id);

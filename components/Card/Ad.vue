@@ -44,15 +44,6 @@ export default {
     },
   },
 
-  computed: {
-    place() {
-      return this.$store.state.search.place;
-    },
-    userId() {
-      // return this.$store.state.data.owners.find(o => o.id === this.data.owner).
-    },
-  },
-
   methods: {
     showModal() {
       if (this.$store.state.user.signedIn) {

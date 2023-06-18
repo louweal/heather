@@ -43,17 +43,14 @@ Only needed if you want to make changes to the contracts.
 ## Deploying contracts
 
 The Solidity contracts are compiled to using `solcjs` (this is not a project dependency, you need to install it manually).
-After installation, go to the contracts directory and run:
+After installation, go to the `utils/contracts` directory and run:
 
 ```
-cd utils/contracts
 solcjs --bin ContractFileName.sol
-
 ```
 
-Next, deploy the bytecode on Hedera. Make sure you change the Contract filename on line 21 in the script.
+Next, deploy the bytecode on Hedera from the root directory of the project. Make sure you change the Contract filename on line 21 in the script to the file you wish to deploy.
 
 ```
-cd ../..
 node utils/deployContract.js
 ```

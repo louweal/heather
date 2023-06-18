@@ -48,7 +48,19 @@ export default {
     this.results = this.filterOwners(this.maxDistance);
   },
 
+  mounted() {
+    this.validateAccess();
+  },
+
   methods: {
+    validateAccess() {
+      if (this.$store.state.user.signedIn === false) {
+        return this.$nuxt.error({
+          statusCode: 403,
+          message: "Access denied",
+        });
+      }
+    },
     filterOwners() {
       // todo: move to default created() ?
       let defaultCenter = this.$store.state.user.location;

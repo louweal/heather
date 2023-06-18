@@ -3,6 +3,8 @@
     <div class="btn btn-primary mb-2" @click="createAds()">Create dummy ads on Hedera</div>
 
     <p>Inspect the console for details</p>
+
+    <p>Reload dApp to see results</p>
   </main>
 </template>
 

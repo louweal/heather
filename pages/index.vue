@@ -65,7 +65,7 @@
             </div>
 
             <!-- <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
-              <span class="font-small fw-light">v0.1</span>
+              <span class="font-sm fw-light">v0.1</span>
 
               <p>The pre-hackathon phase</p>
 
@@ -87,7 +87,7 @@
               </div>
             </div> -->
             <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
-              <span class="font-small fw-light">26 May — 2 June</span>
+              <span class="font-sm fw-light">26 May — 2 June</span>
 
               <p>And off we go!</p>
 
@@ -114,7 +114,7 @@
             </div>
             <div data-aos="fade-up-scale">
               <div class="row gy-2 mt-2 border-top" id="v03">
-                <span class="font-small fw-light">2 June — 9 June</span>
+                <span class="font-sm fw-light">2 June — 9 June</span>
 
                 <p>Still going strong in the second week!</p>
 
@@ -140,7 +140,7 @@
             </div>
             <div data-aos="fade-up-scale">
               <div class="row gy-2 mt-2 border-top" id="v03">
-                <span class="font-small fw-light">9 June — 19 June</span>
+                <span class="font-sm fw-light">9 June — 19 June</span>
 
                 <p>The deadline is getting closer and closer...</p>
 
@@ -162,7 +162,7 @@
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v05" data-aos="fade-up-scale">
-              <span class="font-small fw-light">19 June — 26 June</span>
+              <span class="font-sm fw-light">19 June — 26 June</span>
 
               <p>
                 Although I spend most of this week on a well-deserved holiday in my own country, I also managed to finish some crucial
@@ -189,7 +189,7 @@
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v06" data-aos="fade-up-scale">
-              <span class="font-small fw-light">Judging phase</span>
+              <span class="font-sm fw-light">Judging phase</span>
 
               <p>
                 Just biting my nails and hoping for some luck! ☘︎ And ofcourse, waiting until I can continue with the development of
@@ -198,7 +198,7 @@
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v07" data-aos="fade-up-scale">
-              <span class="font-small fw-light">8 July — the near future</span>
+              <span class="font-sm fw-light">8 July — the near future</span>
 
               <p>We have exiting plans for the (near) future!</p>
 

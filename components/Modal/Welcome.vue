@@ -7,16 +7,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    // discover() {
-    //   this.$router.push("/app");
-    //   this.$store.commit("modals/hide");
-    // },
-  },
-};
-</script>
-
-<style></style>

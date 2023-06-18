@@ -3,6 +3,8 @@
     <div class="btn btn-primary mb-2" @click="createUsers()">Create dummy users on Hedera</div>
 
     <p>Inspect the console for details</p>
+
+    <p>Reload dApp to see results</p>
   </main>
 </template>
 
@@ -64,9 +66,6 @@ export default {
           email: user.name.toLowerCase() + "@domain.com",
           phone: "06-12345678",
         };
-
-        // add user to user list in data store
-        // this.$store.commit("data/addUser", data); // uncomment or simply reconnect
 
         // add user to hedera storage
         let status = await addUser(data);

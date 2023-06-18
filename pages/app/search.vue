@@ -83,6 +83,10 @@ export default {
     this.results = this.filterData(this.maxDistance);
   },
 
+  mounted() {
+    this.validateAccess();
+  },
+
   watch: {
     maxDistance: function (newDistance) {
       this.results = this.filterData(); // uses new maxDistance value to refilter
@@ -92,26 +96,20 @@ export default {
     "$store.state.search.query": function () {
       this.results = this.filterData();
     },
-    // "$store.state.search.placeValue": function () {
-    //   this.results = this.filterData();
-    // },
   },
 
   methods: {
-    explore() {
-      this.$store.commit("search/setPlace");
-
-      this.$router.push({
-        path: newPath,
-        force: true,
-      });
-
-      this.$forceUpdate();
+    validateAccess() {
+      if (this.$store.state.user.signedIn === false) {
+        return this.$nuxt.error({
+          statusCode: 403,
+          message: "Access denied",
+        });
+      }
     },
+
     filterData() {
       let query = this.$store.state.search.query;
-      // let place = this.$store.state.user.location;
-
       let calls = this.$store.state.data.calls;
       let ads = this.$store.state.data.ads;
       let results = calls.concat(ads);
