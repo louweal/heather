@@ -11,10 +11,10 @@
           <span class="fw-bold">{{ data.deposit }} hbar</span> deposit
         </span>
         <span v-if="data.rent && data.rent.start > 0">
-          <span class="fw-bold">{{ data.rent.start }} hbar</span> first day
+          <span class="fw-bold">{{ data.rent.start }} hbar</span> rent, first day
         </span>
-        <span v-if="data.rent && data.rent.extra > 0">
-          <span class="fw-bold">{{ data.rent.extra }} hbar</span> each extra day
+        <span v-if="data.rent && data.rent.start > 0">
+          <span class="fw-bold">{{ data.rent.extra }} hbar</span> rent, each extra day
         </span>
       </div>
     </nuxt-link>
