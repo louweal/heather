@@ -14,7 +14,7 @@
           </a>
           browser extension from the Chrome Web Store.
         </p>
-        <p v-else class="text-success">Found Hashpack</p>
+        <!-- <p v-else class="text-success">Found Hashpack</p> -->
       </div>
 
       <p class="text-center cp" @click="connect()">or connect using a demo wallet</p>
