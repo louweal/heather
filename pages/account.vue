@@ -47,15 +47,7 @@
                 <div><i class="bi bi-telephone-fill"></i> {{ phone }}</div>
 
                 <div class="mt-3 d-grid">
-                  <button
-                    class="btn btn-primary"
-                    @click="
-                      $store.commit('user/signOut');
-                      $router.push('/');
-                    "
-                  >
-                    Sign out
-                  </button>
+                  <button class="btn btn-primary" @click="disconnect()">Sign out</button>
                 </div>
               </div>
               <button class="btn" @click="$store.commit('modals/show', { name: 'update' })">
@@ -155,6 +147,29 @@ export default {
       await removeCall(this.$store.state.user.id, i);
       this.$store.commit("data/removeCall", id);
       this.$router.push("/account?removed=" + id);
+    },
+
+    disconnect() {
+      if (this.$store.state.user.method === "signer") {
+        // hashconnect
+        if (this.$hashconnect) {
+          let pairingData = this.$hashconnect.hcData.pairingData;
+          if (pairingData) {
+            let topic = pairingData[0].topic;
+            if (topic) {
+              this.$hashconnect.disconnect(topic);
+            } else {
+              console.log("No topic found");
+            }
+          } else {
+            console.log("No pairing data found.");
+          }
+        } else {
+          console.log("No hashconnect found");
+        }
+      }
+      this.$store.commit("user/signOut");
+      this.$router.push("/");
     },
   },
 };

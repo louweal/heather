@@ -66,7 +66,7 @@ export default {
         this.$store.commit("user/setUserData", data);
         this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
 
-        //update user in store (user list)
+        //update user in store (user list) and also updates user data in ads and calls
         this.$store.commit("data/updateUser", data);
         // add distance from current user to ad/call
         this.$store.commit("data/updateDistance", this.$store.state.user.location);

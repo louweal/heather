@@ -1,7 +1,21 @@
 <template>
   <div v-if="$store.state.modals.show === 'connect'">
     <div class="d-grid gap-2">
-      <div class="btn btn-primary" @click="connectHashpack()">Connect using HashPack</div>
+      <button class="btn btn-primary" @click="connectHashconnect()" :class="!$store.state.foundHashpack ? 'disabled' : false">
+        <span class="spinner-grow spinner-grow-sm" v-if="showSpinner"></span> Connect using Hashpack
+      </button>
+
+      <div class="text-center">
+        <p class="text-danger" v-if="!$store.state.foundHashpack">
+          Unable to detect HashPack browser extension. Please, install the
+          <a href="https://chrome.google.com/webstore/detail/hashpack/gjagmgiddbbciopjhllkdnddhcglnemk" target="_blank"
+            >Hashpack
+            <i class="bi bi-box-arrow-up-right"></i>
+          </a>
+          browser extension from the Chrome Web Store.
+        </p>
+        <p v-else class="text-success">Found Hashpack</p>
+      </div>
 
       <p class="text-center cp" @click="connect()">or connect using a demo wallet</p>
     </div>
@@ -14,9 +28,41 @@ const { getAd } = require("@/utils/storage/ads.js");
 const { getCall } = require("@/utils/storage/calls.js");
 
 export default {
+  data() {
+    return {
+      showSpinner: false,
+    };
+  },
+
+  watch: {
+    "$store.state.user.id": function (id) {
+      console.log("id :>> ", id);
+      this.handleConnect(id); // redo look-up user on chain if id changes
+    },
+  },
+
   methods: {
     async connect() {
-      let id = process.env.MY_ACCOUNT_ID; //// todo hashpack option
+      let id = process.env.MY_ACCOUNT_ID;
+      this.$store.commit("user/setMethod", { method: "client" });
+      await this.handleConnect(id);
+    },
+
+    async connectHashconnect() {
+      this.showSpinner = true;
+      this.$store.commit("user/setMethod", { method: "signer" });
+
+      this.$hashconnect.connectToLocalWallet();
+
+      // already paired
+      console.log(this.$store.state.user.method);
+      if (this.$store.state.user.method === "signer") {
+        await this.handleConnect(this.$store.state.user.id);
+      } else {
+      }
+    },
+
+    async handleConnect(id) {
       let userdata = await getUserData(id);
       if (userdata) {
         this.$store.commit("user/setUserData", userdata);
@@ -25,16 +71,13 @@ export default {
         this.$store.commit("modals/hide");
 
         this.$store.commit("notice/show");
-        await this.getter(false, true);
+        await this.getter(true, true);
         this.$store.commit("notice/hide");
       } else {
         // show register modal
         this.$store.commit("modals/show", { name: "register" });
       }
-    },
-
-    async connectHashPack() {
-      console.log("todo connect hashpack");
+      this.showSpinner = false;
     },
 
     async getter(getCalls, getAds) {
@@ -103,6 +146,12 @@ export default {
     },
   },
 };
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 </script>
 
 <style></style>

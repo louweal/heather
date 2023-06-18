@@ -1,7 +1,7 @@
 <template>
   <div class="container-xl">
     <div class="text-center">
-      <h1 class="text-primary fs-2 pb-3">{{ error ? $t(error.message) : $t("Something went wrong") }}.</h1>
+      <h1 class="text-primary fs-2 pb-3">{{ error ? $t(error.message) : $t("Something went wrong") }}</h1>
 
       <button class="btn btn-primary" v-if="this.error.statusCode === 403" @click="$store.commit('modals/show', { name: 'connect' })">
         Connect wallet

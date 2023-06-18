@@ -16,7 +16,7 @@
 
       <span class="fw-bold">Personal details</span>
 
-      <div class="input-group">
+      <div class="input-group" :key="this.$store.state.user.id">
         <span class="input-group-text">Account Id</span>
         <input type="text" class="form-control" placeholder="Wallet address*" :value="accountId" disabled="true" />
       </div>
@@ -47,8 +47,8 @@ export default {
   },
   computed: {
     accountId() {
-      if (process.env.HASHPACK_ENABLED) {
-        return "0.0.012345";
+      if (this.$store.state.user.method === "signer") {
+        return this.$store.state.user.id;
       } else {
         return process.env.MY_ACCOUNT_ID;
       }
@@ -60,7 +60,7 @@ export default {
       //todo validate form
 
       let data = {
-        id: process.env.MY_ACCOUNT_ID,
+        id: this.accountId,
         name: this.name,
         neighborhood: this.neighborhood,
         email: this.email,

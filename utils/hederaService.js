@@ -13,11 +13,20 @@ const {
   Hbar,
 } = require("@hashgraph/sdk");
 
+let signMethod = "client";
+
+export function updateSignMethod(method) {
+  signMethod = method;
+  console.log("signMethod :>> ", signMethod);
+}
+
 async function transactionFlow(id, tx, returnType) {
   let rx; // response
   let isVoid = returnType === undefined; // get returned value if function has returnType
 
-  if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
+  console.log(signMethod);
+
+  if (signMethod == "signer" && !(id === process.env.STORAGE_CONTRACT)) {
     rx = await signerTransactionFlow(tx, isVoid);
   } else {
     rx = await clientTransactionFlow(tx, isVoid);
@@ -34,7 +43,7 @@ async function transactionFlow(id, tx, returnType) {
       val = rx.toString();
   }
 
-  console.log(`Result: ${val} \n`);
+  console.log(`Result: ${val}`);
 
   return val; // return value
 }
@@ -44,7 +53,7 @@ async function queryFlow(id, tx, returnType) {
 
   exTx = await clientQueryFlow(tx);
 
-  // if (process.env.ENABLE_HASHPACK == "true" && !(id === process.env.STORAGE_CONTRACT)) {
+  // if (signMethod == "signer" && !(id === process.env.STORAGE_CONTRACT)) {
   //   exTx = await signerQueryFlow(tx);
   // } else {
   //   exTx = await clientQueryFlow(tx);
@@ -116,12 +125,10 @@ async function signerTransactionFlow(tx, isVoid) {
   //return await provider.getTransactionReceipt(exTx.transactionId);
 
   if (isVoid) {
-    return await provider.getTransactionReceipt(exTx.transactionId); //  get status
+    return (await provider.getTransactionReceipt(exTx.transactionId)).status;
   } else {
-    console.log(await provider.getTransactionReceipt(exTx.transactionId));
-    let rec = await provider.call(new TransactionRecordQuery().setIncludeChildren(true).setTransactionId(exTx.transactionId)); // undefined .setIncludeChildren(true)
-    console.log(rec);
-    return rec;
+    console.log("Error: Retrieving return value is not implemented"); // not possible?
+    return await provider.getTransactionReceipt(exTx.transactionId);
   }
 }
 
