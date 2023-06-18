@@ -19,7 +19,7 @@
             <div class="d-grid gap-3">
               <card-request :item="item" v-if="this.$store.state.data.ads.length > 0" />
 
-              <template v-if="item && item.owner === $store.state.user.accountId">
+              <template v-if="item && item.owner === $store.state.user.id">
                 owner
                 <!-- owner actions -->
                 <template v-if="$store.state.request.state == 'Created'">
@@ -69,7 +69,7 @@
                 </template>
               </template>
 
-              <template v-if="$store.state.request.borrower === $store.state.user.accountId">
+              <template v-if="$store.state.request.borrower === $store.state.user.id">
                 borrowerr
 
                 <!-- borrower actions -->
@@ -209,10 +209,10 @@ export default {
     },
 
     isBorrower() {
-      return this.$store.state.user.accountId === this.$store.state.request.borrower;
+      return this.$store.state.user.id === this.$store.state.request.borrower;
     },
     isOwner() {
-      return this.item ? this.$store.state.user.accountId === this.item.owner : false;
+      return this.item ? this.$store.state.user.id === this.item.owner : false;
     },
 
     missing() {

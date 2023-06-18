@@ -6,10 +6,14 @@ let accountId = process.env.MY_ACCOUNT_ID;
 
 // create user
 export async function addUser(data) {
-  data = { ...data, id: accountId };
+  let findUserData = await getUserData(data.id);
+  if (typeof findUserData === "object" && findUserData.id) {
+    console.log("This user already exists");
+    return undefined;
+  } // otherwise we get a Contract revert error (which we can ignore)
 
   let params = [
-    { type: "address", value: accountId },
+    { type: "address", value: data.id },
     { type: "string", value: encodeData(data) },
   ];
   return await contractExecuteTransaction(contractId, "addUser", params);

@@ -5,8 +5,15 @@
         <logo @click.native="scrollToTop()" />
       </div>
       <div class="col-7 col-sm col-md-4">
-        <div class="searchbar" @click="activateSearch()">
-          <input type="text" class="form-control" placeholder="Find items" />
+        <div class="searchbar">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Find something..."
+            ref="query"
+            @input="(e) => (query = e.target.value)"
+            v-on:keyup.enter="goSearch"
+          />
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
@@ -32,20 +39,20 @@
       </div>
     </div>
 
-    <div class="searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
+    <!-- <div class=" searchform fixed-top start-50 translate-middle-x bg-white p-2" :class="searchActive ? 'active' : false">
       <div class="row g-2">
         <div class="col-12 col-sm">
           <input type="text" class="form-control" placeholder="Find something..." ref="query" @input="(e) => (query = e.target.value)" />
         </div>
         <div class="col-9 col-sm">
-          <input
+           <input
             type="text"
             class="form-control"
             :class="missingInput && !this.placeValue ? 'border-danger' : false"
             placeholder="Address"
             ref="searchLoc"
             @input="(e) => (placeValue = e.target.value)"
-          />
+          /> 
         </div>
         <div class="col-3 col-sm-2">
           <div class="btn btn-primary rounded w-100" @click="goSearch()">
@@ -53,7 +60,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </nav>
 </template>
 
@@ -62,7 +69,6 @@ export default {
   data() {
     return {
       prevPosY: 0,
-      searchActive: false,
       query: undefined,
       place: undefined,
       placeValue: undefined,
@@ -72,15 +78,6 @@ export default {
 
   mounted() {
     window.addEventListener("scroll", this.aosHeader);
-
-    var input = this.$refs["searchLoc"];
-    const autocomplete = new google.maps.places.Autocomplete(input);
-
-    autocomplete.addListener("place_changed", () => {
-      this.place = autocomplete.getPlace();
-    });
-
-    autocomplete.setFields(["address_components", "geometry", "name"]); // to do
   },
 
   beforeDestroy() {
@@ -121,59 +118,12 @@ export default {
     },
 
     goSearch() {
-      if (!this.place) {
-        this.missingInput = true;
-        return;
-      }
-
-      this.missingInput = false;
-
       this.$store.commit("search/setQuery", this.query === "" ? undefined : this.query);
-
-      if (this.place) {
-        this.$store.commit("search/setPlace", this.place);
-      }
-      this.placeValue = this.$refs["searchLoc"].value;
-
-      let prevPlaceValue = this.$store.state.search.placeValue;
-      if (this.placeValue) {
-        this.$store.commit("search/setPlaceValue", this.placeValue);
-      }
-      this.searchActive = false; // hide search form
-      let newPath = "/app/search";
-
-      // location changed
-      if (prevPlaceValue !== this.placeValue) {
-        // update ad distance data in store
-
-        let center;
-        if (this.place) {
-          let lat = this.place.geometry.location.lat();
-          let lng = this.place.geometry.location.lng();
-          let searchLocation = new google.maps.LatLng(lat, lng);
-          center = searchLocation;
-        } else {
-          // use default
-          center = this.$store.state.origin;
-        }
-
-        // this.$store.commit("data/updateDistance", center);
-      }
-
       this.$router.push({
-        path: newPath,
+        path: "/app/search",
         force: true,
       });
-
       this.$forceUpdate();
-
-      // google.maps.event.trigger(this.$map, "resize");
-    },
-
-    activateSearch() {
-      this.searchActive = true;
-      let field = this.$refs["query"]; // document.getElementById("query");
-      window.setTimeout(() => field.focus(), 0);
     },
   },
 };
@@ -198,7 +148,7 @@ export default {
 
 .searchbar {
   position: relative;
-  &:not(.active)::after {
+  &::after {
     content: "\F52A";
     position: absolute;
     right: 1rem;
@@ -215,26 +165,6 @@ export default {
     font-size: 1.75rem;
     color: $primary;
     transform: scaleX(-1);
-  }
-}
-
-.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.searchform {
-  width: 100vw;
-  opacity: 0.2;
-  visibility: hidden;
-  transition: opacity 0.9s 0.1s cubic-bezier(0.2, 0, 0.1, 1);
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-
-  @include media-breakpoint-up(lg) {
-    opacity: 1;
-    visibility: visible;
-    width: auto;
-    box-shadow: none;
   }
 }
 </style>

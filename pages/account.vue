@@ -36,7 +36,7 @@
                 <h4 class="font-family-base fs-6">Personal details</h4>
                 <div>
                   <i class="bi bi-wallet-fill"></i>
-                  <a :href="accountUrl" target="_blank">{{ accountId }} <i class="bi bi-box-arrow-up-right"></i></a>
+                  <a :href="accountUrl" target="_blank">{{ id }} <i class="bi bi-box-arrow-up-right"></i></a>
                 </div>
                 <div v-if="location">
                   <i class="bi bi-geo-alt-fill"></i>
@@ -87,11 +87,11 @@ export default {
     curTab() {
       return this.$store.state.tabs.name;
     },
-    accountId() {
-      return this.$store.state.user.accountId;
+    id() {
+      return this.$store.state.user.id;
     },
     accountUrl() {
-      return `https://testnet.dragonglass.me/hedera/accounts/${this.accountId}`;
+      return `https://testnet.dragonglass.me/hedera/accounts/${this.id}`;
     },
     name() {
       return this.$store.state.user.name;
@@ -129,10 +129,10 @@ export default {
     },
 
     ads() {
-      return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.accountId);
+      return this.$store.state.data.ads.filter((a) => a.owner === this.$store.state.user.id);
     },
     calls() {
-      return this.$store.state.data.calls.filter((a) => a.owner === this.$store.state.user.accountId);
+      return this.$store.state.data.calls.filter((a) => a.owner === this.$store.state.user.id);
     },
 
     numAds() {
@@ -162,7 +162,7 @@ export default {
     },
 
     async removeCall(id, i) {
-      await removeCall(this.$store.state.user.accountId, i);
+      await removeCall(this.$store.state.user.id, i);
       this.$store.commit("data/removeCall", id);
       this.$router.push("/account?removed=" + id);
     },

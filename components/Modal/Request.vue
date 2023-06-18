@@ -123,7 +123,7 @@ export default {
       this.request["to"] = parseInt(this.to.getTime() / 1000);
 
       let owner = this.data.owner;
-      let details = { ...this.request, borrower: this.$store.state.user.accountId };
+      let details = { ...this.request, borrower: this.$store.state.user.id };
       let startdate = this.request.from;
       let enddate = this.request.to;
       let deposit = this.data.deposit;

@@ -1,8 +1,8 @@
-import { encodeData, decodeData } from "../utils/encodeHelper";
+import { encodeData } from "../utils/encodeHelper";
 
 export const state = () => ({
   signedIn: false,
-  accountId: "0.0.000000",
+  id: "0.0.000000",
   userData: undefined, // encoded
   // new user input:
   name: "Jane Doe",
@@ -13,9 +13,9 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setAccountId(state, payload) {
-    state.accountId = payload;
-  },
+  // setAccountId(state, payload) {
+  //   state.id = payload;
+  // },
 
   setLocation(state, payload) {
     state.location = payload;
@@ -24,7 +24,7 @@ export const mutations = {
   setUserData(state, payload) {
     console.log(payload);
 
-    state.accountId = payload.accountId;
+    state.id = payload.id;
     state.name = payload.name;
     state.neighborhood = payload.neighborhood;
     state.email = payload.email;
@@ -37,10 +37,10 @@ export const mutations = {
 
   signIn(state) {
     state.signedIn = true;
-    state.accountId = state.accountId;
+    state.id = state.id;
   },
   signOut(state) {
     state.signedIn = false;
-    // state.accountId = undefined;
+    // state.id = undefined;
   },
 };

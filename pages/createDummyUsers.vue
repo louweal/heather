@@ -8,6 +8,7 @@
 
 <script>
 import owners from "@/data/owners";
+const { addUser } = require("@/utils/storage/users.js");
 
 export default {
   owners,
@@ -48,28 +49,34 @@ export default {
       ];
 
       let users = this.$options.owners;
+      console.log("users.length :>> ", users.length);
+
       for (let i = 0; i < users.length; i++) {
         let user = users[i];
 
         let id = dummies[user.id];
 
-        let metadata = {
+        let data = {
+          id: id,
           name: user.name,
           neighborhood: user.neighborhood,
           location: { lat: user.lat, lng: user.lng },
-          email: user.name.toLowerCase() + "@hedera.com",
-          phone: "01234567",
+          email: user.name.toLowerCase() + "@domain.com",
+          phone: "06-12345678",
         };
 
-        // let payload = {
-        //   contractId: process.env.S_CONTRACT,
-        //   accountId: id,
-        //   metadata: metadata,
-        // };
+        // add user to user list in data store
+        // this.$store.commit("data/addUser", data); // uncomment or simply reconnect
 
-        // // console.log(payload);
+        // add user to hedera storage
+        let status = await addUser(data);
 
-        // let res = await this.$store.dispatch("user/addDummyUser", payload);
+        if (status === "SUCCESS") {
+          //
+        } else {
+          // todo
+          console.log("Something went wrong");
+        }
       }
     },
   },

@@ -18,7 +18,7 @@
 
       <div class="input-group">
         <span class="input-group-text">Account Id</span>
-        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.accountId" disabled="true" />
+        <input type="text" class="form-control" placeholder="Wallet address*" :value="this.$store.state.user.id" disabled="true" />
       </div>
 
       <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" id="accountLoc" />
@@ -43,7 +43,6 @@ export default {
       location: undefined,
       email: undefined,
       phone: undefined,
-      googleLoc: undefined,
     };
   },
   computed: {},
@@ -53,24 +52,24 @@ export default {
       //todo validate form
 
       let data = {
-        accountId: process.env.MY_ACCOUNT_ID,
+        id: process.env.MY_ACCOUNT_ID,
         name: this.name,
         neighborhood: this.neighborhood,
         email: this.email,
         phone: this.phone,
-        location: { lat: this.googleLoc.geometry.location.lat(), lng: this.googleLoc.geometry.location.lng() },
+        location: this.location,
       };
 
-      // add user data to store
+      // add user data to store ( current user details)
       this.$store.commit("user/setUserData", data);
+      // add user to user list in data store
+      this.$store.commit("data/addUser", data);
 
       // add user to hedera storage
       let status = await addUser(data);
 
       if (status === "SUCCESS") {
         this.$store.commit("modals/show", { name: "welcome" });
-        // this.$store.commit("user/signIn");
-        // this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
       } else {
         // todo
         console.log("Something went wrong");
@@ -90,11 +89,9 @@ export default {
     autocomplete.addListener("place_changed", () => {
       let place = autocomplete.getPlace();
       if (place) {
-        this.googleLoc = place;
         let lat = place.geometry.location.lat();
         let lng = place.geometry.location.lng();
-
-        this.$store.commit("user/setLocation", { lat: lat, lng: lng });
+        this.location = { lat: lat, lng: lng };
       }
     });
     autocomplete.setFields(["address_components", "geometry", "name"]); // to do

@@ -22,7 +22,6 @@
           <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">ħ{{ markerInfo.rent.start }}</span>
         </p>
       </template>
-
       <p v-if="markerInfo.type === 'user' && numItems > 0">{{ numItems }} item<span v-if="numItems > 1">s</span></p>
 
       <p v-if="markerInfo.type === 'call'">{{ markerInfo.description.slice(0, 60) }}...</p>

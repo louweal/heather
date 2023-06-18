@@ -185,7 +185,7 @@ export default {
         console.log(data);
 
         // add new ad to hedera storage
-        let userId = this.$store.state.user.accountId; // todo
+        let userId = this.$store.state.user.id; // todo
 
         console.log(userId);
         let status = await addAd(userId, data);
@@ -193,6 +193,8 @@ export default {
         if (status === "SUCCESS") {
           // add to vuex store
           this.$store.commit("data/addAd", { ...data, owner: userId });
+          // add distance from current user to ad
+          this.$store.commit("data/updateDistance", this.$store.state.user.location);
 
           this.success = true;
 

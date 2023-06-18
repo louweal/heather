@@ -2,6 +2,7 @@ export const state = () => ({
   ads: [],
   calls: [],
   owners: [],
+  fetching: false,
 });
 
 export const mutations = {
@@ -9,6 +10,8 @@ export const mutations = {
     state.ads = payload;
     state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
     state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
+
+    state.owners.forEach((o) => (o["numItems"] = state.ads.filter((a) => a.owner === o.id).length)); // count num items (ads) each user has
   },
   SET_CALLS(state, payload) {
     state.calls = payload;
@@ -16,8 +19,29 @@ export const mutations = {
     state.calls.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
   },
 
+  toggleFetching(state) {
+    state.fetching = !state.fetching;
+  },
+
   SET_USERS(state, payload) {
     state.owners = payload;
+  },
+
+  // add user (after registration)
+  addUser(state, payload) {
+    state.owners.push(payload);
+  },
+
+  updateUser(state, payload) {
+    // remove old user data
+    this.commit("data/removeUser", payload.id);
+
+    // add updated data
+    this.commit("data/addUser", payload);
+  },
+
+  removeUser(state, id) {
+    state.owners = state.owners.filter((o) => o.id !== id);
   },
 
   addAd(state, ad) {
@@ -79,8 +103,6 @@ function getDistance(origin, destination) {
 
     let distance = google.maps.geometry.spherical.computeDistanceBetween(origin, destination);
     distance = isNaN(distance) ? 0 : distance;
-
-    console.log(distance + " in meter");
 
     return parseFloat(distance / 1000).toFixed(1);
   }

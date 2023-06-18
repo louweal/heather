@@ -3,7 +3,7 @@
     <p>Your account was succesfully created.</p>
 
     <div class="d-grid">
-      <button class="btn btn-primary" @click="discover()">Sign in</button>
+      <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'connect' })">Sign in</button>
     </div>
   </div>
 </template>
@@ -11,10 +11,10 @@
 <script>
 export default {
   methods: {
-    discover() {
-      this.$router.push("/app");
-      this.$store.commit("modals/hide");
-    },
+    // discover() {
+    //   this.$router.push("/app");
+    //   this.$store.commit("modals/hide");
+    // },
   },
 };
 </script>

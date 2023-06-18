@@ -46,7 +46,7 @@
       <modal-call />
     </modal>
     <pushmenu />
-    <notice v-if="$store.state.notice.active"> </notice>
+    <notice v-if="$store.state.notice.active === true">Fetching data from Hedera ...</notice>
 
     {{ $store.state.user.location }}
 
@@ -61,6 +61,7 @@
     Users: <br />
     {{ $store.state.data.owners }}
 
+    <br />
     Ads: <br />
     {{ $store.state.data.ads }}
   </div>
@@ -77,8 +78,10 @@ export default {
     mode: "out-in",
   },
 
-  fetch() {
-    this.setUsers();
+  async fetch() {
+    this.$store.commit("notice/show");
+    await this.setUsers();
+    this.$store.commit("notice/hide");
   },
 
   methods: {

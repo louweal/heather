@@ -1,5 +1,5 @@
 <template>
-  <main :key="$store.state.search.placeValue">
+  <main>
     <google-map :class="$store.state.map.show ? 'd-block' : 'd-none d-md-block'" :zoom="zoom" :results="results" />
     <section>
       <div class="container-fluid">
@@ -24,23 +24,23 @@
               </div>
             </div>
 
-            <template v-if="this.$store.state.search.placeValue">
+            <template xxxv-if="this.$store.state.search.placeValue">
               <p>
                 {{ results.length > 0 ? results.length : "No" }} result<span v-if="results.length !== 1">s</span>
                 <span v-if="this.$store.state.search.query && this.$store.state.search.query !== ''">for </span
                 ><span class="text-primary">{{ this.$store.state.search.query }}</span> in
-                <span class="opacity-75">{{ this.$store.state.search.placeValue }}</span> (+{{ maxDistance }} km).
+                <span class="opacity-75">your neighborhood</span> (+{{ maxDistance }} km).
                 <span v-if="results.length === 0"> Try to increase your search area.</span>
               </p>
 
               <p v-if="results.length === 0"><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
             </template>
 
-            <template v-else>
+            <!-- <template xxxv-else>
               <p>Please use the search bar above to find items in your neighborhood.</p>
 
               <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
-            </template>
+            </template> -->
 
             <div class="row g-2">
               <template v-if="results.length > 0">
@@ -100,9 +100,9 @@ export default {
     "$store.state.search.query": function () {
       this.results = this.filterData();
     },
-    "$store.state.search.placeValue": function () {
-      this.results = this.filterData();
-    },
+    // "$store.state.search.placeValue": function () {
+    //   this.results = this.filterData();
+    // },
   },
 
   methods: {
@@ -118,14 +118,14 @@ export default {
     },
     filterData() {
       let query = this.$store.state.search.query;
-      let place = this.$store.state.search.place;
+      // let place = this.$store.state.user.location;
 
-      let results;
-      let ads;
-      let calls;
+      let calls = this.$store.state.data.calls;
+      let ads = this.$store.state.data.ads;
+      let results = calls.concat(ads);
 
       // filter to local results only
-      if (place) {
+      if (this.$store.state.user.location) {
         calls = this.$store.state.data.calls.filter((a) => a.distance <= this.maxDistance);
         ads = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
         results = calls.concat(ads);

@@ -16,8 +16,8 @@ const { getCall } = require("@/utils/storage/calls.js");
 export default {
   methods: {
     async connect() {
-      let accountId = process.env.MY_ACCOUNT_ID; //// todo hashpack option
-      let userdata = await getUserData(accountId);
+      let id = process.env.MY_ACCOUNT_ID; //// todo hashpack option
+      let userdata = await getUserData(id);
       if (userdata) {
         this.$store.commit("user/setUserData", userdata);
         this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
