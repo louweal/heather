@@ -1,10 +1,6 @@
 <template>
   <div class="test d-grid justify-content-center">
-    <img
-      :src="data.visual ? require(`/assets/images/${data.visual}`) : false"
-      :alt="data.visual ? data.name : false"
-      class="visual rounded"
-    />
+    <img :src="data.visual ? visual : false" :alt="data.visual ? data.name : false" class="visual rounded" />
   </div>
 </template>
 
@@ -18,6 +14,15 @@ export default {
     ratio: {
       type: String,
       default: "4x3",
+    },
+  },
+  computed: {
+    visual() {
+      try {
+        return require(`/assets/images/${data.visual}`);
+      } catch (error) {
+        return "none";
+      }
     },
   },
 };

@@ -1,17 +1,10 @@
 <template>
-  <div class="notice position-fixed bottom-0 bg-primary text-white w-100 p-2 opacity-75">
-    <div class="d-flex justify-content-between align-items-center gap-1">
-      <div>
-        <p class="mb-0">
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          <span> Fetching data from Hedera </span>
-        </p>
-      </div>
-      <div>
-        <div class="px-2 py-1 cp" @click="$store.commit('notice/hide')">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
+  <div class="notice fixed-top w-100 h-100 p-2 d-flex justify-content-center align-items-center">
+    <div class="text-center">
+      <p class="mb-0">
+        <span class="spinner-grow spinner-grow-sm"></span> <br />
+        <span> Fetching data from Hedera </span>
+      </p>
     </div>
   </div>
 </template>
@@ -21,7 +14,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.position-fixed {
+.notice {
   z-index: 4000 !important;
+  background-color: rgba(#ddd, 0.5);
+  backdrop-filter: blur(4px);
 }
 </style>

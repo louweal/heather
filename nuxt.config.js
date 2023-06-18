@@ -51,7 +51,7 @@ export default {
 
   components: true,
 
-  plugins: ["~/plugins/typed.js", "~/plugins/aos.js", "~/plugins/maps.js", "~/plugins/translate.js"],
+  plugins: ["~/plugins/typed.js", "~/plugins/aos.js", "~/plugins/maps.js", "~/plugins/translate.js", "~/plugins/hashconnect.js"],
 
   modules: ["@nuxtjs/style-resources"],
   buildModules: ["@nuxtjs/dotenv"], //"@nuxtjs/style-resources"

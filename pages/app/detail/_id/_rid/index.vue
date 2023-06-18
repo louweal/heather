@@ -16,11 +16,10 @@
           </div>
 
           <div class="col-12 col-md-9">
-            <div class="d-grid gap-3">
-              <card-request :item="item" v-if="this.$store.state.data.ads.length > 0" />
+            <div class="d-grid gap-3" v-if="item">
+              <card-request :item="item" />
 
               <template v-if="item && item.owner === $store.state.user.id">
-                owner
                 <!-- owner actions -->
                 <template v-if="$store.state.request.state == 'Created'">
                   <div class="bg-light rounded p-2" v-if="$store.state.request.message.length > 0">
@@ -70,8 +69,6 @@
               </template>
 
               <template v-if="$store.state.request.borrower === $store.state.user.id">
-                borrowerr
-
                 <!-- borrower actions -->
                 <template v-if="$store.state.request.state == 'Accepted'">
                   <!-- Created -->
@@ -160,6 +157,9 @@ export default {
         this.ownerReview = await getOwnerReview(this.rid);
       }
     },
+    "$store.state.request.progress": async function () {
+      this.getState();
+    },
   },
 
   async created() {
@@ -221,7 +221,20 @@ export default {
       return this.$store.state.request.enddate + 86400 * 7 <= new Date() / 1000;
     },
   },
+  mounted() {
+    this.validateAccess();
+  },
+
   methods: {
+    validateAccess() {
+      if (this.$store.state.user.signedIn === false) {
+        return this.$nuxt.error({
+          statusCode: 403,
+          message: "Access denied",
+        });
+      }
+    },
+
     async getDetails() {
       let details = await getRequestDetails(this.rid);
       this.$store.commit("request/setRequest", { id: this.rid, ...details });
@@ -235,7 +248,9 @@ export default {
     async acceptRequest() {
       let res = await acceptRequest(this.rid);
       if (res !== "SUCCESS") {
-        this.error = "The borrow request is expired.";
+        this.error = "Unexpected error";
+      } else {
+        this.$store.commit("request/updateProgress");
       }
     },
 
@@ -249,6 +264,8 @@ export default {
 
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
+      } else {
+        this.$store.commit("request/updateProgress");
       }
     },
 
@@ -258,6 +275,8 @@ export default {
       let res = await returnBorrow(this.rid, returndate);
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
+      } else {
+        this.$store.commit("request/updateProgress");
       }
     },
 
@@ -265,6 +284,8 @@ export default {
       let res = await confirmReturn(this.rid);
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
+      } else {
+        this.$store.commit("request/updateProgress");
       }
     },
 
@@ -272,6 +293,8 @@ export default {
       let res = await acceptReturn(this.rid);
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
+      } else {
+        this.$store.commit("request/updateProgress");
       }
     },
   },

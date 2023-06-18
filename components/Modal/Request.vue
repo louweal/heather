@@ -20,7 +20,6 @@
             valueType="date"
             format="MM/DD/YYYY"
             :default-value="new Date()"
-            :placeholder="`${today} (today)`"
             class="form-control w-100"
           ></date-picker>
         </div>
@@ -31,34 +30,14 @@
         </div>
 
         <div class="btn btn-primary" @click="sendRequest()">Send request</div>
+
+        <p v-if="error" class="text-center text-danger">Please provide both dates.</p>
       </template>
 
       <template v-if="rid">
-        <p class="text-center">
-          Your request with ID
-          <nuxt-link
-            class="border-bottom"
-            :to="link"
-            event=""
-            @click.native="
-              $router.push(link);
-              $store.commit('modals/hide');
-            "
-            >{{ rid }}</nuxt-link
-          >
-          was successfully created.
-        </p>
+        <p class="text-center">Your request was successfully created.</p>
 
-        <nuxt-link
-          class="btn btn-primary"
-          :to="link"
-          event=""
-          @click.native="
-            $router.push(link);
-            $store.commit('modals/hide');
-          "
-          >View request</nuxt-link
-        >
+        <button class="btn btn-primary" @click="goToRequest()">View request</button>
       </template>
     </div>
   </div>
@@ -67,7 +46,7 @@
 <script>
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
-const { deployBorrow, computeTotalRent } = require("@/utils/borrow.js");
+const { deployBorrow, getBorrowContract, computeTotalRent } = require("@/utils/borrow.js");
 
 export default {
   components: { DatePicker },
@@ -79,6 +58,7 @@ export default {
       to: undefined,
       rid: undefined, // request ID retrieved after deploying borrow contract
       message: "",
+      error: false,
     };
   },
 
@@ -91,24 +71,15 @@ export default {
     data() {
       return this.$store.state.modals.data;
     },
-
-    link() {
-      return `/app/detail/${this.data.id}/${this.rid}`;
-    },
-
-    today() {
-      let locale = "us-EN";
-      return new Date().toLocaleDateString(locale, {
-        day: "numeric",
-        month: "numeric",
-        year: "numeric",
-      });
-    },
   },
 
   methods: {
     async sendRequest() {
-      // todo: validate from
+      if (!this.to || !this.from) {
+        this.error = true;
+        return;
+      }
+      this.error = false;
 
       this.request["from"] = parseInt(this.from.getTime() / 1000);
       this.request["to"] = parseInt(this.to.getTime() / 1000);
@@ -124,11 +95,25 @@ export default {
       let deposit = this.data.deposit;
       let totalRent = computeTotalRent(this.data.rent, startdate, enddate);
 
-      this.rid = await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
+      await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
+      this.rid = await getBorrowContract(this.$store.state.user.id);
+
+      console.log(this.rid);
     },
 
     setMessage(value) {
       this.request["message"] = value;
+    },
+
+    goToRequest() {
+      // reset data
+      this.request = { message: "", from: undefined, to: undefined };
+      this.from = undefined;
+      this.to = undefined;
+      this.message = undefined;
+      this.$router.push(`/app/detail/${this.data.id}/${this.rid}`);
+      this.$store.commit("modals/hide");
+      this.rid = undefined;
     },
   },
 };

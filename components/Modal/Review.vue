@@ -56,6 +56,7 @@ export default {
           this.error = "Unexpected error";
         } else {
           this.submitted = true;
+          this.$store.commit("request/updateProgress");
         }
       } else {
         this.error = "Review is too short";

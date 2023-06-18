@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded overflow-hidden" v-if="this.$store.state.data.ads.length > 0" :key="$store.state.user.signedIn">
+  <div class="bg-white rounded overflow-hidden">
     <div class="row g-2">
       <div class="col-12 col-md-5">
         <nuxt-link :to="`/app/detail/${item.id}`">
@@ -24,8 +24,8 @@
             <div v-if="item.deposit > 0">
               <span class="fw-bold">{{ item.deposit }} hbar</span> deposit
             </div>
-            <div v-if="totalRent > 0">
-              <span class="fw-bold">{{ totalRent }} hbar</span> rent
+            <div v-if="rent() > 0">
+              <span class="fw-bold">{{ rent() }} hbar</span> rent
             </div>
           </div>
         </div>
@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       rid: undefined,
-      totalRent: 0,
     };
   },
 
@@ -70,8 +69,6 @@ export default {
 
   created() {
     this.rid = this.$route.params.rid;
-
-    this.totalRent = computeTotalRent(this.item.rent, this.$store.state.request.startdate, this.$store.state.request.enddate);
   },
 
   methods: {
@@ -79,6 +76,10 @@ export default {
       console.log(this.rid);
       let state = await getState(this.rid);
       this.$store.commit("request/setState", state);
+    },
+
+    rent() {
+      return computeTotalRent(this.item.rent, this.$store.state.request.startdate, this.$store.state.request.enddate);
     },
   },
 };
