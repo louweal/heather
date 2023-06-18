@@ -74,6 +74,7 @@ export default {
         await this.getter(true, true);
         this.$store.commit("notice/hide");
       } else {
+        this.$store.commit("modals/hide");
         // show register modal
         this.$store.commit("modals/show", { name: "register" });
       }
