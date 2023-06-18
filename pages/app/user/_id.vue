@@ -11,9 +11,12 @@
         </p>
 
         <div class="row">
-          <div class="col-12 col-sm-6 col-xxl-3" v-for="a in items" :key="a.id">
-            <card-call v-if="a.type === 'call'" :data="a" />
-            <card-ad v-else :data="a" />
+          <div class="col-12 col-sm-6 col-xxl-3" v-for="a in calls" :key="a.id">
+            <card-call :data="a" />
+          </div>
+
+          <div class="col-12 col-sm-6 col-xxl-3" v-for="a in ads" :key="a.id">
+            <card-ad :data="a" />
           </div>
         </div>
       </div>
@@ -34,10 +37,12 @@ export default {
   },
 
   computed: {
-    items() {
-      let calls = this.$store.state.data.calls.filter((d) => d.owner === this.id);
-      let ads = this.$store.state.data.ads.filter((d) => d.owner === this.id);
-      return calls.concat(ads);
+    ads() {
+      return this.$store.state.data.ads.filter((d) => d.owner === this.id);
+    },
+
+    calls() {
+      return this.$store.state.data.calls.filter((d) => d.owner === this.id);
     },
 
     user() {

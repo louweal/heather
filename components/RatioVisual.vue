@@ -1,6 +1,6 @@
 <template>
   <div
-    class="visual ratio"
+    class="visual ratio bg-light"
     :class="`ratio-${ratio}`"
     :style="{ backgroundImage: data.visual ? `url(${require(`/assets/images/${data.visual}`)})` : 'none' }"
   ></div>
@@ -22,10 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.visual {
-  background-color: $light;
-}
-
 .visual {
   background-size: cover;
   background-position: center center;

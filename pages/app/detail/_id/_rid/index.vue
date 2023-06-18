@@ -20,7 +20,6 @@
               <card-request :item="item" v-if="this.$store.state.data.ads.length > 0" />
 
               <template v-if="item && item.owner === $store.state.user.id">
-                owner
                 <!-- owner actions -->
                 <template v-if="$store.state.request.state == 'Created'">
                   <div class="bg-light rounded p-2" v-if="$store.state.request.message.length > 0">
@@ -70,8 +69,6 @@
               </template>
 
               <template v-if="$store.state.request.borrower === $store.state.user.id">
-                borrowerr
-
                 <!-- borrower actions -->
                 <template v-if="$store.state.request.state == 'Accepted'">
                   <!-- Created -->
