@@ -18,8 +18,8 @@ async function main() {
 
   const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
-  // const contractName = "Storage";
-  const contractName = "BorrowFactory";
+  const contractName = "Storage";
+  // const contractName = "BorrowFactory";
 
   const bytecode = fs.readFileSync(`./utils/contracts/${contractName}_sol_${contractName}.bin`);
 

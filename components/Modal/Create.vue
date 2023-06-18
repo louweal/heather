@@ -133,7 +133,12 @@ export default {
         };
 
         // store image NAME only
-        this.visuals.push(photos[i].name);
+        try {
+          let test = require(`/assets/images/${photos[i].name}`);
+          this.visuals.push(photos[i].name);
+        } catch (e) {
+          // do not add image
+        }
       }
     },
 
