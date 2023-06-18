@@ -38,6 +38,9 @@ export const mutations = {
 
     // add updated data
     this.commit("data/addUser", payload);
+
+    // update user info in ads and calls
+    this.commit("data/updateDataOwnerInfo");
   },
 
   removeUser(state, id) {
@@ -77,6 +80,14 @@ export const mutations = {
   updateDistance(state, origin) {
     state.ads.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
     state.calls.forEach((a) => (a["distance"] = getDistance(origin, a.location)));
+  },
+
+  updateDataOwnerInfo(state) {
+    // ugly solution, needs fix
+    state.ads.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
+    state.ads.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
+    state.calls.forEach((a) => (a["location"] = setOwnerLocation(state.owners.find((o) => o.id === a.owner))));
+    state.calls.forEach((a) => (a["name"] = setOwnerName(state.owners.find((o) => o.id === a.owner))));
   },
 
   updateOwnerDistance(state, origin) {
