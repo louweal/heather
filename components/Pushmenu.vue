@@ -4,7 +4,7 @@
       <logo
         @click.native="
           $store.commit('pushmenu/toggle');
-          $router.push('/');
+          $store.state.user.signedIn ? $router.push('/app') : $router.push('/');
         "
       />
 
@@ -14,35 +14,8 @@
     </div>
 
     <div class="pushmenu--body">
-      <ul class="list-unstyled">
+      <ul class="list-unstyled" v-if="this.$store.state.user.signedIn">
         <li>
-          <nuxt-link
-            to="/"
-            event=""
-            @click.native="
-              $store.commit('pushmenu/toggle');
-              $router.push('/');
-            "
-            class="nav-link"
-          >
-            Home
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link
-            to="/"
-            event=""
-            @click.native="
-              $store.commit('pushmenu/toggle');
-              $router.push('/app');
-            "
-            class="nav-link"
-          >
-            App
-          </nuxt-link>
-        </li>
-
-        <li v-if="this.$store.state.user.signedIn === true">
           <nuxt-link
             to="/"
             event=""
@@ -69,7 +42,16 @@
       >
         Sign in / Register
       </div>
-      <div class="btn btn-primary" v-else @click="$store.commit('modals/show', { name: 'create' })">Share</div>
+      <div
+        class="btn btn-primary"
+        v-else
+        @click="
+          $store.commit('pushmenu/toggle');
+          $store.commit('modals/show', { name: 'create' });
+        "
+      >
+        Share
+      </div>
     </div>
   </div>
 </template>
@@ -87,7 +69,6 @@ export default {};
   top: 0;
   z-index: 2000;
   background-color: #fff;
-  // color: #fff;
   text-align: center;
   transform: translateY(-100%);
   opacity: 0.2;

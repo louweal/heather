@@ -29,5 +29,11 @@ export default {
       }
     },
   },
+
+  created() {
+    if (this.error.statusCode === 403) {
+      this.$store.commit("modals/show", { name: "connect" });
+    }
+  },
 };
 </script>
