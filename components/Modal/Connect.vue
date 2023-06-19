@@ -1,6 +1,9 @@
 <template>
   <div v-if="$store.state.modals.show === 'connect'">
-    <div class="d-grid gap-2">
+    <div v-if="$store.state.notice.active === true" class="text-center">
+      <p><span class="spinner-grow spinner-grow-sm"></span> Please wait until all data is fetched.</p>
+    </div>
+    <div v-else class="d-grid gap-2">
       <button class="btn btn-primary" @click="connectHashconnect()" :class="!$store.state.foundHashpack ? 'disabled' : false">
         <span class="spinner-grow spinner-grow-sm" v-if="showSpinner"></span> Connect using Hashpack
       </button>
@@ -73,11 +76,11 @@ export default {
         this.$store.commit("user/setUserData", userdata);
         this.$store.commit("data/updateOwnerDistance", this.$store.state.user.location);
         this.$store.commit("user/signIn");
-        this.$store.commit("modals/hide");
 
         this.$store.commit("notice/show");
         await this.getter(true, true);
         this.$store.commit("notice/hide");
+        this.$store.commit("modals/hide");
       } else {
         this.$store.commit("modals/hide");
         // show register modal
