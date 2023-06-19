@@ -99,11 +99,16 @@ export default {
 
     goSearch() {
       this.$store.commit("search/setQuery", this.query === "" ? undefined : this.query);
-      this.$router.push({
-        path: "/app/search",
-        force: true,
-      });
-      this.$forceUpdate();
+
+      if (this.$store.state.user.signedIn) {
+        this.$router.push({
+          path: "/app/search",
+          force: true,
+        });
+        this.$forceUpdate();
+      } else {
+        this.$store.commit("modals/show", { name: "connect" });
+      }
     },
   },
 };
