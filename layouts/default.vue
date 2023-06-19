@@ -46,7 +46,8 @@
       <modal-call />
     </modal>
     <pushmenu />
-    <notice v-if="$store.state.notice.active === true" />
+
+    <modal-fetching />
 
     <!--
     <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>

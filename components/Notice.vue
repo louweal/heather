@@ -1,9 +1,11 @@
 <template>
-  <div class="notice fixed-top w-100 h-100 p-2 d-flex justify-content-center align-items-center">
+  <div
+    class="notice fixed-top top-50 start-50 translate-middle xxxw-100 xxxh-100 p-2 xxxd-flex xxxjustify-content-center xxxalign-items-center"
+  >
     <div class="text-center">
       <p class="mb-0">
         <span class="spinner-grow spinner-grow-sm"></span> <br />
-        <span> Fetching data from Hedera </span>
+        <!-- <span> Fetching data from Hedera </span> -->
       </p>
     </div>
   </div>
@@ -16,7 +18,7 @@ export default {};
 <style lang="scss" scoped>
 .notice {
   z-index: 4000 !important;
-  background-color: rgba(#ddd, 0.5);
-  backdrop-filter: blur(1px);
+  // background-color: rgba(#fff, 0.75);
+  // backdrop-filter: blur(1px);
 }
 </style>
