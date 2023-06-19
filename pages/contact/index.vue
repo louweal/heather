@@ -12,15 +12,13 @@
 
           <form
             data-aos="fade-up-scale"
-            name="Contact-2"
+            name="say-hello"
             method="POST"
             action="/contact/success"
             data-netlify="true"
             netlify
             netlify-honeypot="title"
           >
-            <input type="hidden" name="form-name" value="Contact-2" />
-
             <div class="d-none">
               <label>
                 Don’t fill this out if you’re human:
