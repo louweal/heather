@@ -8,7 +8,7 @@
           <textarea
             rows="5"
             class="form-control"
-            :placeholder="`Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`"
+            :value="`Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`"
             @input="(e) => setMessage(e.target.value)"
           />
         </div>
@@ -81,12 +81,12 @@ export default {
       }
       this.error = false;
 
-      this.request["from"] = parseInt(this.from.getTime() / 1000);
-      this.request["to"] = parseInt(this.to.getTime() / 1000);
-
       if (this.request.message === "") {
         this.request.message = `Hi ${this.data.name}, I would like to ${this.data.type} your ${this.data.title}. Kind regards, your neighbor ${this.$store.state.user.name}`;
       }
+
+      this.request["from"] = parseInt(this.from.getTime() / 1000);
+      this.request["to"] = parseInt(this.to.getTime() / 1000);
 
       let owner = this.data.owner;
       let details = { ...this.request, borrower: this.$store.state.user.id };

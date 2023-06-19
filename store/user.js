@@ -21,7 +21,7 @@ export const mutations = {
     state.location = payload.location;
   },
 
-  setId(id) {
+  setId(state, id) {
     state.id = id; //hashconnect pair succesful
   },
 

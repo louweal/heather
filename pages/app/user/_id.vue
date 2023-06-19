@@ -2,6 +2,8 @@
   <main v-if="user">
     <section>
       <div class="container-xl">
+        <button @click="$router.go(-1)" class="btn p-0"><i class="bi bi-arrow-left text-primary fs-2"></i></button>
+
         <h1>
           {{ user.name }}
         </h1>

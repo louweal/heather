@@ -31,7 +31,8 @@
           <div class="col-12 col-md-6 col-xl-4 order-0 order-md-1 h-100">
             <div class="bg-white rounded p-3 pt-2 d-flex justify-content-between flex-column">
               <div>
-                <nuxt-link to="/app" class="d-block"><i class="bi bi-arrow-left text-primary fs-2"></i> </nuxt-link>
+                <!-- <nuxt-link to="/app" class="d-block"><i class="bi bi-arrow-left text-primary fs-2"></i> </nuxt-link> -->
+                <button @click="$router.go(-1)" class="btn p-0"><i class="bi bi-arrow-left text-primary fs-2"></i></button>
 
                 <h1>{{ item.title }}</h1>
 

@@ -5,9 +5,9 @@
         <div class="row">
           <div class="col-12 col-md-3">
             <badge>State</badge>
-            <borrow-state />
+            <borrow-state :type="item.type === 'rent' ? 'Rented' : 'Borrowed'" />
 
-            <div class="d-grid mt-2">
+            <div class="d-grid mt-2" v-if="$store.state.request.state !== 'Reviewed'">
               <div class="btn btn-primary" @click="getState()">Sync state</div>
             </div>
 
@@ -45,15 +45,18 @@
                   </div>
                 </template>
 
-                <template v-else-if="$store.state.request.state == 'Checked'">
-                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'owner-review' })">Write review</button>
-                </template>
+                <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
+                  <!-- Checked || Reviewed -->
 
-                <template v-else-if="$store.state.request.state == 'Reviewed'">
-                  <div v-if="borrowerReview" class="bg-light rounded p-2">
-                    <p>{{ borrowerReview }}</p>
-                  </div>
-                  <div v-if="ownerReview">
+                  <button
+                    v-if="ownerReview === undefined"
+                    class="btn btn-primary"
+                    @click="$store.commit('modals/show', { name: 'owner-review' })"
+                  >
+                    Write review
+                  </button>
+
+                  <div v-if="ownerReview !== undefined">
                     <p class="opacity-75">You have left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ ownerReview }}
@@ -72,7 +75,7 @@
                 <!-- borrower actions -->
                 <template v-if="$store.state.request.state == 'Accepted'">
                   <!-- Created -->
-                  <button class="btn btn-primary" @click="startBorrow()">Start borrowing</button>
+                  <button class="btn btn-primary" @click="startBorrow()">Start {{ item.type }}ing</button>
                 </template>
                 <template v-else-if="$store.state.request.state == 'Borrowed'">
                   <!-- Borrowed -->
@@ -80,7 +83,30 @@
                 </template>
 
                 <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
-                  <!-- Checked -->
+                  <!-- Checked || Reviewed -->
+
+                  <button
+                    v-if="borrowerReview === undefined"
+                    class="btn btn-primary"
+                    @click="$store.commit('modals/show', { name: 'borrower-review' })"
+                  >
+                    Write review
+                  </button>
+
+                  <div v-if="borrowerReview !== undefined">
+                    <p class="opacity-75">You have left following review:</p>
+                    <div class="bg-light rounded p-2">
+                      {{ borrowerReview }}
+                    </div>
+                  </div>
+
+                  <div v-if="ownerReview">
+                    <p class="opacity-75">{{ owner.name }} has left following review:</p>
+                    <div class="bg-light rounded p-2">
+                      {{ ownerReview }}
+                    </div>
+                  </div>
+
                   <div v-if="problem">
                     <p class="text-danger">
                       Unfortunately, you've lost your deposit because the owner of the item detected a problem. Contact the owner for more
@@ -93,12 +119,10 @@
                       </p>
                     </div>
                   </div>
-
-                  <button class="btn btn-primary" @click="$store.commit('modals/show', { name: 'borrower-review' })">Write review</button>
                 </template>
               </template>
 
-              <p class="pt-3 text-danger" v-if="error">{{ error }}</p>
+              <p class="pt-3 text-danger text-center" v-if="error">{{ error }}</p>
             </div>
           </div>
         </div>
@@ -129,7 +153,6 @@ const {
   returnBorrow,
   confirmReturn,
   acceptReturn,
-  getTotalRent,
   getOwnerReview,
   getBorrowerReview,
   getProblem,
@@ -187,9 +210,12 @@ export default {
   computed: {
     item() {
       let ads = this.$store.state.data.ads;
-      if (ads.length > 0) {
-        return ads.find((a) => a.id === this.id);
+      if (ads) {
+        if (ads.length > 0) {
+          return ads.find((a) => a.id === this.id);
+        }
       }
+
       return undefined;
     },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="hero min-vh-100 d-flex flex-column justify-content-around mb-3">
+  <div class="hero d-flex flex-column justify-content-around mb-3">
     <div class="hero--bg"></div>
 
     <div class="hero--inner w-100">
@@ -19,7 +19,13 @@
             <h2 class="hero--intro mb-3">
               Minimize your environmental impact and save money by sharing resources within your local community.
             </h2>
-            <nuxt-link to="/app" class="btn btn-primary mb-4">Launch app <i class="bi bi-arrow-right"></i></nuxt-link>
+            <nuxt-link
+              to="/app"
+              event=""
+              @click.native="$store.state.user.signedIn ? $router.push('/app') : $store.commit('modals/show', { name: 'connect' })"
+              class="btn btn-primary mb-4"
+              >Launch app <i class="bi bi-arrow-right"></i
+            ></nuxt-link>
           </div>
         </div>
       </div>
@@ -39,6 +45,7 @@ export default {};
 .hero {
   // background-color: #000;
   position: relative;
+  height: 100vh; // min(100%, 100vh);
 
   &--inner {
     z-index: 2;
