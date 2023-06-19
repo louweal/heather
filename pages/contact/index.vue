@@ -12,14 +12,14 @@
 
           <form
             data-aos="fade-up-scale"
-            name="contact-form-2"
+            name="Contact-2"
             method="POST"
             action="/contact/success"
             data-netlify="true"
             netlify
             netlify-honeypot="title"
           >
-            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="form-name" value="Contact-2" />
 
             <div class="d-none">
               <label>
