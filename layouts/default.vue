@@ -46,20 +46,6 @@
       <modal-call />
     </modal>
     <pushmenu />
-    <notice v-if="$store.state.notice.active === true" />
-
-    <!--
-    <nuxt-link class="btn btn-secondary" to="/createDummyUsers">create dummy users</nuxt-link>
-
-    <nuxt-link class="btn btn-secondary" to="/createDummyAds">create dummy ads</nuxt-link> -->
-
-    <!-- <br />
-    Users: <br />
-    {{ $store.state.data.owners }}
-
-    <br />
-    Ads: <br />
-    {{ $store.state.data.ads }} -->
   </div>
 </template>
 
