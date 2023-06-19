@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!$store.state.user.signedIn">
     <p>Fill in the form below and you're ready to start sharing!</p>
 
     <div class="d-grid gap-2">
