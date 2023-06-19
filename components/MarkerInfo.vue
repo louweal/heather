@@ -16,11 +16,18 @@
       </div>
 
       <template v-if="markerInfo.type === 'rent' || markerInfo.type === 'borrow'">
-        <p>
-          To {{ markerInfo.type }}
-
-          <span v-if="markerInfo.type === 'rent' && markerInfo.rent" class="opacity-50">ħ{{ markerInfo.rent.start }}</span>
-        </p>
+        <p>To {{ markerInfo.type }}</p>
+        <div class="vstack lh-sm">
+          <span v-if="markerInfo.deposit > 0">
+            <span class="fw-bold">{{ markerInfo.deposit }} hbar</span> deposit
+          </span>
+          <span v-if="markerInfo.rent && markerInfo.rent.start > 0">
+            <span class="fw-bold">{{ markerInfo.rent.start }} hbar</span> rent, first day
+          </span>
+          <span v-if="markerInfo.rent && markerInfo.rent.start > 0">
+            <span class="fw-bold">{{ markerInfo.rent.extra }} hbar</span> rent, each extra day
+          </span>
+        </div>
       </template>
       <p v-if="markerInfo.type === 'user' && numItems > 0">{{ numItems }} item<span v-if="numItems > 1">s</span></p>
 
@@ -34,7 +41,7 @@
         >
           <i class="bi bi-chat-text-fill"></i>
         </button>
-        <div>{{ markerInfo.name }}</div>
+        <nuxt-link :to="userPath">{{ markerInfo.name }}</nuxt-link>
       </div>
     </div>
   </div>
@@ -57,7 +64,10 @@ export default {
     },
 
     infoPath() {
-      return "/app" + (this.markerInfo.type === "user" ? "/user" : " /detail") + "/" + this.markerInfo.id;
+      return "/app" + (this.markerInfo.type === "user" ? "/user" : "/detail") + "/" + this.markerInfo.id;
+    },
+    userPath() {
+      return "/app/user/" + this.markerInfo.owner;
     },
 
     modalName() {

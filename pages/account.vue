@@ -155,11 +155,15 @@ export default {
         if (this.$hashconnect) {
           let pairingData = this.$hashconnect.hcData.pairingData;
           if (pairingData) {
-            let topic = pairingData[0].topic;
-            if (topic) {
-              this.$hashconnect.disconnect(topic);
+            if (pairingData[0]) {
+              let topic = pairingData[0].topic;
+              if (topic) {
+                this.$hashconnect.disconnect(topic);
+              } else {
+                console.log("No topic found");
+              }
             } else {
-              console.log("No topic found");
+              console.log("No pairing[0] data found.");
             }
           } else {
             console.log("No pairing data found.");
@@ -168,6 +172,8 @@ export default {
           console.log("No hashconnect found");
         }
       }
+      localStorage.removeItem("hashconnectData");
+
       this.$store.commit("user/signOut");
       this.$router.push("/");
     },

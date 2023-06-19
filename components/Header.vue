@@ -14,6 +14,7 @@
             @input="(e) => (query = e.target.value)"
             v-on:keyup.enter="goSearch"
           />
+          <div class="hidden-button rounded" @click="goSearch"></div>
         </div>
       </div>
       <div class="col col-md-4 d-flex justify-content-end align-items-center">
@@ -67,7 +68,11 @@ export default {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         window.scrollTo({ top: 0, behavior: "auto" });
-        this.$router.push("/");
+        if (this.$store.state.user.signedIn) {
+          this.$router.push("/app");
+        } else {
+          this.$router.push("/");
+        }
       }
     },
     aosHeader() {
@@ -94,11 +99,16 @@ export default {
 
     goSearch() {
       this.$store.commit("search/setQuery", this.query === "" ? undefined : this.query);
-      this.$router.push({
-        path: "/app/search",
-        force: true,
-      });
-      this.$forceUpdate();
+
+      if (this.$store.state.user.signedIn) {
+        this.$router.push({
+          path: "/app/search",
+          force: true,
+        });
+        this.$forceUpdate();
+      } else {
+        this.$store.commit("modals/show", { name: "connect" });
+      }
     },
   },
 };
@@ -140,6 +150,19 @@ export default {
     font-size: 1.75rem;
     color: $primary;
     transform: scaleX(-1);
+  }
+
+  .hidden-button {
+    position: absolute;
+    right: 0;
+    // background-color: plum;
+    // opacity: 0.3;
+    width: 80px;
+    height: 100%;
+    bottom: 0;
+    top: 0;
+    cursor: pointer;
+    z-index: 2;
   }
 }
 </style>
