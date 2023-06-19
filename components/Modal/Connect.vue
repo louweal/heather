@@ -50,7 +50,6 @@ export default {
 
     async connectHashconnect() {
       this.showSpinner = true;
-      this.$store.commit("user/setMethod", { method: "signer" });
 
       this.$hashconnect.connectToLocalWallet();
 
@@ -59,10 +58,16 @@ export default {
       if (this.$store.state.user.method === "signer") {
         await this.handleConnect(this.$store.state.user.id);
       } else {
+        this.$store.commit("user/setMethod", { method: "signer" });
       }
     },
 
     async handleConnect(id) {
+      // method is hashconnect, but it is not yet paired
+      if (this.$store.state.user.id === process.env.MY_ACCOUNT_ID && this.$store.state.user.method === "signer") {
+        return;
+      }
+
       let userdata = await getUserData(id);
       if (userdata) {
         this.$store.commit("user/setUserData", userdata);

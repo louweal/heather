@@ -7,7 +7,7 @@
             <badge>State</badge>
             <borrow-state :type="item.type === 'rent' ? 'Rented' : 'Borrowed'" />
 
-            <div class="d-grid mt-2">
+            <div class="d-grid mt-2" v-if="$store.state.request.state !== 'Reviewed'">
               <div class="btn btn-primary" @click="getState()">Sync state</div>
             </div>
 
@@ -48,11 +48,15 @@
                 <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
                   <!-- Checked || Reviewed -->
 
-                  <button v-if="!ownerReview" class="btn btn-primary" @click="$store.commit('modals/show', { name: 'owner-review' })">
+                  <button
+                    v-if="ownerReview === undefined"
+                    class="btn btn-primary"
+                    @click="$store.commit('modals/show', { name: 'owner-review' })"
+                  >
                     Write review
                   </button>
 
-                  <div else>
+                  <div v-if="ownerReview !== undefined">
                     <p class="opacity-75">You have left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ ownerReview }}
@@ -81,11 +85,15 @@
                 <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
                   <!-- Checked || Reviewed -->
 
-                  <button v-if="!borrowerReview" class="btn btn-primary" @click="$store.commit('modals/show', { name: 'borrower-review' })">
+                  <button
+                    v-if="borrowerReview === undefined"
+                    class="btn btn-primary"
+                    @click="$store.commit('modals/show', { name: 'borrower-review' })"
+                  >
                     Write review
                   </button>
 
-                  <div v-else>
+                  <div v-if="borrowerReview !== undefined">
                     <p class="opacity-75">You have left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ borrowerReview }}
@@ -93,7 +101,7 @@
                   </div>
 
                   <div v-if="ownerReview">
-                    <p class="opacity-75">{{ item.owner }} has left following review:</p>
+                    <p class="opacity-75">{{ owner.name }} has left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ ownerReview }}
                     </div>
