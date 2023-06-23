@@ -72,9 +72,11 @@
       </div>
     </template>
 
-    <template v-if="success">
+    <div v-if="success" class="d-grid gap-2">
       <p>You've successfully shared your {{ newData["title"] }}!</p>
-    </template>
+
+      <button class="btn btn-primary" @click="onSuccess">View</button>
+    </div>
   </div>
 </template>
 
@@ -86,7 +88,7 @@ import Vue from "vue";
 export default {
   data() {
     return {
-      newData: { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined },
+      newData: { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined, id: -1 },
       photos: [], // preview photos
       visuals: [],
       submitted: false,
@@ -95,12 +97,7 @@ export default {
     };
   },
 
-  mounted() {
-    // reset data
-    this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
-    this.photos = [];
-    this.visuals = [];
-  },
+  mounted() {},
 
   computed: {
     data() {
@@ -120,8 +117,6 @@ export default {
     setPhotos() {
       this.photos = [];
       let photos = this.$refs.files.files;
-
-      console.log(photos);
 
       for (let i = 0; i < photos.length; i++) {
         // for preview
@@ -185,14 +180,13 @@ export default {
           this.newData["type"] = "borrow";
         }
 
-        let data = { ...this.newData, id: self.crypto.randomUUID(), date: parseInt(new Date().getTime() / 1000) };
+        this.newData["id"] = self.crypto.randomUUID();
 
-        console.log(data);
+        let data = { ...this.newData, date: parseInt(new Date().getTime() / 1000) };
 
         // add new ad to hedera storage
         let userId = this.$store.state.user.id; // todo
 
-        console.log(userId);
         let status = await addAd(userId, data);
 
         if (status === "SUCCESS") {
@@ -202,8 +196,6 @@ export default {
           this.$store.commit("data/updateDistance", this.$store.state.user.location);
 
           this.success = true;
-
-          // this.$store.commit("modals/hide");
         }
 
         // return;
@@ -211,6 +203,16 @@ export default {
         this.errors = true;
       }
       this.submitted = false;
+    },
+
+    onSuccess() {
+      this.$store.commit("modals/hide");
+      this.$router.push(`/app/detail/${this.newData["id"]}`);
+      // reset data
+      this.newData = { type: "borrow", deposit: 0, rent: { start: 0, extra: 0 }, title: "", visuals: undefined };
+      this.photos = [];
+      this.visuals = [];
+      this.success = false;
     },
 
     setType(t) {

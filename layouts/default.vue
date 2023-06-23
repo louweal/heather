@@ -5,7 +5,7 @@
         <div>
           <Header />
 
-          <div id="pushdown" class="w-100" style="height: 80px" :class="$route.path === '/' ? 'd-none' : false"></div>
+          <div id="pushdown" class="w-100" style="height: 55px" :class="$route.path === '/' ? 'd-none' : false"></div>
         </div>
         <Nuxt />
 
@@ -46,6 +46,9 @@
       <modal-call />
     </modal>
     <pushmenu />
+
+    Calls
+    {{ $store.state.data.calls }}
   </div>
 </template>
 

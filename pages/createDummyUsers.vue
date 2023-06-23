@@ -51,7 +51,6 @@ export default {
       ];
 
       let users = this.$options.owners;
-      console.log("users.length :>> ", users.length);
 
       for (let i = 0; i < users.length; i++) {
         let user = users[i];

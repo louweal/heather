@@ -117,7 +117,5 @@ function getDistance(origin, destination) {
 
     return parseFloat(distance / 1000).toFixed(1);
   }
-  console.log("origin :>> ", origin);
-  console.log("destination :>> ", destination);
   return -1;
 }

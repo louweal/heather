@@ -79,7 +79,7 @@
                 </template>
                 <template v-else-if="$store.state.request.state == 'Borrowed'">
                   <!-- Borrowed -->
-                  <button class="btn btn-primary" @click="returnBorrow()">Return item</button>
+                  <button v-if="!hideReturnBorrowButton" class="btn btn-primary" @click="returnBorrow()">Return item</button>
                 </template>
 
                 <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
@@ -147,7 +147,6 @@
 const {
   getRequestDetails,
   getState,
-  getBorrower,
   acceptRequest,
   startBorrow,
   returnBorrow,
@@ -167,6 +166,7 @@ export default {
       borrowerReview: undefined,
       ownerReview: undefined,
       problem: undefined,
+      hideReturnBorrowButton: false,
     };
   },
 
@@ -200,11 +200,6 @@ export default {
     // run queries
     this.getDetails();
     this.getState();
-
-    let borrower = await getBorrower(this.rid);
-    // let owner = await getOwner(this.rid);
-    console.log("borrower :>> ", borrower);
-    // console.log("owner :>> ", owner);
   },
 
   computed: {
@@ -282,7 +277,6 @@ export default {
 
     async startBorrow() {
       let numDays = (this.$store.state.request.enddate - this.$store.state.request.startdate) / 86400;
-      console.log(numDays);
       let value = this.item.deposit + this.item.rent.start + (numDays - 1) * this.item.rent.extra;
 
       // return;
@@ -297,12 +291,12 @@ export default {
 
     async returnBorrow() {
       let returndate = parseInt(new Date().getTime() / 1000);
-      console.log(returndate);
       let res = await returnBorrow(this.rid, returndate);
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
       } else {
-        this.$store.commit("request/updateProgress");
+        this.hideReturnBorrowButton = true;
+        // this.$store.commit("request/updateProgress");
       }
     },
 

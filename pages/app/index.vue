@@ -12,12 +12,12 @@
                 <p><span class="text-primary">Tip:</span> Explore Leiden, The Netherlands.</p>
               </template>
 
-              <template v-for="(a, i) in $store.state.data.calls">
+              <template v-for="(a, i) in calls">
                 <div class="col-12 col-sm-6 col-xl-4" :id="i" :key="a.id">
                   <card-call :data="a" />
                 </div>
               </template>
-              <template v-for="(a, i) in $store.state.data.ads">
+              <template v-for="(a, i) in ads">
                 <div class="col-12 col-sm-6 col-xl-4" :key="'banner_' + a.id" v-if="i === 2">
                   <card-new-call />
                 </div>
@@ -50,6 +50,15 @@ export default {
 
   mounted() {
     this.validateAccess();
+  },
+
+  computed: {
+    ads() {
+      return [...this.$store.state.data.ads].sort((a, b) => (a.date > b.date ? -1 : 1));
+    },
+    calls() {
+      return [...this.$store.state.data.calls].sort((a, b) => (a.date > b.date ? -1 : 1));
+    },
   },
 
   methods: {

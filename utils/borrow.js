@@ -20,7 +20,6 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
 }
 
 export async function getBorrowContract(borrowerId) {
-  console.log(borrowerId);
   let params = [{ type: "address", value: borrowerId }];
   return await contractCallQuery(factoryContractId, "borrowContract", params, "address");
 }
