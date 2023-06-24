@@ -10,7 +10,7 @@
     <div v-if="user.location" class="mt-3">
       <i class="bi bi-geo-alt-fill"></i>
       <a :href="`https://maps.google.com?q=${user.location.lat},${user.location.lng}`" target="_blank" class="opacity-75">
-        {{ user.distance }} km <i class="bi bi-box-arrow-up-right"></i
+        {{ user.distance ? user.distance : 0 }} km <i class="bi bi-box-arrow-up-right"></i
       ></a>
     </div>
     <a :href="`mailto:${user.email}`"><i class="bi bi-envelope-fill"></i> {{ user.email }}</a> <br />
