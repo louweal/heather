@@ -46,6 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  height: max(280px, 100%);
+  // height: max(280px, 100%);
+  height: 100%;
 }
 </style>
