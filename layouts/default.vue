@@ -46,9 +46,6 @@
       <modal-call />
     </modal>
     <pushmenu />
-
-    Calls
-    {{ $store.state.data.calls }}
   </div>
 </template>
 
