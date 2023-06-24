@@ -10,6 +10,8 @@
     </div>
     <div class="d-grid gap-2" v-else>
       <p>Your review was successfully submitted.</p>
+
+      <div class="btn btn-primary" @click="$store.commit('modals/hide')">Continue</div>
     </div>
   </div>
 </template>

@@ -97,8 +97,6 @@ export default {
 
       await deployBorrow(owner, details, startdate, enddate, deposit, totalRent);
       this.rid = await getBorrowContract(this.$store.state.user.id);
-
-      console.log(this.rid);
     },
 
     setMessage(value) {

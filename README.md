@@ -2,6 +2,10 @@
 
 Heather is a platform for sharing resources within local communities to minimize environmental impact. It uses vue, nuxt, bootstrap and the Hedera SDK.
 
+## Navigating the repository
+
+We use the default nuxt directory structure for the front-end. Most of the front-end implementation can be found in `/pages` and in `/components`. The decentralized data storage is handled using the scripts in `/utils/storage`. Both the original and the compiled smart contracts can be found in `/utils/contracts`, which are deployed to the Hedera testnet using `/utils/deployContract.js`. The interactions with the Hedera Javascript SDK can be found in `/utils/borrow.js` which uses some helper functions we defined in `/utils/hederaService.js`.
+
 ## Setup
 
 ### 1. Add testnet credentials
@@ -36,11 +40,9 @@ npm run start
 
 And that's it!
 
-## Additional information
+## Deploying contracts
 
 Only needed if you want to make changes to the contracts.
-
-## Deploying contracts
 
 The Solidity contracts are compiled to using `solcjs` (this is not a project dependency, you need to install it manually).
 After installation, go to the `utils/contracts` directory and run:

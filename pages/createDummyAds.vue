@@ -24,7 +24,6 @@ export default {
   methods: {
     async createAds() {
       let ads = this.$options.ads;
-      console.log("ads.length :>> ", ads.length);
 
       let dummies = [
         "0.0.14171302",
@@ -63,8 +62,6 @@ export default {
         let ad = ads[i];
         let owner = dummies[ad.owner];
 
-        console.log(ad.title);
-
         let data = {
           id: self.crypto.randomUUID(),
           title: ad.title,
@@ -77,8 +74,6 @@ export default {
           rent: ad.rent,
           date: ad.date / 1000,
         };
-
-        // console.log(data);
 
         // add new ad to hedera storage
         let status = await addAd(owner, data);

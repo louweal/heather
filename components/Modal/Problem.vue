@@ -10,6 +10,8 @@
     </div>
     <div class="d-grid gap-2" v-else>
       <p>Your problem was successfully reported.</p>
+
+      <div class="btn btn-primary" @click="$store.commit('modals/hide')">Continue</div>
     </div>
   </div>
 </template>

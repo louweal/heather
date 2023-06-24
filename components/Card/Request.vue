@@ -73,7 +73,6 @@ export default {
 
   methods: {
     async getState() {
-      console.log(this.rid);
       let state = await getState(this.rid);
       this.$store.commit("request/setState", state);
     },

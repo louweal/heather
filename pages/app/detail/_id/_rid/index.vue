@@ -51,7 +51,10 @@
                   <button
                     v-if="ownerReview === undefined"
                     class="btn btn-primary"
-                    @click="$store.commit('modals/show', { name: 'owner-review' })"
+                    @click="
+                      $store.commit('modals/show', { name: 'owner-review' });
+                      getOwnerReview();
+                    "
                   >
                     Write review
                   </button>
@@ -62,7 +65,7 @@
                       {{ ownerReview }}
                     </div>
                   </div>
-                  <div v-if="borrowerReview">
+                  <div v-if="borrowerReview !== undefined">
                     <p class="opacity-75">{{ borrower.name }} has left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ borrowerReview }}
@@ -79,7 +82,7 @@
                 </template>
                 <template v-else-if="$store.state.request.state == 'Borrowed'">
                   <!-- Borrowed -->
-                  <button class="btn btn-primary" @click="returnBorrow()">Return item</button>
+                  <button v-if="!hideReturnBorrowButton" class="btn btn-primary" @click="returnBorrow()">Return item</button>
                 </template>
 
                 <template v-else-if="$store.state.request.state == 'Checked' || $store.state.request.state == 'Reviewed'">
@@ -88,7 +91,10 @@
                   <button
                     v-if="borrowerReview === undefined"
                     class="btn btn-primary"
-                    @click="$store.commit('modals/show', { name: 'borrower-review' })"
+                    @click="
+                      $store.commit('modals/show', { name: 'borrower-review' });
+                      getBorrowerReview();
+                    "
                   >
                     Write review
                   </button>
@@ -147,7 +153,6 @@
 const {
   getRequestDetails,
   getState,
-  getBorrower,
   acceptRequest,
   startBorrow,
   returnBorrow,
@@ -167,6 +172,7 @@ export default {
       borrowerReview: undefined,
       ownerReview: undefined,
       problem: undefined,
+      hideReturnBorrowButton: false,
     };
   },
 
@@ -174,6 +180,8 @@ export default {
     "$store.state.request.state": async function (val) {
       if (val === "Checked") {
         this.problem = await getProblem(this.rid);
+        this.borrowerReview = await getBorrowerReview(this.rid);
+        this.ownerReview = await getOwnerReview(this.rid);
       }
       if (val === "Reviewed") {
         this.borrowerReview = await getBorrowerReview(this.rid);
@@ -200,11 +208,6 @@ export default {
     // run queries
     this.getDetails();
     this.getState();
-
-    let borrower = await getBorrower(this.rid);
-    // let owner = await getOwner(this.rid);
-    console.log("borrower :>> ", borrower);
-    // console.log("owner :>> ", owner);
   },
 
   computed: {
@@ -282,7 +285,6 @@ export default {
 
     async startBorrow() {
       let numDays = (this.$store.state.request.enddate - this.$store.state.request.startdate) / 86400;
-      console.log(numDays);
       let value = this.item.deposit + this.item.rent.start + (numDays - 1) * this.item.rent.extra;
 
       // return;
@@ -297,12 +299,12 @@ export default {
 
     async returnBorrow() {
       let returndate = parseInt(new Date().getTime() / 1000);
-      console.log(returndate);
       let res = await returnBorrow(this.rid, returndate);
       if (res !== "SUCCESS") {
         this.error = "Unexpected error";
       } else {
-        this.$store.commit("request/updateProgress");
+        this.hideReturnBorrowButton = true;
+        // this.$store.commit("request/updateProgress");
       }
     },
 
@@ -322,6 +324,13 @@ export default {
       } else {
         this.$store.commit("request/updateProgress");
       }
+    },
+
+    async getBorrowerReview() {
+      this.borrowerReview = await getBorrowerReview(this.rid);
+    },
+    async getOwnerReview() {
+      this.ownerReview = await getOwnerReview(this.rid);
     },
   },
 };

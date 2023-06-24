@@ -5,7 +5,6 @@ export const state = () => ({
 
 export const mutations = {
   foundHashpack(state, payload) {
-    console.log(payload);
     state.foundHashpack = payload.name === "HashPack";
   },
 };

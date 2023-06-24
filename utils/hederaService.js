@@ -24,8 +24,6 @@ async function transactionFlow(id, tx, returnType) {
   let rx; // response
   let isVoid = returnType === undefined; // get returned value if function has returnType
 
-  console.log(signMethod);
-
   if (signMethod == "signer" && !(id === process.env.STORAGE_CONTRACT)) {
     rx = await signerTransactionFlow(tx, isVoid);
   } else {
@@ -195,7 +193,6 @@ export async function contractCallQuery(id, name, params, returnType) {
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));
   } else {
-    // console.log("no params");
     tx = tx.setFunction(name);
   }
 

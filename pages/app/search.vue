@@ -38,8 +38,9 @@
               <template v-if="results.length > 0">
                 <template v-for="(a, i) in results">
                   <div class="col-12 col-sm-6 col-xl-4" :key="a.id">
-                    <card-call v-if="a.type === 'call'" :data="a" />
-                    <card-ad v-else :data="a" />
+                    <card-ad v-if="'deposit' in a" :data="a" />
+
+                    <card-call v-else :data="a" />
                   </div>
                   <div
                     class="col-12 col-sm-6 col-xl-4"
@@ -119,7 +120,6 @@ export default {
         calls = this.$store.state.data.calls.filter((a) => a.distance <= this.maxDistance);
         ads = this.$store.state.data.ads.filter((a) => a.distance <= this.maxDistance);
         results = calls.concat(ads);
-        console.log(results);
       } else {
         console.log("Error: unknown search location");
         return [];

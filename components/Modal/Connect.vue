@@ -39,7 +39,6 @@ export default {
 
   watch: {
     "$store.state.user.id": function (id) {
-      console.log("id :>> ", id);
       this.handleConnect(id); // redo look-up user on chain if id changes
     },
   },
@@ -57,7 +56,6 @@ export default {
       this.$hashconnect.connectToLocalWallet();
 
       // already paired
-      console.log(this.$store.state.user.method);
       if (this.$store.state.user.method === "signer") {
         await this.handleConnect(this.$store.state.user.id);
       } else {
@@ -94,7 +92,6 @@ export default {
       let users = this.$store.state.data.owners;
 
       let neighbors = users.filter((a) => a.distance <= 1); // todo
-      console.log(neighbors.length);
 
       let ads = [];
       let calls = [];
@@ -110,7 +107,6 @@ export default {
               let callData = { ...call, owner: user.id, i: j, type: "call" };
               calls.push(callData);
             } else if (call === undefined) {
-              console.log("removed call");
               // deleted call -> go to next iteration
               continue;
             } else {
@@ -124,18 +120,13 @@ export default {
           for (let j = 0; j < 9999; j++) {
             let ad = await getAd(user.id, j);
 
-            console.log("where are my ads?");
-            console.log(ad);
-
             if (typeof ad === "object" && ad.title) {
               let adData = { ...ad, owner: user.id, i: j };
               ads.push(adData);
             } else if (ad === undefined) {
-              console.log("removed ad");
               // deleted call -> go to next iteration
               continue;
             } else {
-              console.log(ad);
               //reached end of ad list
               break;
             }
@@ -143,8 +134,6 @@ export default {
         }
       }
 
-      console.log("calls.length :>> ", calls.length);
-      console.log("ads.length :>> ", ads.length);
       if (calls.length > 0) {
         this.$store.commit("data/SET_CALLS", calls);
       }
