@@ -40,7 +40,7 @@
                   <div class="col-12 col-sm-6 col-xl-4" :key="a.id">
                     <card-ad v-if="'deposit' in a" :data="a" />
 
-                    <card-call :data="a" />
+                    <card-call v-else :data="a" />
                   </div>
                   <div
                     class="col-12 col-sm-6 col-xl-4"
