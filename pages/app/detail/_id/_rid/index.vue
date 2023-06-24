@@ -51,7 +51,10 @@
                   <button
                     v-if="ownerReview === undefined"
                     class="btn btn-primary"
-                    @click="$store.commit('modals/show', { name: 'owner-review' })"
+                    @click="
+                      $store.commit('modals/show', { name: 'owner-review' });
+                      getOwnerReview();
+                    "
                   >
                     Write review
                   </button>
@@ -62,7 +65,7 @@
                       {{ ownerReview }}
                     </div>
                   </div>
-                  <div v-if="borrowerReview">
+                  <div v-if="borrowerReview !== undefined">
                     <p class="opacity-75">{{ borrower.name }} has left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ borrowerReview }}
@@ -88,7 +91,10 @@
                   <button
                     v-if="borrowerReview === undefined"
                     class="btn btn-primary"
-                    @click="$store.commit('modals/show', { name: 'borrower-review' })"
+                    @click="
+                      $store.commit('modals/show', { name: 'borrower-review' });
+                      getBorrowerReview();
+                    "
                   >
                     Write review
                   </button>
@@ -174,6 +180,8 @@ export default {
     "$store.state.request.state": async function (val) {
       if (val === "Checked") {
         this.problem = await getProblem(this.rid);
+        this.borrowerReview = await getBorrowerReview(this.rid);
+        this.ownerReview = await getOwnerReview(this.rid);
       }
       if (val === "Reviewed") {
         this.borrowerReview = await getBorrowerReview(this.rid);
@@ -316,6 +324,13 @@ export default {
       } else {
         this.$store.commit("request/updateProgress");
       }
+    },
+
+    async getBorrowerReview() {
+      this.borrowerReview = await getBorrowerReview(this.rid);
+    },
+    async getOwnerReview() {
+      this.ownerReview = await getOwnerReview(this.rid);
     },
   },
 };
