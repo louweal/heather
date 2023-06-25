@@ -12,13 +12,15 @@
 
           <form
             xxxdata-aos="fade-up-scale"
-            name="say-hello"
+            name="say-hi"
             method="POST"
-            action="/contact/success"
+            action="/contact/success/"
             data-netlify="true"
             netlify
             netlify-honeypot="title"
           >
+            <input type="hidden" name="form-name" value="say-hi" />
+
             <div class="d-none">
               <label>
                 Don’t fill this out if you’re human:
