@@ -54,7 +54,7 @@
                   </span>
                 </div>
 
-                <button class="btn btn-primary mt-2" @click="$store.commit('modals/show', { name: 'request', data: item })">
+                <button v-if="!mine" class="btn btn-primary mt-2" @click="$store.commit('modals/show', { name: 'request', data: item })">
                   Request to {{ item.type }}
                 </button>
               </div>
@@ -121,6 +121,10 @@ export default {
       return this.$store.state.data.ads.find((a) => a.id === this.id);
     },
 
+    mine() {
+      return 1 === 2; // this.$store.state.user.id === this.item.owner;
+    },
+
     similar() {
       let category = this.item.category;
       if (!category) {
@@ -136,8 +140,6 @@ export default {
   methods: {
     async updateAd() {},
     async removeAd() {
-      console.log(this.item.owner);
-      console.log(this.item.i);
       await removeAd(this.item.owner, this.item.i);
       this.$store.commit("data/removeAd", this.item.id);
       this.$router.push("/account");

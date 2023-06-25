@@ -12,7 +12,7 @@
           {{ user.neighborhood }} <span class="opacity-75" v-if="distance"> {{ distance }} km</span>
         </p>
 
-        <div class="row">
+        <div class="row g-2">
           <div class="col-12 col-sm-6 col-xxl-3" v-for="a in calls" :key="a.id">
             <card-call :data="a" />
           </div>

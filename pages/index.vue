@@ -7,15 +7,14 @@
         <div class="row justify-content-center text-center" data-aos="fade-up-scale">
           <div class="col-12 col-md-8">
             <h2 class="lh-sm">
-              Heather is the first fully decentralized peer-to-peer sharing platform and functions without any mandatory subscriptions or
-              commissions.
+              Heather is the first fully decentralized peer-to-peer sharing platform for sharing items within local communities.
             </h2>
           </div>
           <div class="col-12 col-md-10 fs-md">
             <p>
-              Instead, people can ask a deposit when lending an item. The deposits are stored safely on the Hedera network and are returned
-              automatically when the item is returned to its owner. We also encourage reviewing and we make sure the reviews are reliable
-              using smart contracts.
+              Neighbors can ask a deposit when lending an item. The deposits are stored safely on the Hedera network and are returned
+              automatically when the item is returned to its owner. We also encourage reviewing and we make sure the reviews are reliable by
+              storing them on the Hedera network.
             </p>
           </div>
         </div>
@@ -41,7 +40,7 @@
             <div data-aos="fade-up-scale">
               <badge>Hello Future</badge>
 
-              <h2>On the road to a sustainable planet</h2>
+              <h2>On the road to sustainable neighborhoods</h2>
 
               <div class="fs-md">
                 <p>
@@ -50,10 +49,8 @@
                 </p>
 
                 <p>
-                  The roadmap below shows the key milestones and initiatives as we work to bring our products and services to market. We
-                  want you to be a part of this journey, and to share in our excitement as we build something truly great. So, whether
-                  you're an investor, a neighbor, or just someone who's interested in what we're doing, we invite you to join us on this
-                  journey.
+                  The roadmap below shows the key milestones and initiatives as we work to bring our product to market. So, whether you're
+                  an investor, a neighbor, or just someone who's interested in what we're doing, we invite you to join us on this journey.
                 </p>
               </div>
 
@@ -64,76 +61,60 @@
               </p>
             </div>
 
-            <!-- <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
-              <span class="font-sm fw-light">v0.1</span>
-
-              <p>The pre-hackathon phase</p>
-
-              <div class="col-12 col-lg-6">
-                <h4>Ideating</h4>
-
-                <p>
-                  The idea behind Heather came from our drive to build a dApp that encourages sustainable behavior. We sought for an idea
-                </p>
-              </div>
-
-              <div class="col-12 col-lg-6">
-                <h4>A dive into smart contracts</h4>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta veniam sed beatae, minima, fuga vero placeat omnis porro
-                  expedita possimus dolor tempore quod quasi ea aspernatur. Dolorem deleniti temporibus in!
-                </p>
-              </div>
-            </div> -->
             <div class="row gy-2 mt-2 border-top" id="v01" data-aos="fade-up-scale">
               <span class="font-sm fw-light">26 May — 2 June</span>
 
-              <p>And off we go!</p>
-
               <div class="col-12 col-lg-6">
-                <h4>Front-end development</h4>
-
-                <p>We designed and developed a front-end from scratch, using bootstrap, vue and nuxt.</p>
-              </div>
-
-              <div class="col-12 col-lg-6">
-                <h4>Survey</h4>
+                <h4>Market research</h4>
 
                 <p>
-                  We created and distributed <a href="https://leidenuniv.eu.qualtrics.com/jfe/form/SV_afc0LOwmULSfa0m">a survey</a> to
-                  investigate how interested people are to borrow, lend or rent things.
+                  What motivates people to share items? And how do they feel about deposits? I conduced a small
+                  <a href="/pilot-survey.pdf" class="border-bottom">pilot study</a> (in Dutch) and readjusted my design decisions
+                  accordingly. Due to time constraints, I only collected a small amount of responses. I'm planning to launch a bigger study
+                  in a later stage.
                 </p>
               </div>
 
               <div class="col-12 col-lg-6">
-                <h4>Google maps</h4>
+                <h4>Design and development</h4>
 
-                <p>We integrated Google Maps to make it easier for users to find items in their own neighborhood.</p>
+                <p>
+                  I designed and developed the majority of the dApp, including the homepage, the app page and the search functionality. I
+                  mainly used bootstrap with SCSS, Vue and Nuxt.
+                </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>Locations and distances</h4>
+
+                <p>
+                  I integrated a map using the Google Maps Javascript API to make it easier for users to find items in their own
+                  neighborhood. I also used the
+                  <a href="https://developers.google.com/maps/documentation/javascript/geometry">Google's Geometry Library</a> for computing
+                  distances between users.
+                </p>
               </div>
             </div>
             <div data-aos="fade-up-scale">
               <div class="row gy-2 mt-2 border-top" id="v03">
                 <span class="font-sm fw-light">2 June — 9 June</span>
 
-                <p>Still going strong in the second week!</p>
+                <div class="col-12 col-lg-6">
+                  <h4>Decentralized database</h4>
 
+                  <p>
+                    I developed a decentralized storage solution for the data on the Hedera testnet. While this has some obvious
+                    disadvantages in terms of speed, it also eliminated the need for back-end development whilst also providing the
+                    opportunity to get more experience with writing smart contracts on Hedera. In a later stage I will switch to a more
+                    scalable, and possibly centralized, approach.
+                  </p>
+                </div>
                 <div class="col-12 col-lg-6">
                   <h4>Dummy dataset</h4>
 
                   <p>
-                    We created a dataset with dummy data. We took pictures of items in our own (and our friends) households. And we created
-                    dummy user accounts including testnet wallets.
-                  </p>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                  <h4>Data storage</h4>
-
-                  <p>
-                    We decided to store all data on the Hedera testnet, using a seperate smart contract for storage (Storage.sol). While
-                    this is unconventional, it saved us lot of time and resources because now we could build the dApp as a front-end only
-                    (static) website. And it also gave us the opportunity to get more experience with writing smart contracts on Hedera.
+                    I created a dataset with dummy data, using items from my own and my families' household. Addionally, I created a set of
+                    dummy user accounts including a wallet for each dummy user on the Hedera testnet.
                   </p>
                 </div>
               </div>
@@ -142,21 +123,29 @@
               <div class="row gy-2 mt-2 border-top" id="v04">
                 <span class="font-sm fw-light">9 June — 19 June</span>
 
-                <p>The deadline is getting closer and closer...</p>
-
                 <div class="col-12 col-lg-6">
                   <h4>Borrow contract</h4>
 
                   <p>
-                    Finally, we created all borrow functionality. We wrote smart contract in Solidity and interacted with it using the
-                    Hedera Javascript SDK.
+                    I wrote
+                    <a
+                      href="https://github.com/louweal/heather/blob/master/utils/contracts/Borrow.sol"
+                      target="_blank"
+                      class="border-bottom"
+                      >Smart Contract</a
+                    >
+                    in Solidity and interacted with it using the Hedera Javascript SDK. The contract handles everything related to borrowing
+                    and renting items. From sending borrow requests to storing deposits, to handling problems and writing reviews.
                   </p>
                 </div>
 
                 <div class="col-12 col-lg-6">
                   <h4>HashPack integration</h4>
 
-                  <p>We integrated Hashpack to make it easy to connect Hedera wallets to our dApp.</p>
+                  <p>
+                    I integrated <a href="https://www.hashpack.app/" target="_blank" class="border-bottom">Hashpack</a> to make it possible
+                    to connect Hedera wallets to the dApp.
+                  </p>
                 </div>
               </div>
             </div>
@@ -165,25 +154,44 @@
               <span class="font-sm fw-light">19 June — 26 June</span>
 
               <p>
-                Although I spend most of this week on a well-deserved holiday in my own country, I also managed to finish some crucial
-                deliverables!
+                Although I spend most of this week on a holiday in nature with my boyfriend and our dog 🐕🌳, I also managed to finish some
+                crucial deliverables!
               </p>
+
+              <div class="col-12 col-lg-6">
+                <h4>Testing</h4>
+
+                <p>
+                  Together with a friend I tested the whole application and I changed and fixed a lot stuff based on his feedback.
+                  Unfortunately, I was unable to solve all issues before the deadline. Remaining issues will be fixed after the judging
+                  phase.
+                </p>
+              </div>
 
               <div class="col-12 col-lg-6">
                 <h4>Pitch video</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  I created a 5-minute
+                  <a href="https://www.youtube.com/watch?v=DnDVVyjth98" target="_blank" class="border-bottom">pitch video</a> showcasing the
+                  vision, goals and mission of Heather a demo of almost all functionalities and the future milestones.
                 </p>
               </div>
               <div class="col-12 col-lg-6">
                 <h4>Project description</h4>
 
                 <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
+                  I wrote a short <nuxt-link to="/project-description" class="border-bottom">project description</nuxt-link>, containing a
+                  summary of the project, a problem statement and how I used Hedera to solve this problem.
+                </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>README</h4>
+
+                <p>
+                  I also created a 'read me'-file containing information about navigating the repository, how to run the code and some
+                  helpful tips for testing.
                 </p>
               </div>
             </div>
@@ -191,40 +199,54 @@
             <div class="row gy-2 mt-2 border-top" id="v06" data-aos="fade-up-scale">
               <span class="font-sm fw-light">Judging phase</span>
 
-              <p>
-                Just biting my nails and hoping for some luck! ☘︎ And ofcourse, waiting until I can continue with the development of
-                Heather!^^
-              </p>
+              <p>During the judging phase I will further solidify my ideas and the steps needed to bring Heather to the market.</p>
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v07" data-aos="fade-up-scale">
-              <span class="font-sm fw-light">8 July — the near future</span>
+              <span class="font-sm fw-light">8 July — the future</span>
 
-              <p>We have exiting plans for the (near) future!</p>
+              <div class="col-12 col-lg-6">
+                <h4>Further market research</h4>
+
+                <p>
+                  I want to conduct more market research studies to better understand what the market wants and also to collect feedback
+                  about the current version of the app.
+                </p>
+              </div>
 
               <div class="col-12 col-lg-6">
                 <h4>Multilanguage support</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  I want to convert Heather to a multi-language website, such that I can also create a Dutch version and launch the first
+                  versions of the app in my own neighborhood, which makes it easier to collect feedback.
                 </p>
               </div>
-              <div class="col-12 col-lg-6">
-                <h4>Centralized back-end</h4>
 
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
-                </p>
-              </div>
               <div class="col-12 col-lg-6">
                 <h4>Email services</h4>
 
                 <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
+                  Users need to a notifications whenever someone wants to rent or borrow one of their items and whenever the state of a item
+                  changes. I want to integrate an email service to support email notifications.
+                </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>Switch back-end</h4>
+
+                <p>
+                  The current decentralized solution for storing data is too slow and not scalable. Therefore I need to develop a different
+                  back-end that is faster, easier to interact with and that can handle larger datasets.
+                </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>Integrate with existing solutions</h4>
+
+                <p>
+                  People who do not have a Hedera wallet should also be able to use Heather. Therefore, I want to integrate an onRamping
+                  service like C14 or Fractal.ID. I also want to look into other interesting existing solutions such as Arkhia.
                 </p>
               </div>
             </div>

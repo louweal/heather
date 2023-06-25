@@ -24,8 +24,6 @@ async function transactionFlow(id, tx, returnType) {
   let rx; // response
   let isVoid = returnType === undefined; // get returned value if function has returnType
 
-  console.log(signMethod);
-
   if (signMethod == "signer" && !(id === process.env.STORAGE_CONTRACT)) {
     rx = await signerTransactionFlow(tx, isVoid);
   } else {
@@ -66,6 +64,9 @@ async function queryFlow(id, tx, returnType) {
       break;
     case "uint32":
       val = exTx.getUint32(0);
+      break;
+    case "uint64":
+      val = exTx.getUint64(0);
       break;
     case "address":
       val = AccountId.fromSolidityAddress(exTx.getAddress(0)).toString();
@@ -153,6 +154,9 @@ function functionParameters(params) {
       case "uint32":
         cfp = cfp.addUint32(value);
         break;
+      case "uint64":
+        cfp = cfp.addUint64(value);
+        break;
       case "uint256":
         cfp = cfp.addUint256(value);
         break;
@@ -195,7 +199,6 @@ export async function contractCallQuery(id, name, params, returnType) {
   if (params) {
     tx = tx.setFunction(name, functionParameters(params));
   } else {
-    // console.log("no params");
     tx = tx.setFunction(name);
   }
 

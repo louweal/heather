@@ -11,10 +11,10 @@
               :loop="true"
               :typeSpeed="90"
               :backSpeed="80"
-              :startDelay="1300"
+              :startDelay="200"
               :showCursor="false"
             >
-              <h1 class="hero--title display-1 lh-sm pb-2">Hi Heather, can I borrow a <span class="typing">tent</span>?</h1>
+              <h1 class="hero--title display-1 lh-sm pb-2">Hi Heather, can I borrow a <span class="typing"></span>?</h1>
             </vue-typed-js>
             <h2 class="hero--intro mb-3">
               Minimize your environmental impact and save money by sharing resources within your local community.
