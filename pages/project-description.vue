@@ -90,6 +90,16 @@
             sharing resources within local communities to minimize environmental impact and to increase social cohesion.
           </p>
         </section>
+
+        <section>
+          <h2>Future plans</h2>
+
+          <p>
+            Our next <nuxt-link to="/#v07" class="border-bottom">milestones</nuxt-link> include, but are not limited to, integrating with
+            onramping technologies, switching to a scalable back-end, adding email notifications and implementing multi-language support to
+            launch in multiple countries.
+          </p>
+        </section>
       </div>
     </div>
   </main>
