@@ -65,6 +65,9 @@ async function queryFlow(id, tx, returnType) {
     case "uint32":
       val = exTx.getUint32(0);
       break;
+    case "uint64":
+      val = exTx.getUint64(0);
+      break;
     case "address":
       val = AccountId.fromSolidityAddress(exTx.getAddress(0)).toString();
       break;
@@ -150,6 +153,9 @@ function functionParameters(params) {
         break;
       case "uint32":
         cfp = cfp.addUint32(value);
+        break;
+      case "uint64":
+        cfp = cfp.addUint64(value);
         break;
       case "uint256":
         cfp = cfp.addUint256(value);

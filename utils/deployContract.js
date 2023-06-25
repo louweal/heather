@@ -2,15 +2,7 @@ require("dotenv").config();
 
 var fs = require("fs");
 
-const {
-  Client,
-  AccountId,
-  PrivateKey,
-  ContractCreateFlow,
-  FileCreateTransaction,
-  FileAppendTransaction,
-  ContractCreateTransaction,
-} = require("@hashgraph/sdk");
+const { Client, AccountId, PrivateKey, ContractCreateFlow } = require("@hashgraph/sdk");
 
 async function main() {
   const operatorId = AccountId.fromString(process.env.MY_ACCOUNT_ID);
@@ -18,8 +10,8 @@ async function main() {
 
   const client = Client.forTestnet().setOperator(operatorId, operatorKey);
 
-  const contractName = "Storage";
-  // const contractName = "BorrowFactory";
+  // const contractName = "Storage";
+  const contractName = "BorrowFactory";
 
   const bytecode = fs.readFileSync(`./utils/contracts/${contractName}_sol_${contractName}.bin`);
 
