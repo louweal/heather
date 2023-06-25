@@ -162,8 +162,9 @@
                 <h4>Testing</h4>
 
                 <p>
-                  My boyfriend tested the whole application and I changed and fixed a lot stuff based on his feedback. Unfortunately, I was
-                  unable to solve all issues before the deadline. Remaining issues will be fixed after the judging phase.
+                  Together with a friend I tested the whole application and I changed and fixed a lot stuff based on his feedback.
+                  Unfortunately, I was unable to solve all issues before the deadline. Remaining issues will be fixed after the judging
+                  phase.
                 </p>
               </div>
 
