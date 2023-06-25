@@ -18,7 +18,7 @@ You can always update your location and other account details on the Account pag
 
 If you want to test the borrowing functionality using two accounts, you can use your Hashpack wallet for one user and the demo account for the other user. Or you can use two Hashpack extensions in two different browsers (e.g. Chrome and Brave). Currently, it is also possible to borrow your own items so you can also test using only one account, but this might get a bit confusing.
 
-Email notifications are not yet implemented, so you have to manually copy the url of your borrow request and send it to the person you wish to borrow from.
+Email notifications are not yet implemented, so you have to manually **copy the url of your borrow request** and send it to the person you wish to borrow from.
 
 ## Navigating the repository
 
