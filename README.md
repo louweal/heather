@@ -12,7 +12,7 @@ Other tips:
 
 - Choose a location in the city center of Leiden to see dummy data. (e.g. 'Burcht van Leiden')
 - In the registration form, always choose a location from the Google dropdown box.
-- In the Hashpack browser extension, always choose your testnet wallet that is listed **first**.
+- In the Hashpack browser extension, always choose the testnet wallet that is listed **first** if you have multiple testnet wallets.
 
 You can always update your location and other account details on the Account page.
 
