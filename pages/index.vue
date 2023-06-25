@@ -7,7 +7,7 @@
         <div class="row justify-content-center text-center" data-aos="fade-up-scale">
           <div class="col-12 col-md-8">
             <h2 class="lh-sm">
-              Heather is the first fully decentralized peer-to-peer sharing platform for sharing items directly with your neighbors.
+              Heather is the first fully decentralized peer-to-peer sharing platform for sharing items within local communities.
             </h2>
           </div>
           <div class="col-12 col-md-10 fs-md">
@@ -68,11 +68,10 @@
                 <h4>Market research</h4>
 
                 <p>
-                  First, we wanted to find out what people thought and felt about sharing items with their neighbors. What motivates them to
-                  share? And how do they feel about deposits? We conduced a small
-                  <a href="/pilot-survey.pdf" class="border-bottom">pilot study</a> (in Dutch) and readjusted our design decisions
-                  accordingly. Due to time constraints, we only collected a small amount of responses. We are planning to launch a bigger
-                  study in a later stage.
+                  What motivates people to share items? And how do they feel about deposits? I conduced a small
+                  <a href="/pilot-survey.pdf" class="border-bottom">pilot study</a> (in Dutch) and readjusted my design decisions
+                  accordingly. Due to time constraints, I only collected a small amount of responses. I'm planning to launch a bigger study
+                  in a later stage.
                 </p>
               </div>
 
@@ -80,7 +79,7 @@
                 <h4>Design and development</h4>
 
                 <p>
-                  We designed and developed the majority of the dApp, including the homepage, the app page and the search functionality. We
+                  I designed and developed the majority of the dApp, including the homepage, the app page and the search functionality. I
                   mainly used bootstrap with SCSS, Vue and Nuxt.
                 </p>
               </div>
@@ -89,9 +88,10 @@
                 <h4>Locations and distances</h4>
 
                 <p>
-                  We integrated a map using the Google Maps Javascript API to make it easier for users to find items in their own
-                  neighborhood. We also compute distances using
-                  <a href="https://developers.google.com/maps/documentation/javascript/geometry">Google's Geometry Library</a>.
+                  I integrated a map using the Google Maps Javascript API to make it easier for users to find items in their own
+                  neighborhood. I also used the
+                  <a href="https://developers.google.com/maps/documentation/javascript/geometry">Google's Geometry Library</a> for computing
+                  distances between users.
                 </p>
               </div>
             </div>
@@ -103,9 +103,9 @@
                   <h4>Decentralized database</h4>
 
                   <p>
-                    We developed a decentralized storage solution for our data on the Hedera testnet. While this has some obvious
+                    I developed a decentralized storage solution for the data on the Hedera testnet. While this has some obvious
                     disadvantages in terms of speed, it also eliminated the need for back-end development whilst also providing the
-                    opportunity to get more experience with writing smart contracts on Hedera. In a later stage we will switch to a more
+                    opportunity to get more experience with writing smart contracts on Hedera. In a later stage I will switch to a more
                     scalable, and possibly centralized, approach.
                   </p>
                 </div>
@@ -113,8 +113,8 @@
                   <h4>Dummy dataset</h4>
 
                   <p>
-                    We created a dataset with dummy data, using items from our own households. Addionally, we created a set of dummy user
-                    accounts including a wallet for each dummy user on the Hedera testnet.
+                    I created a dataset with dummy data, using items from my own and my families' household. Addionally, I created a set of
+                    dummy user accounts including a wallet for each dummy user on the Hedera testnet.
                   </p>
                 </div>
               </div>
@@ -127,7 +127,7 @@
                   <h4>Borrow contract</h4>
 
                   <p>
-                    We wrote
+                    I wrote
                     <a
                       href="https://github.com/louweal/heather/blob/master/utils/contracts/Borrow.sol"
                       target="_blank"
@@ -135,7 +135,7 @@
                       >Smart Contract</a
                     >
                     in Solidity and interacted with it using the Hedera Javascript SDK. The contract handles everything related to borrowing
-                    or renting an item. From sending borrow requests to storing deposits, to reporting issues and writing reviews.
+                    and renting items. From sending borrow requests to storing deposits, to handling problems and writing reviews.
                   </p>
                 </div>
 
@@ -143,8 +143,8 @@
                   <h4>HashPack integration</h4>
 
                   <p>
-                    We integrated <a href="https://www.hashpack.app/" target="_blank" class="border-bottom">Hashpack</a> to make it easy to
-                    connect Hedera wallets to our dApp.
+                    I integrated <a href="https://www.hashpack.app/" target="_blank" class="border-bottom">Hashpack</a> to make it possible
+                    to connect Hedera wallets to the dApp.
                   </p>
                 </div>
               </div>
@@ -162,9 +162,8 @@
                 <h4>Testing</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  My boyfriend tested the whole application and I changed and fixed a lot stuff based on his feedback. Unfortunately, I was
+                  unable to solve all issues before the deadline. Remaining issues will be fixed after the judging phase.
                 </p>
               </div>
 
@@ -172,17 +171,17 @@
                 <h4>Pitch video</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  I created a 5-minute
+                  <a href="https://www.youtube.com/watch?v=DnDVVyjth98" target="_blank" class="border-bottom">pitch video</a> showcasing the
+                  vision, goals and mission of Heather a demo of almost all functionalities and the future milestones.
                 </p>
               </div>
               <div class="col-12 col-lg-6">
                 <h4>Project description</h4>
 
                 <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
+                  I wrote a short <nuxt-link to="/project-description" class="border-bottom">project description</nuxt-link>, containing a
+                  summary of the project, a problem statement and how I used Hedera to solve this problem.
                 </p>
               </div>
 
@@ -190,8 +189,8 @@
                 <h4>README</h4>
 
                 <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
+                  I also created a 'read me'-file containing information about navigating the repository, how to run the code and some
+                  helpful tips for testing.
                 </p>
               </div>
             </div>
@@ -199,10 +198,7 @@
             <div class="row gy-2 mt-2 border-top" id="v06" data-aos="fade-up-scale">
               <span class="font-sm fw-light">Judging phase</span>
 
-              <p>
-                During the judging phase I will further solidify my ideas for Heather and the steps needed to bring the product to the
-                market.
-              </p>
+              <p>During the judging phase I will further solidify my ideas and the steps needed to bring Heather to the market.</p>
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v07" data-aos="fade-up-scale">
@@ -212,9 +208,8 @@
                 <h4>Further market research</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  I want to conduct more market research studies to better understand what the market wants and also to collect feedback
+                  about the current version of the app.
                 </p>
               </div>
 
@@ -222,32 +217,36 @@
                 <h4>Multilanguage support</h4>
 
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita reiciendis eius mollitia tempore dolore provident modi
-                  facere repellat. Laboriosam explicabo praesentium aspernatur perferendis labore eum accusamus nesciunt recusandae
-                  voluptatum harum.
+                  I want to convert Heather to a multi-language website, such that I can also create a Dutch version and launch the first
+                  versions of the app in my own neighborhood, which makes it easier to collect feedback.
                 </p>
               </div>
-              <div class="col-12 col-lg-6">
-                <h4>Centralized back-end</h4>
 
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
-                </p>
-              </div>
               <div class="col-12 col-lg-6">
                 <h4>Email services</h4>
 
                 <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore, impedit consectetur totam sapiente libero cumque ad
-                  dolores reprehenderit laborum repellat nostrum, cum rerum alias ipsa dolor modi provident facilis quibusdam!
+                  Users need to a notifications whenever someone wants to rent or borrow one of their items and whenever the state of a item
+                  changes. I want to integrate an email service to support email notifications.
+                </p>
+              </div>
+
+              <div class="col-12 col-lg-6">
+                <h4>Switch back-end</h4>
+
+                <p>
+                  The current decentralized solution for storing data is too slow and not scalable. Therefore I need to develop a different
+                  back-end that is faster, easier to interact with and that can handle larger datasets.
                 </p>
               </div>
 
               <div class="col-12 col-lg-6">
                 <h4>Integrate with existing solutions</h4>
 
-                <p>Onboarding: C14, Fractal.ID , scalability: Arkhia?</p>
+                <p>
+                  People who do not have a Hedera wallet should also be able to use Heather. Therefore, I want to integrate an onRamping
+                  service like C14 or Fractal.ID. I also want to look into other interesting existing solutions such as Arkhia.
+                </p>
               </div>
             </div>
           </div>

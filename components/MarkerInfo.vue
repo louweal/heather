@@ -31,7 +31,7 @@
       </template>
       <p v-if="markerInfo.type === 'user' && numItems > 0">{{ numItems }} item<span v-if="numItems > 1">s</span></p>
 
-      <p v-if="markerInfo.type === 'call'">{{ markerInfo.description.slice(0, 60) }}...</p>
+      <p v-if="markerInfo.type === 'call'">{{ markerInfo.description }}</p>
     </div>
     <div class="card-footer" v-if="markerInfo.type !== 'user'">
       <div class="d-flex gap-2 align-items-center">
@@ -41,7 +41,7 @@
         >
           <i class="bi bi-chat-text-fill"></i>
         </button>
-        <nuxt-link :to="userPath">{{ markerInfo.name }}</nuxt-link>
+        <nuxt-link :to="userPath">{{ mine ? "You" : markerInfo.name }}</nuxt-link>
       </div>
     </div>
   </div>
@@ -76,6 +76,10 @@ export default {
 
     numItems() {
       return this.markerInfo.numItems;
+    },
+
+    mine() {
+      return this.$store.state.user.id === this.markerInfo.owner;
     },
   },
 

@@ -17,8 +17,8 @@
           <i class="bi" :class="mine ? 'bi-person-fill' : 'bi-chat-text-fill'"></i>
         </button>
         <div>
-          <nuxt-link class="lh-1 text-white" :to="`/app/user/${data.owner}`">{{ data.name }}</nuxt-link>
-          <div class="lh-sm">
+          <nuxt-link class="lh-1 text-white" :to="`/app/user/${data.owner}`">{{ mine ? "You" : data.name }}</nuxt-link>
+          <div class="lh-sm" v-if="!mine">
             {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance"> {{ data.distance }} km</span>
           </div>
         </div>

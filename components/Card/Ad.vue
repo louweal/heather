@@ -28,8 +28,8 @@
           <i class="bi bi-chat-text-fill"></i>
         </button>
         <div>
-          <nuxt-link class="lh-1" :to="`/app/user/${data.owner}`">{{ data.name }}</nuxt-link>
-          <div class="lh-sm">
+          <nuxt-link class="lh-1" :to="`/app/user/${data.owner}`">{{ mine ? "You" : data.name }}</nuxt-link>
+          <div class="lh-sm" v-if="!mine">
             {{ data.neighborhood }} <span class="opacity-75" v-if="data.distance"> {{ data.distance }} km</span>
           </div>
         </div>
@@ -44,6 +44,12 @@ export default {
     data: {
       type: [Object, Array],
       default: () => {},
+    },
+  },
+
+  computed: {
+    mine() {
+      return this.$store.state.user.id === this.data.owner;
     },
   },
 

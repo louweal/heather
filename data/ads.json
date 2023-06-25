@@ -13,6 +13,32 @@
     "date": 1663174231000
   },
   {
+    "id": 1,
+    "title": "Alhambra",
+    "description": "",
+    "category": "boardgames",
+    "visuals": ["alhambra.jpeg"],
+    "type": "borrow",
+    "deposit": 0,
+    "rent": { "start": 0, "extra": 0 },
+
+    "owner": 28,
+    "date": 1681485220000
+  },
+  {
+    "id": 2,
+    "title": "Bernini",
+    "description": "",
+    "category": "boardgames",
+    "visuals": ["bernini.jpeg"],
+    "type": "borrow",
+    "deposit": 0,
+    "rent": { "start": 0, "extra": 0 },
+
+    "owner": 18,
+    "date": 1669458938000
+  },
+  {
     "id": 3,
     "title": "Dog bicycle basket",
     "description": "Basil buddy bicycle basket for small dogs for Basil carrier plates only. Without carrier plate.",

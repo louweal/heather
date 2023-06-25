@@ -11,7 +11,7 @@
           </p>
 
           <form
-            data-aos="fade-up-scale"
+            xxxdata-aos="fade-up-scale"
             name="say-hello"
             method="POST"
             action="/contact/success"

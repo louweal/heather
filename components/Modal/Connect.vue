@@ -17,10 +17,9 @@
           </a>
           browser extension from the Chrome Web Store.
         </p>
-        <!-- <p v-else class="text-success">Found Hashpack</p> -->
       </div>
 
-      <p class="text-center cp" @click="connect()">or connect using a demo wallet</p>
+      <p class="text-center cp" @click="connect()">or connect using demo wallet {{ demoId }}</p>
     </div>
   </div>
 </template>
@@ -40,6 +39,12 @@ export default {
   watch: {
     "$store.state.user.id": function (id) {
       this.handleConnect(id); // redo look-up user on chain if id changes
+    },
+  },
+
+  computed: {
+    demoId() {
+      return process.env.MY_ACCOUNT_ID;
     },
   },
 
@@ -144,12 +149,6 @@ export default {
     },
   },
 };
-
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 </script>
 
 <style></style>
