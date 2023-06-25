@@ -1,6 +1,8 @@
 # heather
 
-Heather is a platform for sharing resources within local communities to minimize environmental impact. It uses vue, nuxt, bootstrap and the Hedera JavaScript SDK.
+Heather is a platform for sharing resources within local communities to minimize environmental impact.
+
+It uses Vue, Vuex, Nuxt, Bootstrap, SCSS, Solidity and the Hedera JavaScript SDK.
 
 ## Testing tips
 
