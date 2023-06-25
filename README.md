@@ -6,7 +6,7 @@ It uses Vue, Vuex, Nuxt, Bootstrap, SCSS, Solidity and the Hedera JavaScript SDK
 
 ## Testing tips
 
-Demo website: [heather.codesparks.nl](https://heather.codesparks.nl)
+Demo website: [heather.codesparks.nl](https://heather.codesparks.nl) (or checkout branch `master` to run locally)
 
 Please keep in mind that form validation is not yet fully implemented. In general, it is always best to fill in all form fields.
 
@@ -21,6 +21,12 @@ You can always update your location and other account details on the Account pag
 If you want to test the borrowing functionality using two accounts, you can use your Hashpack wallet for one user and the demo account for the other user. Or you can use two Hashpack extensions in two different browsers (e.g. Chrome and Brave). Currently, it is also possible to borrow your own items so you can also test using only one account, but this might get a bit confusing.
 
 Email notifications are not yet implemented, so you have to manually **copy the url of your borrow request** and send it to the person you wish to borrow from.
+
+### Sandbox
+
+We also provided a sandbox demo website for testing. Go to [heather-sandbox.codesparks.nl](https://heather-sandbox.codesparks.nl) or checkout branch `sandbox` to run locally.
+
+This is the exact same website as the main demo site, but without any dummy data. On this website you can test everything using items and user profiles you create yourself without the trouble of delays caused by retrieving dummy data from the decentralized storage.
 
 ## Navigating the repository
 
