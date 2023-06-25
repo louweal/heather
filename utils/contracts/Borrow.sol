@@ -8,8 +8,8 @@ contract Borrow {
     uint32 public startdate;
     uint32 public enddate;
     uint32 public returndate;
-    uint32 public deposit;
-    uint32 public totalRent;
+    uint64 public deposit;
+    uint64 public totalRent;
     string public problem;
     string public ownerReview = '';
     string public borrowerReview = '';
@@ -30,8 +30,8 @@ contract Borrow {
         string memory details_, // encoded request message + dates + borrowerId
         uint32 startdate_,
         uint32 enddate_,
-        uint32 deposit_,
-        uint32 totalRent_,
+        uint64 deposit_,
+        uint64 totalRent_,
         address borrower_
     ) payable {
         // request to borrow -> create contract

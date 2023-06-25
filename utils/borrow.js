@@ -12,8 +12,8 @@ export async function deployBorrow(owner, details, startdate, enddate, deposit, 
     { type: "string", value: encodeData(details) },
     { type: "uint32", value: startdate },
     { type: "uint32", value: enddate },
-    { type: "uint32", value: deposit * 1e8 },
-    { type: "uint32", value: totalRent * 1e8 },
+    { type: "uint64", value: deposit * 1e8 },
+    { type: "uint64", value: totalRent * 1e8 },
   ];
 
   return await contractExecuteTransaction(factoryContractId, "deployBorrow", params);
@@ -54,8 +54,12 @@ export async function getBorrower(contractId) {
   return await contractCallQuery(contractId, "borrower", undefined, "uint32");
 }
 
+export async function getDeposit(contractId) {
+  return await contractCallQuery(contractId, "deposit", undefined, "uint64");
+}
+
 export async function getTotalRent(contractId) {
-  return await contractCallQuery(contractId, "totalRent", undefined, "uint32");
+  return await contractCallQuery(contractId, "totalRent", undefined, "uint64");
 }
 
 export async function acceptRequest(contractId) {

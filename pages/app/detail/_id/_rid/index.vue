@@ -1,5 +1,5 @@
 <template>
-  <main v-if="this.$store.state.user.signedIn">
+  <main v-if="this.$store.state.user.signedIn && item">
     <section>
       <div class="container-xl">
         <div class="row">
@@ -51,10 +51,7 @@
                   <button
                     v-if="ownerReview === undefined"
                     class="btn btn-primary"
-                    @click="
-                      $store.commit('modals/show', { name: 'owner-review' });
-                      getOwnerReview();
-                    "
+                    @click="$store.commit('modals/show', { name: 'owner-review' })"
                   >
                     Write review
                   </button>
@@ -91,10 +88,7 @@
                   <button
                     v-if="borrowerReview === undefined"
                     class="btn btn-primary"
-                    @click="
-                      $store.commit('modals/show', { name: 'borrower-review' });
-                      getBorrowerReview();
-                    "
+                    @click="$store.commit('modals/show', { name: 'borrower-review' })"
                   >
                     Write review
                   </button>
@@ -106,7 +100,7 @@
                     </div>
                   </div>
 
-                  <div v-if="ownerReview">
+                  <div v-if="ownerReview !== undefined">
                     <p class="opacity-75">{{ owner.name }} has left following review:</p>
                     <div class="bg-light rounded p-2">
                       {{ ownerReview }}
@@ -161,6 +155,7 @@ const {
   getOwnerReview,
   getBorrowerReview,
   getProblem,
+  computeTotalRent,
 } = require("@/utils/borrow.js");
 
 export default {
@@ -182,10 +177,15 @@ export default {
         this.problem = await getProblem(this.rid);
         this.borrowerReview = await getBorrowerReview(this.rid);
         this.ownerReview = await getOwnerReview(this.rid);
+
+        this.borrowerReview = this.borrowerReview === "" ? undefined : this.borrowerReview;
+        this.ownerReview = this.ownerReview === "" ? undefined : this.ownerReview;
       }
       if (val === "Reviewed") {
         this.borrowerReview = await getBorrowerReview(this.rid);
         this.ownerReview = await getOwnerReview(this.rid);
+        this.borrowerReview = this.borrowerReview === "" ? undefined : this.borrowerReview;
+        this.ownerReview = this.ownerReview === "" ? undefined : this.ownerReview;
       }
     },
     "$store.state.request.progress": async function () {
@@ -284,8 +284,8 @@ export default {
     },
 
     async startBorrow() {
-      let numDays = (this.$store.state.request.enddate - this.$store.state.request.startdate) / 86400;
-      let value = this.item.deposit + this.item.rent.start + (numDays - 1) * this.item.rent.extra;
+      let totalRent = computeTotalRent(this.item.rent, this.$store.state.request.startdate, this.$store.state.request.enddate);
+      let value = this.item.deposit + totalRent;
 
       // return;
       let res = await startBorrow(this.rid, value);
