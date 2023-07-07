@@ -2,38 +2,51 @@
   <div v-if="!$store.state.user.signedIn">
     <p>Fill in the form below and you're ready to start sharing!</p>
 
-    <div class="d-grid gap-2">
+    <form class="needs-validation d-grid gap-2" novalidate ref="form">
       <span class="fw-bold">Your public profile</span>
-      <input
-        type="text"
-        class="form-control"
-        :class="true === false ? 'border-danger' : false"
-        placeholder="Your name"
-        @input="(e) => (name = e.target.value)"
-      />
 
-      <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => (neighborhood = e.target.value)" />
-
-      <span class="fw-bold">Personal details</span>
-
-      <div class="input-group" :key="this.$store.state.user.id">
-        <span class="input-group-text">Account Id</span>
-        <input type="text" class="form-control" placeholder="Wallet address*" :value="accountId" disabled="true" />
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Your name" @input="(e) => (name = e.target.value)" required />
+        <div class="invalid-feedback mb-1">Name is required</div>
       </div>
 
-      <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" id="accountLoc" />
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Your neigborhood" @input="(e) => (neighborhood = e.target.value)" required />
+        <div class="invalid-feedback mb-1">Neighborhood is required</div>
+      </div>
 
-      <input type="email" class="form-control" placeholder="Your e-mail" @input="(e) => (email = e.target.value)" />
+      <span class="fw-bold">Personal details</span>
+      <div class="form-group">
+        <div class="input-group" :key="this.$store.state.user.id">
+          <span class="input-group-text">Account Id</span>
+          <input type="text" class="form-control" placeholder="Wallet address*" :value="accountId" disabled="true" required />
+        </div>
+        <div class="invalid-feedback mb-1">Account Id not found</div>
+      </div>
 
-      <input type="tel" class="form-control" placeholder="Your phone number" @input="(e) => (phone = e.target.value)" />
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Your address" ref="accountLoc" id="accountLoc" required />
+        <div class="invalid-feedback mb-1">Address is required</div>
+      </div>
 
-      <div class="btn btn-primary" @click="createAccount()">Create account</div>
-    </div>
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder="Your e-mail" @input="(e) => (email = e.target.value)" required />
+        <div class="invalid-feedback mb-1">Email is required</div>
+      </div>
+
+      <div class="form-group">
+        <input type="tel" class="form-control" placeholder="Your phone number" @input="(e) => (phone = e.target.value)" required />
+        <div class="invalid-feedback mb-1">Phone number is required</div>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Create account</button>
+    </form>
   </div>
 </template>
 
 <script>
 const { addUser } = require("@/utils/storage/users.js");
+import { validateForm } from "~/utils/formValidator";
 
 export default {
   data() {
@@ -45,6 +58,36 @@ export default {
       phone: undefined,
     };
   },
+
+  mounted() {
+    let form = this.$refs["form"];
+
+    let valid = validateForm(form);
+
+    if (valid) {
+      // this.createAccount();
+    }
+    form.classList.add("was-validated");
+
+    var input = document.querySelector("#accountLoc"); //this.$refs["accountLoc"];
+
+    if (!google) {
+      console.log("Failed to load google autocomplete");
+      return;
+    }
+    const autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.addListener("place_changed", () => {
+      let place = autocomplete.getPlace();
+      if (place) {
+        let lat = place.geometry.location.lat();
+        let lng = place.geometry.location.lng();
+        this.location = { lat: lat, lng: lng };
+      }
+    });
+    autocomplete.setFields(["address_components", "geometry", "name"]); // to do
+  },
+
   computed: {
     accountId() {
       if (this.$store.state.user.method === "signer") {
@@ -83,26 +126,6 @@ export default {
         console.log("Something went wrong");
       }
     },
-  },
-
-  mounted() {
-    var input = document.querySelector("#accountLoc"); //this.$refs["accountLoc"];
-
-    if (!google) {
-      console.log("Failed to load google autocomplete");
-      return;
-    }
-    const autocomplete = new google.maps.places.Autocomplete(input);
-
-    autocomplete.addListener("place_changed", () => {
-      let place = autocomplete.getPlace();
-      if (place) {
-        let lat = place.geometry.location.lat();
-        let lng = place.geometry.location.lng();
-        this.location = { lat: lat, lng: lng };
-      }
-    });
-    autocomplete.setFields(["address_components", "geometry", "name"]); // to do
   },
 };
 </script>

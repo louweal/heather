@@ -33,12 +33,8 @@ export default {
     },
     {
       id: "06",
-      version: "Judging phase",
+      version: "25 June onwards",
       current: true,
-    },
-    {
-      id: "07",
-      version: "8 July onwards",
     },
   ],
 };
