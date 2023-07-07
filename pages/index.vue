@@ -256,8 +256,10 @@
 
               <p>We're excited to connect with you. Got a question, need some help, or just want to say hi? Drop us a message!</p>
 
-              <div class="d-flex justify-content-center">
+              <div class="d-flex justify-content-center gap-2">
                 <nuxt-link to="/contact" class="btn btn-light"> <i class="bi bi-envelope me-2"></i> Send message </nuxt-link>
+                <a href="#" class="btn btn-light disabled">Twitter</a>
+                <a href="#" class="btn btn-light disabled">Discord</a>
               </div>
             </div>
           </div>
