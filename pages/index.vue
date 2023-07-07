@@ -196,13 +196,16 @@
             </div>
 
             <div class="row gy-2 mt-2 border-top" id="v06" data-aos="fade-up-scale">
-              <span class="font-sm fw-light">Judging phase</span>
-
-              <p>During the judging phase I will further solidify my ideas and the steps needed to bring Heather to the market.</p>
-            </div>
-
-            <div class="row gy-2 mt-2 border-top" id="v07" data-aos="fade-up-scale">
               <span class="font-sm fw-light">8 July — the future</span>
+
+              <div class="col-12 col-lg-6">
+                <h4>Back-end development</h4>
+
+                <p>
+                  I'm currently developing a solid, scalable back-end for storing the shared resources and user data using express, mongoose
+                  and MongoDB.
+                </p>
+              </div>
 
               <div class="col-12 col-lg-6">
                 <h4>Further market research</h4>
@@ -228,15 +231,6 @@
                 <p>
                   Users need to a notifications whenever someone wants to rent or borrow one of their items and whenever the state of a item
                   changes. I want to integrate an email service to support email notifications.
-                </p>
-              </div>
-
-              <div class="col-12 col-lg-6">
-                <h4>Switch back-end</h4>
-
-                <p>
-                  The current decentralized solution for storing data is too slow and not scalable. Therefore I need to develop a different
-                  back-end that is faster, easier to interact with and that can handle larger datasets.
                 </p>
               </div>
 
