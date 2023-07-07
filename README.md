@@ -4,30 +4,6 @@ Heather is a platform for sharing resources within local communities to minimize
 
 It uses Vue, Vuex, Nuxt, Bootstrap, SCSS, Solidity and the Hedera JavaScript SDK.
 
-## Testing tips
-
-Demo website: [heather.codesparks.nl](https://heather.codesparks.nl) (or checkout branch `master` to run locally)
-
-Please keep in mind that form validation is not yet fully implemented. In general, it is always best to fill in all form fields.
-
-Other tips:
-
-- Choose a location in the city center of Leiden to see dummy data. (e.g. 'Burcht van Leiden')
-- In the registration form, always choose a location from the Google dropdown box.
-- In the Hashpack browser extension, always choose the testnet wallet that is listed **first** if you have multiple testnet wallets.
-
-You can always update your location and other account details on the Account page.
-
-If you want to test the borrowing functionality using two accounts, you can use your Hashpack wallet for one user and the demo account for the other user. Or you can use two Hashpack extensions in two different browsers (e.g. Chrome and Brave). Currently, it is also possible to borrow your own items so you can also test using only one account, but this might get a bit confusing.
-
-Email notifications are not yet implemented, so you have to manually **copy the url of your borrow request** and send it to the person you wish to borrow from.
-
-### Sandbox
-
-We also provided a sandbox demo website for testing. Go to [heather-sandbox.codesparks.nl](https://heather-sandbox.codesparks.nl) or checkout branch `sandbox` to run locally.
-
-This is the exact same website as the main demo site, but without any dummy data. On this website you can test everything using items and user profiles you create yourself without the trouble of delays caused by retrieving dummy data from the decentralized storage.
-
 ## Navigating the repository
 
 We use the default nuxt directory structure for the front-end. Most of the front-end implementation can be found in `/pages` and `/components`. The decentralized data storage is handled using the scripts in `/utils/storage`. Both the original and the compiled smart contracts can be found in `/utils/contracts`, which are deployed on the Hedera testnet using `/utils/deployContract.js`. The interactions with the Hedera Javascript SDK can be found in `/utils/borrow.js` which uses helper functions we defined in `/utils/hederaService.js`.
